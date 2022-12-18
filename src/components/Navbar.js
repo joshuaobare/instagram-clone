@@ -6,13 +6,20 @@ import { ReactComponent as MessagesSvg } from "../images/icons/Messages.svg"
 import { ReactComponent as NotificationsSvg } from "../images/icons/Notifications.svg"
 import { ReactComponent as CreateSvg } from "../images/icons/Create.svg"
 import { ReactComponent as MoreSvg } from "../images/icons/More.svg"
+import { ReactComponent as LogoSvg } from "../images/icons/Logo.svg"
 import Profile from "../images/icons/favicon.ico"
 
 export default function Navbar(){
     return (
         <nav>
-            <div>Instagram</div>
-            <div>
+            <div className="navbar-heading">
+                <div className="navbar-item">
+                    <LogoSvg />
+                </div>
+                
+            </div>
+            
+            <div className="navbar-mid">
                 <div className="navbar-item">
                     <HomeSvg />                    
                     <div className="nav-title">Home</div>
@@ -48,7 +55,7 @@ export default function Navbar(){
                 
             </div>
             
-            <div>
+            <div className="navbar-bottom">
                 <div className="navbar-item">
                     <MoreSvg />
                     <div className="nav-title">More</div>
