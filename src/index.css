@@ -11,18 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.side {
-  background-color: #e4e4e4;
+.App {
+  background-color: #fafafa;
+  display: flex;
+
 }
 nav {
   padding-top: 25px;
   padding-left: 0px;
-  border-right: 1px solid #dcdcdc;
+  border-right: 1px solid #e4e4e4;
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 350px;
   height: 95vh;
+  background-color: #fff;
 }
 .main-nav-title {
   height: 92px;
@@ -49,4 +52,14 @@ nav {
 
 .navbar-mid {
   flex: 2;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-top, .footer-bottom {
+  display: flex;
+
 }
