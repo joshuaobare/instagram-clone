@@ -14,7 +14,10 @@ export default function Login() {
                     
                     <form action="">
                         {/*<LogoSvg /> */}
-                        <img src={IGlogo} alt="" />                       
+                        <div className="login-logo">
+                            <img src={IGlogo} alt="" />
+                        </div>
+                                               
                         <div className="form-inputs">
                             <input type="text" placeholder="Phone number, username, or email"/>
                             <input type="password" placeholder="Password"/>                        
@@ -35,7 +38,7 @@ export default function Login() {
                                                 
                     </form>
                     <div className="signup-prompt">
-                        Don't have an account? Sign Up
+                        Don't have an account? <span className="signup-prompt-span">Sign Up</span>
                     </div>
                     <div className="form-section-bottom">
                         <div>Get the app.</div>
