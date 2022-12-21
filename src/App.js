@@ -25,8 +25,8 @@ function App() {
 
   return (
     <div className="App">
-      
-      <MiniProfile />
+      <Navbar />
+      <Homepage />
 
     </div>
   );
