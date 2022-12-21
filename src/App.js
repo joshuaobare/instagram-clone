@@ -4,6 +4,7 @@ import { getFirestore , collection, addDoc, getDocs } from "firebase/firestore"
 import { app } from "./firebase-config"
 import Post from "./components/Home-Post";
 import Profile from "./components/Profile";
+import FullPost from "./components/FullPost";
 
 
 
@@ -21,8 +22,8 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <Profile />
+      
+      <FullPost />
 
     </div>
   );
