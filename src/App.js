@@ -3,6 +3,7 @@ import Login from "./components/Login"
 import { getFirestore , collection, addDoc, getDocs } from "firebase/firestore"
 import { app } from "./firebase-config"
 import Post from "./components/Home-Post";
+import Profile from "./components/Profile";
 
 
 
@@ -20,7 +21,8 @@ function App() {
 
   return (
     <div className="App">
-      <Post />
+      <Navbar />
+      <Profile />
 
     </div>
   );
