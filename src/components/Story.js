@@ -5,7 +5,7 @@ export default function Story() {
    return (
     <div className="Story">
         <img src={Waldo} alt="" className="story-main-img"/>
-    <div>username</div>
-</div>
+        <div>username</div>
+    </div>
    ) 
 }

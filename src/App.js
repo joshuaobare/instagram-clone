@@ -6,6 +6,7 @@ import Post from "./components/Home-Post";
 import Profile from "./components/Profile";
 import Story from "./components/Story";
 import FullPost from "./components/FullPost";
+import Homepage from "./components/Homepage";
 
 
 
@@ -23,8 +24,8 @@ function App() {
 
   return (
     <div className="App">
-      
-      <Story />
+      <Navbar />
+      <Homepage />
 
     </div>
   );
