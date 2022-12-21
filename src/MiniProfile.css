@@ -1,0 +1,31 @@
+.MiniProfile {
+    display: flex;
+    align-items: center;
+    width: 347px;
+    height: 48px;   
+
+}
+
+.miniprofile-icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid black;
+    border-radius: 100%;
+}
+
+.miniprofile-main {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    padding-left: 10px;
+}
+
+.miniprofile-main-followers {
+    color: #8E8E8E;
+    font-size: 12px;
+}
+
+.miniprofile-follow {
+    color: #0095F6;
+    font-size: 14px;
+}

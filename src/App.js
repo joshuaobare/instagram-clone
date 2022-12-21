@@ -7,6 +7,7 @@ import Profile from "./components/Profile";
 import Story from "./components/Story";
 import FullPost from "./components/FullPost";
 import Homepage from "./components/Homepage";
+import MiniProfile from "./components/MiniProfile";
 
 
 
@@ -24,8 +25,8 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <Homepage />
+      
+      <MiniProfile />
 
     </div>
   );
