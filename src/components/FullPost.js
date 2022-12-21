@@ -4,6 +4,7 @@ import {ReactComponent as AddEmojiSvg} from "../images/icons/AddEmoji.svg"
 import {ReactComponent as CommentIconSvg} from "../images/icons/CommentIcon.svg"
 import {ReactComponent as ShareIconSvg} from "../images/icons/ShareIcon.svg"
 import {ReactComponent as SaveIconSvg} from "../images/icons/SaveIcon.svg"
+import Comment from "./Comment"
 import Waldo from "../images/icons/waldo.png"
 import "../FullPost.css"
 
@@ -19,13 +20,19 @@ return (
                 </div>                
                 <OptionsSvg />
             </div>
+            <hr />
             <div className="full-post-comment-section">
                 <div className="full-post-caption-section">
-                    <div className="full-post-caption-username">username</div>
+                    <div className="full-post-caption-section-main">
+                        <img src={Waldo} alt="" className="full-post-profile-icon" />
+                        <div className="full-post-caption-username">username</div>
+                    </div>                    
                     <div className="full-post-caption">You love to see it</div>
                 </div>
                 <div className="full-post-comments">
-
+                    <Comment />
+                    <Comment />
+                    <Comment />
                 </div>
             </div>
             <hr />

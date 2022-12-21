@@ -34,7 +34,9 @@
 
 .full-post-caption-section {
     display: flex;
-    gap: 15px;
+    gap: 5px;
+    align-items:center;
+    padding: 10px;
 }
 
 .full-post-icons {
@@ -52,7 +54,7 @@
 .full-post-comment-section {
     flex: 2;
 }
-.full-post-likes,.full-post-mid-section, .full-post-time , .full-post-addcomment, .full-post-icons, .full-post-caption-username {
+.full-post-likes,.full-post-mid-section, .full-post-time , .full-post-addcomment, .full-post-icons  {
     padding-left: 10px;
     
     
@@ -83,4 +85,12 @@
 
 hr {
     border-color: #dbdbdb;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.full-post-caption-section-main {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
