@@ -12,16 +12,16 @@ export default function Post(){
     return (
         <div className="post">
             <div className="home-post-header">
-                <div>
+                <div className="home-post-header-main">
                     <img src={Waldo} alt="random-icon" className="home-post-profile-icon"/>
                     <div>username</div>
                 </div>                
                 <OptionsSvg />
             </div>
             <img src={Wrap} alt="" className="home-post-img" />
-            <div>
+            <div className="home-post-main">
                 <div className="home-post-icons">
-                    <div>
+                    <div className="home-post-icons-main">
                         <LikeIconSvg />
                         <CommentIconSvg />
                         <ShareIconSvg />
@@ -31,16 +31,20 @@ export default function Post(){
                     </div>                   
                     
                 </div>
-                <div>28311 likes</div>
-                <div className="home-post-caption">
-                    <div>username</div>
-                    <div>You love to see it</div>
+                <div className="home-post-likes">28311 likes</div>
+                <div className="home-post-mid-section">
+                    <div className="home-post-caption-section">
+                        <div className="home-post-caption-username">username</div>
+                        <div className="home-post-caption">You love to see it</div>
+                    </div>                    
+                    <div className="home-post-comments-section">View all comments</div>                   
+                    
                 </div>
-                <div className="home-post-comments-section">View all comments</div>
+                <div className="home-post-time">14 HOURS AGO</div>
                 <div className="home-post-comment">
                     <AddEmojiSvg />
-                    <input type="text" placeholder="Add a comment..." />
-                    <div>POST</div>
+                    <input type="text" placeholder="Add a comment..." className="add-comment"/>
+                    <div className="home-post-comment-post">Post</div>
                 </div>
             </div>
         </div>

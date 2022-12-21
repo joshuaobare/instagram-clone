@@ -1,0 +1,94 @@
+.post {
+    width: 472px;
+    height: 800px;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+}
+
+.home-post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+.home-post-header-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.home-post-profile-icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid black;
+    border-radius: 100%;
+}
+
+.home-post-img {
+    height: 587px;
+    width: 472px;
+}
+
+.home-post-icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.home-post-likes,.home-post-mid-section, .home-post-time , .home-post-comment, .home-post-icons {
+    padding-left: 10px;
+    
+    
+}
+.home-post-icons-main {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 5px;
+}
+
+.home-post-caption-section {
+    display: flex;
+    gap: 15px;
+}
+
+.home-post-likes, .home-post-caption-username {
+    font-weight: 600;
+}
+
+.home-post-mid-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.home-post-time {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #8E8E8E;
+    font-size: 12px;
+}
+
+.home-post-comments-section {
+    color: #8E8E8E;
+}
+
+.home-post-comment {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: auto;
+    border-top: 1px solid #dbdbdb;
+    height: 40px;
+    
+}
+
+.add-comment {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    width: 374px;
+}
+
+.home-post-comment-post {
+   color: #0095F6;
+}
