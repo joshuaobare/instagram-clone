@@ -21,11 +21,14 @@ export default function Homepage(props) {
         <div className="Homepage">
             <div className="homepage-left-section">
                 <div className="homepage-stories-section">
-                    <Story />
-                    <Story />
-                    <Story />
-                    <Story />
-                    <Story />
+                    {props.profiles.map(item => {
+                        return (
+                            <Story 
+                                username ={item.username.stringValue}
+                                ppic = {item.profilePicture.stringValue}
+                            />
+                        )
+                    })}
                 </div>
                 <div className="homepage-posts-section">
                     {
@@ -58,11 +61,17 @@ export default function Homepage(props) {
                     <div className="homepage-aside-seeall">See All</div>
                 </div>
                 <div>
-                    <MiniProfile />
-                    <MiniProfile />
-                    <MiniProfile />
-                    <MiniProfile />
-                    <MiniProfile />
+                    {
+                        props.profiles.map(item => {
+                            return (
+                                <MiniProfile 
+                                    username = {item.username.stringValue}
+                                    ppic = {item.profilePicture.stringValue}
+                                />
+                            )
+                        })
+                    
+                    }
                 </div>
                 <div className="homepage-aside-footer">
                     <div className="homepage-aside-footer-top">
