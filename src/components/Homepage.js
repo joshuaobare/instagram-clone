@@ -3,8 +3,10 @@ import Story from "./Story"
 import Post from "./Home-Post"
 import MiniProfile from "./MiniProfile"
 import Waldo from "../images/icons/waldo.png"
+import uniqid from 'uniqid';
 
-export default function Homepage() {
+
+export default function Homepage(props) {
     return (
         <div className="Homepage">
             <div className="homepage-left-section">
@@ -16,10 +18,17 @@ export default function Homepage() {
                     <Story />
                 </div>
                 <div className="homepage-posts-section">
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
+                    {
+                        props.posts.map(item => {
+                            return (
+                            <Post 
+                                key = {uniqid()}
+                                username = {item.username.stringValue}
+                                caption = {item.caption.stringValue}
+                                url = {item.url.stringValue}
+                            />)
+                        })
+                    }
                 </div>
             </div>
             <aside>

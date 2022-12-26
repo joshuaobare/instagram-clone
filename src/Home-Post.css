@@ -49,7 +49,7 @@
 
 .home-post-caption-section {
     display: flex;
-    gap: 15px;
+    gap: 5px;
 }
 
 .home-post-likes, .home-post-caption-username {

@@ -8,17 +8,17 @@ import Waldo from "../images/icons/waldo.png"
 import Wrap from "../images/wrap.jpg"
 import "../Home-Post.css"
 
-export default function Post(){
+export default function Post(props){
     return (
         <div className="post">
             <div className="home-post-header">
                 <div className="home-post-header-main">
                     <img src={Waldo} alt="random-icon" className="home-post-profile-icon"/>
-                    <div>username</div>
+                    <div>{props.username}</div>
                 </div>                
                 <OptionsSvg />
             </div>
-            <img src={Wrap} alt="" className="home-post-img" />
+            <img src={props.url} alt="" className="home-post-img" />
             <div className="home-post-main">
                 <div className="home-post-icons">
                     <div className="home-post-icons-main">
@@ -34,8 +34,8 @@ export default function Post(){
                 <div className="home-post-likes">28311 likes</div>
                 <div className="home-post-mid-section">
                     <div className="home-post-caption-section">
-                        <div className="home-post-caption-username">username</div>
-                        <div className="home-post-caption">You love to see it</div>
+                        <div className="home-post-caption-username">{props.username}</div>
+                        <div className="home-post-caption">{props.caption}</div>
                     </div>                    
                     <div className="home-post-comments-section">View all comments</div>                   
                     

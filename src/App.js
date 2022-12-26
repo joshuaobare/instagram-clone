@@ -22,7 +22,7 @@ function App() {
     async function fetcher(){
       const ref = await getDocs(collection(getFirestore(app), "profiles"))
       ref.forEach((doc) => {
-        console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
+        //console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
         const { values } = doc._document.data.value.mapValue.fields.data.arrayValue        
         //console.log(values)
         setData(prevState => [...prevState, values])
@@ -58,7 +58,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Homepage />
+      <Homepage posts = {posts}/>
 
     </div>
   );
