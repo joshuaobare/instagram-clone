@@ -16,28 +16,30 @@ function App() {
 
   const [data, setData] = useState([])
   const [posts , setPosts] = useState([])
+  const [profiles , setProfiles] = useState([])
 
   useEffect(() => {
     async function fetcher(){
       const ref = await getDocs(collection(getFirestore(app), "profiles"))
       ref.forEach((doc) => {
-        const { fields } = doc._document.data.value.mapValue        
-        setData(prevState => [...prevState, fields])
-        const fielddata = Object.values(fields)
-        //data2.push(fields)
-        fielddata.forEach(item => {
-          console.log(item)
-          console.log(item.mapValue.fields.posts.arrayValue.values)
+        console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
+        const { values } = doc._document.data.value.mapValue.fields.data.arrayValue        
+        //console.log(values)
+        setData(prevState => [...prevState, values])
 
-          const { values } = item.mapValue.fields.posts.arrayValue
+        values.forEach(item => {
 
+          const {values} = item.mapValue.fields.posts.arrayValue
+
+          setProfiles(prevState => [...prevState , item.mapValue.fields])
           if (values.length > 1) {
             values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
           } else {
             setPosts(prevState => [...prevState , values[0].mapValue.fields])
+
           }
-          
         })
+
 
 
       })
@@ -47,6 +49,7 @@ function App() {
   } , [])
 
   //console.log(data)
+  //console.log(profiles)
   console.log(posts)
 
 
