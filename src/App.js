@@ -49,7 +49,7 @@ function App() {
   } , [])
 
   //console.log(data)
-  //console.log(profiles)
+  console.log(profiles)
   console.log(posts)
 
 
@@ -58,7 +58,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Homepage posts = {posts}/>
+      <Homepage posts = {posts} profiles= {profiles}/>
 
     </div>
   );

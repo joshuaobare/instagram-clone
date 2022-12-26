@@ -7,6 +7,19 @@ import uniqid from 'uniqid';
 
 
 export default function Homepage(props) {
+
+    const profileFinder = (username) => {
+        const profile = props.profiles.filter(item => {
+                return item.username.stringValue === username
+                })
+        
+
+        console.log(profile.profilePicture.stringValue)
+        return profile.profilePicture.stringValue
+    }
+
+
+
     return (
         <div className="Homepage">
             <div className="homepage-left-section">
@@ -26,6 +39,7 @@ export default function Homepage(props) {
                                 username = {item.username.stringValue}
                                 caption = {item.caption.stringValue}
                                 url = {item.url.stringValue}
+                                ppic = {() => profileFinder(item.username.stringValue)}
                             />)
                         })
                     }
