@@ -26,9 +26,20 @@ function App() {
         const fielddata = Object.values(fields)
         //data2.push(fields)
         fielddata.forEach(item => {
-          //console.log(item.mapValue.fields.posts.mapValue.fields)
-          setPosts(prevState => [...prevState , item.mapValue.fields.posts.mapValue.fields])
+          console.log(item)
+          console.log(item.mapValue.fields.posts.arrayValue.values)
+
+          const { values } = item.mapValue.fields.posts.arrayValue
+
+          if (values.length > 1) {
+            values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
+          } else {
+            setPosts(prevState => [...prevState , values[0].mapValue.fields])
+          }
+          
         })
+
+
       })
     }
   
