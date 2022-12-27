@@ -72,13 +72,17 @@ function App() {
   async function googleLogin(event){
     await signIn()
     const data = await getAuth()
-    setUserData({username: data.currentUser.displayName , ppic: data.currentUser.photoURL || '/images/profile_placeholder.png'})
+    setUserData(
+      {
+        username: data.currentUser.displayName,
+        ppic: `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`
+      })
     console.log(data)
     setLoggedIn(true)
 
   }
 
-  console.log(userData)
+  console.log(userData.ppic)
  
     // Returns the signed-in user's profile Pic URL.
   function getProfilePicUrl() {
@@ -91,18 +95,23 @@ function App() {
     return getAuth().currentUser.displayName;
   }
 
+  function addSizeToGoogleProfilePic(url) {
+    if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
+      return url + '?sz=150';
+    }
+    return url;
+  }
   
 
 
-console.log(loggedIn)
+
 
   return (
     <div className="App">
-      <Navbar />
+      {loggedIn ? <Navbar /> : ""}
       {!loggedIn ? 
-      <Login googleLogin = {googleLogin}  /> : (
-        
-      <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} />) }
+      <Login googleLogin = {googleLogin}  /> :        
+      <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> }
       
 
     </div>

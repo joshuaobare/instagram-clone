@@ -59,6 +59,7 @@
 .homepage-aside-header-switch {
     color: #0095F6;
     font-size: 14px;
+    cursor: pointer;
 }
 .homepage-aside-suggestions {
     color: #8e8e8e;

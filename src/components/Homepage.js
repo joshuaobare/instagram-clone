@@ -23,7 +23,8 @@ export default function Homepage(props) {
                 <div className="homepage-stories-section">
                     {props.profiles.map(item => {
                         return (
-                            <Story 
+                            <Story
+                                key = {uniqid()} 
                                 username ={item.username.stringValue}
                                 ppic = {item.profilePicture.stringValue}
                             />
