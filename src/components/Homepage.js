@@ -53,7 +53,7 @@ export default function Homepage(props) {
                         <div className="homepage-aside-header-name">Firstname Lastname</div>
                     </div>
                     <div className="homepage-aside-header-switch">
-                        Switch
+                        Sign Out
                     </div>
                 </div>
                 <div className="homepage-aside-mid">

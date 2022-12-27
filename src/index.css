@@ -14,7 +14,7 @@ code {
 .App {
   background-color: #fafafa;
   display: flex;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 
 }
@@ -28,6 +28,7 @@ nav {
   width: 350px;
   height: 95vh;
   background-color: #fff;
+  position: fixed;
 }
 .main-nav-title {
   height: 92px;
