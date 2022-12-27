@@ -6,7 +6,7 @@ import Appstore from "../images/icons/Appstore.png"
 import IGlogo from "../images/icons/IGlogo.png"
 import { ReactComponent as LogoSvg } from "../images/icons/Logo.svg"
 
-export default function Login() {
+export default function Login(props) {
     return (
         <div className="Login">
             <div className="main">
@@ -30,7 +30,7 @@ export default function Login() {
                             <div className="form-mid-border"><hr /></div>
                         </div>
                         <div className="form-bottom">
-                            <div className="Google-login">
+                            <div className="Google-login" onClick={props.googleLogin}>
                                 <img src={GoogleIcon} alt="Google icon" className="Googleicon" /> 
                                 <div className="Google-login-text">Log in with Google</div>
                             </div>

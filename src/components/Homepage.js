@@ -47,12 +47,12 @@ export default function Homepage(props) {
             </div>
             <aside>
                 <div className="homepage-aside-header">
-                    <img src={Waldo} alt="homepage aside header" className="homepage-aside-img"/>
+                    <img src={props.userData.ppic} alt="homepage aside header" className="homepage-aside-img"/>
                     <div className="homepage-aside-header-main">
                         <div className="homepage-aside-header-username">username</div>
-                        <div className="homepage-aside-header-name">Firstname Lastname</div>
+                        <div className="homepage-aside-header-name">{props.userData.username}</div>
                     </div>
-                    <div className="homepage-aside-header-switch">
+                    <div className="homepage-aside-header-switch" onClick={props.signOut}>
                         Sign Out
                     </div>
                 </div>
