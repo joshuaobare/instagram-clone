@@ -17,6 +17,7 @@ function App() {
   const [data, setData] = useState([])
   const [posts , setPosts] = useState([])
   const [profiles , setProfiles] = useState([])
+  const [loggedIn , setLoggedIn] = useState(false)
 
   useEffect(() => {
     async function fetcher(){
@@ -36,12 +37,8 @@ function App() {
             values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
           } else {
             setPosts(prevState => [...prevState , values[0].mapValue.fields])
-
           }
         })
-
-
-
       })
     }
   
@@ -57,8 +54,9 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <Homepage posts = {posts} profiles= {profiles}/>
+      
+      {!loggedIn ? <Login /> : <Homepage posts = {posts} profiles= {profiles}/> }
+      
 
     </div>
   );

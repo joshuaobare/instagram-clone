@@ -1,6 +1,6 @@
 import Footer from "./Footer"
 import LoginImg from "../images/Login.png"
-import FBicon from "../images/icons/FBicon.png"
+import GoogleIcon from "../images/icons/GoogleIcon.png"
 import Playstore from "../images/icons/Playstore.png"
 import Appstore from "../images/icons/Appstore.png"
 import IGlogo from "../images/icons/IGlogo.png"
@@ -30,9 +30,9 @@ export default function Login() {
                             <div className="form-mid-border"><hr /></div>
                         </div>
                         <div className="form-bottom">
-                            <div className="FB-login">
-                                <span><img src={FBicon} alt="Facebook icon" className="FBicon" /></span> 
-                                Log in with Facebook
+                            <div className="Google-login">
+                                <img src={GoogleIcon} alt="Google icon" className="Googleicon" /> 
+                                <div className="Google-login-text">Log in with Google</div>
                             </div>
                             <div className="forgot-password">Forgot password?</div>
                         </div>

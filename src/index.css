@@ -77,18 +77,28 @@ footer {
   
 }
 
-.FBicon {
+.Googleicon {
   height: 16px;
   width: 16px;
 }
 
-.FB-login {
+.Google-login {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   color: #385185;
   font-size: 14px;
   font-weight: 600px;
+  
+}
+
+.Google-login , .forgot-password, .signup-prompt-span, .app-stores {
+  cursor: pointer;
+}
+
+.Google-login-text {
+  font-weight: 600;
 }
 
 .forgot-password {
