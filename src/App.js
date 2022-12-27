@@ -72,9 +72,13 @@ function App() {
   async function googleLogin(event){
     await signIn()
     const data = await getAuth()
+    const names = data.currentUser.displayName.split(" ")
+    const username = names[0][0].toLowerCase() + names[1].toLowerCase()
+
     setUserData(
       {
-        username: data.currentUser.displayName,
+        name:  data.currentUser.displayName,
+        username: username,
         ppic: `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`
       })
     console.log(data)
