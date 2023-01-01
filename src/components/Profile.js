@@ -11,26 +11,29 @@ import { useParams } from "react-router-dom"
 
 export default function Profile(props) {
 
-    const [data, setData] = useState("")
+    const [data, setData] = useState({
+        description: "",
+        name: "",
+        posts: "",
+        profilePicture: "",
+        username: ""
+    })
     const {username} = useParams()
 
-    const finder = () => {
-        const profile = props.profiles.find(item => item.username.stringValue === username.toString())
-        console.log(profile)
-        return profile
-    }
-
     useEffect(() => {
-        setData(finder())
+        const finder = async () => {
+            const profiles = await props.profiles
+            const profile = profiles.find(item => item.username.stringValue === username.toString())
+            setData(profile)
+        }
+        finder()
     }, [])
-
-    
     
 
     return (
         <div className="Profile">
             <div className="profile-main">
-                <img src={Waldo} alt="main profile pic" className="profile-main-img" />
+                <img src={data.profilePicture.stringValue} alt="main profile pic" className="profile-main-img" />
                 <div className="profile-details">
                     <div className="profile-details-header">
                         <div className="profile-details-username">{data.username.stringValue}</div>

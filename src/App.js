@@ -118,8 +118,7 @@ function App() {
         <Routes>
           <Route 
             path="/" 
-            element = {!loggedIn ? 
-              <Login googleLogin = {googleLogin}  /> :        
+            element = {        
               <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> } 
           />
           <Route 
