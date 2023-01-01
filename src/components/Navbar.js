@@ -8,6 +8,7 @@ import { ReactComponent as CreateSvg } from "../images/icons/Create.svg"
 import { ReactComponent as MoreSvg } from "../images/icons/More.svg"
 import { ReactComponent as LogoSvg } from "../images/icons/Logo.svg"
 import Profile from "../images/icons/favicon.ico"
+import { Link } from "react-router-dom"
 
 export default function Navbar(){
     return (
@@ -21,8 +22,11 @@ export default function Navbar(){
             
             <div className="navbar-mid">
                 <div className="navbar-item">
-                    <HomeSvg />                    
-                    <div className="nav-title">Home</div>
+                    <HomeSvg />
+                    <Link to = "/" >
+                        <div className="nav-title">Home</div>
+                    </Link>                    
+                    
                 </div>
                 <div className="navbar-item">
                     <SearchSvg />

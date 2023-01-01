@@ -10,6 +10,7 @@ import {
   signOut,
 } from 'firebase/auth';
 import { app } from "./firebase-config"
+import { HashRouter , Routes , Route } from "react-router-dom";
 import Post from "./components/Home-Post";
 import Profile from "./components/Profile";
 import Story from "./components/Story";
@@ -27,7 +28,7 @@ function App() {
   const [loggedIn , setLoggedIn] = useState(false)
   const [authData , setAuthData] = useState("")
   const [userData , setUserData] = useState({
-    username: "" ,ppic: ""
+    username: "" , ppic: "" , name: ""
   })
 
   useEffect(() => {
@@ -112,10 +113,19 @@ function App() {
 
   return (
     <div className="App">
-      {loggedIn ? <Navbar /> : ""}
-      {!loggedIn ? 
-      <Login googleLogin = {googleLogin}  /> :        
-      <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> }
+      <HashRouter>
+        {loggedIn ? <Navbar /> : ""}
+        <Routes>
+          <Route 
+            path="/" 
+            element = {!loggedIn ? 
+              <Login googleLogin = {googleLogin}  /> :        
+              <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> } 
+          /> 
+        </Routes>
+        
+      </HashRouter>
+      
       
 
     </div>
