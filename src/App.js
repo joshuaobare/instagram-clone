@@ -108,7 +108,7 @@ function App() {
   }
   
 
-
+  console.log(profiles)
 
 
   return (
@@ -121,6 +121,15 @@ function App() {
             element = {!loggedIn ? 
               <Login googleLogin = {googleLogin}  /> :        
               <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> } 
+          />
+          <Route 
+            path = "/profile/:username"
+            element = {
+              <Profile
+                profiles = {profiles}
+                userData = {userData}
+              />
+            }
           /> 
         </Routes>
         

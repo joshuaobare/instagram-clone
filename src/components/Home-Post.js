@@ -4,6 +4,7 @@ import {ReactComponent as AddEmojiSvg} from "../images/icons/AddEmoji.svg"
 import {ReactComponent as CommentIconSvg} from "../images/icons/CommentIcon.svg"
 import {ReactComponent as ShareIconSvg} from "../images/icons/ShareIcon.svg"
 import {ReactComponent as SaveIconSvg} from "../images/icons/SaveIcon.svg"
+import { Link } from "react-router-dom"
 import Waldo from "../images/icons/waldo.png"
 import Wrap from "../images/wrap.jpg"
 import "../Home-Post.css"
@@ -34,7 +35,10 @@ export default function Post(props){
                 <div className="home-post-likes">28311 likes</div>
                 <div className="home-post-mid-section">
                     <div className="home-post-caption-section">
-                        <div className="home-post-caption-username">{props.username}</div>
+                        <Link to={`/profile/${props.username}`}>
+                            <div className="home-post-caption-username">{props.username}</div>
+                        </Link>
+                        
                         <div className="home-post-caption">{props.caption}</div>
                     </div>                    
                     <div className="home-post-comments-section">View all comments</div>                   

@@ -6,15 +6,34 @@ import {ReactComponent as ProfileMenuSvg} from "../images/icons/ProfileMenu.svg"
 import {ReactComponent as OptionsSvg } from "../images/icons/Options.svg"
 import Waldo from "../images/icons/waldo.png"
 import "../Profile.css"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
-export default function Profile() {
+export default function Profile(props) {
+
+    const [data, setData] = useState("")
+    const {username} = useParams()
+
+    const finder = () => {
+        const profile = props.profiles.find(item => item.username.stringValue === username.toString())
+        console.log(profile)
+        return profile
+    }
+
+    useEffect(() => {
+        setData(finder())
+    }, [])
+
+    
+    
+
     return (
         <div className="Profile">
             <div className="profile-main">
                 <img src={Waldo} alt="main profile pic" className="profile-main-img" />
                 <div className="profile-details">
                     <div className="profile-details-header">
-                        <div className="profile-details-username">username</div>
+                        <div className="profile-details-username">{data.username.stringValue}</div>
                         <button className="profile-details-follow">Follow</button>
                         <OptionsSvg />
                     </div>
@@ -24,8 +43,8 @@ export default function Profile() {
                         <div><b>154</b> following</div>
                     </div>
                     <div className="profile-details-bottom">
-                        <div>Firstname Lastname</div>
-                        <div>Description</div>
+                        <div>{data.name.stringValue}</div>
+                        <div>{data.description.stringValue}</div>
                     </div>
                 </div>
             </div>
