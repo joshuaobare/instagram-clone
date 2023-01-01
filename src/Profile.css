@@ -77,3 +77,8 @@ hr {
 .profile-posts-grid {
     flex: 2;
 }
+
+.profile-post {
+    width: 290px;
+    height: 290px;
+}
