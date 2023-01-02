@@ -14,7 +14,7 @@ export default function Profile(props) {
     const [data, setData] = useState({
         description: "",
         name: "",
-        posts: "",
+        posts: [],
         profilePicture: "",
         username: ""
     })
@@ -25,14 +25,22 @@ export default function Profile(props) {
         const finder = async () => {
             const profiles = await props.profiles
             const profile = profiles.find(item => item.username.stringValue === username.toString())
-            setData(profile)
+            console.log(profile)
+            setData(prevState => {
+                return {...prevState ,
+                description: profile.description.stringValue,
+                name: profile.name.stringValue,
+                posts: profile.posts.arrayValue.values,
+                profilePicture: profile.profilePicture.stringValue,
+                username: profile.username.stringValue}
+            })
         }
         finder()
     }, [])
     
     // the posts map function varies based on how many posts the user has
 
-    if (data.posts.arrayValue.values.length > 1) {
+    /*if (data.posts.arrayValue.values.length > 1) {
         posts =  data.posts.arrayValue.values.map(item => 
             <img 
                 src={item.mapValue.fields.url.stringValue} 
@@ -46,15 +54,17 @@ export default function Profile(props) {
                         alt="posts"
                         className="profile-post" 
                       />
-    }
+    }*/
+
+    console.log(data)
 
     return (
         <div className="Profile">
             <div className="profile-main">
-                <img src={data.profilePicture.stringValue} alt="main profile pic" className="profile-main-img" />
+                <img src={data.profilePicture} alt="main profile pic" className="profile-main-img" />
                 <div className="profile-details">
                     <div className="profile-details-header">
-                        <div className="profile-details-username">{data.username.stringValue}</div>
+                        <div className="profile-details-username">{data.username}</div>
                         <button className="profile-details-follow">Follow</button>
                         <OptionsSvg />
                     </div>
@@ -64,8 +74,8 @@ export default function Profile(props) {
                         <div><b>154</b> following</div>
                     </div>
                     <div className="profile-details-bottom">
-                        <div>{data.name.stringValue}</div>
-                        <div>{data.description.stringValue}</div>
+                        <div>{data.name}</div>
+                        <div>{data.description}</div>
                     </div>
                 </div>
             </div>
@@ -85,7 +95,13 @@ export default function Profile(props) {
                 </div>
             </div>
             <div className="profile-posts-grid">
-                {posts}
+                {
+                    data.posts.map(item => <img 
+                        src={item.mapValue.fields.url.stringValue} 
+                        alt="posts"
+                        className="profile-post" 
+                    />)
+                }
             </div>
             <Footer />
         </div>
