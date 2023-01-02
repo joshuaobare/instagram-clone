@@ -24,27 +24,39 @@ export default function Profile(props) {
     
     
     console.log(props.userData)
+    console.log(props.profiles[0])
     useEffect(() => {
         const finder = async () => {
-            let profile
-            const profiles = await props.profiles            
+            
+            const profiles = await props.profiles   
+            console.log(username)         
+
             if (username === "user"){
                 setIsUser(true)
-                profile = props.userData
+                const profile = props.userData
+                setData(prevState => {
+                    return {...prevState ,
+                    description: profile.description,
+                    name: profile.name,
+                    posts: profile.posts,
+                    profilePicture: profile.profilePicture,
+                    username: profile.username}
+                })
             } else {
-                profile = profiles.find(item => item.username.stringValue === username.toString())
+                const profile = profiles.find(item => item.username.stringValue === username.toString())
+                setData(prevState => {
+                    return {...prevState ,
+                    description: profile.description.stringValue,
+                    name: profile.name.stringValue,
+                    posts: profile.posts.arrayValue.values,
+                    profilePicture: profile.profilePicture.stringValue,
+                    username: profile.username.stringValue}
+                })
             }
             
             
             //console.log(profile)
-            setData(prevState => {
-                return {...prevState ,
-                description: profile.description.stringValue,
-                name: profile.name.stringValue,
-                posts: profile.posts.arrayValue.values,
-                profilePicture: profile.profilePicture.stringValue,
-                username: profile.username.stringValue}
-            })
+            
         }
         finder()
     }, [])
@@ -57,7 +69,7 @@ export default function Profile(props) {
                 <div className="profile-details">
                     <div className="profile-details-header">
                         <div className="profile-details-username">{data.username}</div>
-                        <button className="profile-details-follow">Follow</button>
+                        <button className="profile-details-follow">{isUser ? "Edit Profile" : "Follow"}</button>
                         <OptionsSvg />
                     </div>
                     <div className="profile-details-mid">

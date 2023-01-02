@@ -4,6 +4,7 @@ import Post from "./Home-Post"
 import MiniProfile from "./MiniProfile"
 import Waldo from "../images/icons/waldo.png"
 import uniqid from 'uniqid';
+import { Link } from "react-router-dom"
 
 
 export default function Homepage(props) {
@@ -50,7 +51,9 @@ export default function Homepage(props) {
                 <div className="homepage-aside-header">
                     <img src={props.userData.profilePicture} alt="homepage aside header" className="homepage-aside-img"/>
                     <div className="homepage-aside-header-main">
-                        <div className="homepage-aside-header-username">{props.userData.username}</div>
+                        <Link to ="/profile/user">
+                            <div className="homepage-aside-header-username">{props.userData.username}</div>
+                        </Link>                        
                         <div className="homepage-aside-header-name">{props.userData.name}</div>
                     </div>
                     <div className="homepage-aside-header-switch" onClick={props.signOut}>

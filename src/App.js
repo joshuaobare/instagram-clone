@@ -103,7 +103,7 @@ function App() {
         {
                 description: checker.description.stringValue,
                 name: checker.name.stringValue,
-                posts: checker.posts.arrayValue.values,
+                posts: checker.posts.arrayValue.values ? checker.posts.arrayValue.values : [],
                 profilePicture: checker.profilePicture.stringValue,
                 username: checker.username.stringValue
         }
