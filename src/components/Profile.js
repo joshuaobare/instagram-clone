@@ -19,8 +19,7 @@ export default function Profile(props) {
         profilePicture: "",
         username: ""
     })
-    const {username} = useParams()
-    let posts
+    const {username} = useParams()   
 
     useEffect(() => {
         const finder = async () => {
@@ -39,25 +38,6 @@ export default function Profile(props) {
         finder()
     }, [])
     
-    // the posts map function varies based on how many posts the user has
-
-    /*if (data.posts.arrayValue.values.length > 1) {
-        posts =  data.posts.arrayValue.values.map(item => 
-            <img 
-                src={item.mapValue.fields.url.stringValue} 
-                alt="posts"
-                className="profile-post" 
-            />
-            )
-    } else {
-        posts = <img 
-                        src={data.posts.arrayValue.values[0].mapValue.fields.url.stringValue} 
-                        alt="posts"
-                        className="profile-post" 
-                      />
-    }*/
-
-    //console.log(data)
 
     return (
         <div className="Profile">

@@ -15,7 +15,9 @@ export default function Post(props){
             <div className="home-post-header">
                 <div className="home-post-header-main">
                     <img src={props.ppic} alt="random-icon" className="home-post-profile-icon"/>
-                    <div>{props.username}</div>
+                    <Link to={`/profile/${props.username}`}>
+                        <div>{props.username}</div>
+                    </Link>                    
                 </div>                
                 <OptionsSvg />
             </div>
