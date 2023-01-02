@@ -161,13 +161,11 @@ function App() {
   return (
     <div className="App">
       <HashRouter>
-        {loggedIn ? <Navbar /> : ""}
+        {<Navbar />}
         <Routes>
           <Route 
             path="/" 
-            element = {!loggedIn ? 
-              <Login googleLogin = {googleLogin}  /> :      
-              <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> } 
+            element = {<Create /> } 
           />
           <Route 
             path = "/profile/:username"
