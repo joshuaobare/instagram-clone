@@ -48,7 +48,7 @@ export default function Homepage(props) {
             </div>
             <aside>
                 <div className="homepage-aside-header">
-                    <img src={props.userData.ppic} alt="homepage aside header" className="homepage-aside-img"/>
+                    <img src={props.userData.profilePicture} alt="homepage aside header" className="homepage-aside-img"/>
                     <div className="homepage-aside-header-main">
                         <div className="homepage-aside-header-username">{props.userData.username}</div>
                         <div className="homepage-aside-header-name">{props.userData.name}</div>

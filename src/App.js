@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login"
-import { getFirestore , collection, addDoc, getDocs } from "firebase/firestore"
+import { getFirestore , collection, addDoc, getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore"
 import {
   getAuth,
   onAuthStateChanged,
@@ -70,24 +70,68 @@ function App() {
     setLoggedIn(false)
   }
 
+  async function createProfile(username , ppic , name) {
+
+    const profileData = doc(getFirestore(app), "profiles" , "Profile")
+    //console.log(profileData)
+
+    await updateDoc(profileData , {
+
+      data: arrayUnion({
+        description: "",
+        name: name,
+        posts: [],
+        profilePicture: ppic,
+        username: username
+      })
+                
+    })
+  }
+
   async function googleLogin(event){
     await signIn()
     const data = await getAuth()
     const names = data.currentUser.displayName.split(" ")
     const username = names[0][0].toLowerCase() + names[1].toLowerCase()
+    const checker = profiles.find(item => item.username.toString() === username.toString())
+    const ppic = `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`
+    const name = data.currentUser.displayName
 
+    if (checker) {
+      setUserData(
+        {
+                description: checker.description.stringValue,
+                name: checker.name.stringValue,
+                posts: checker.posts.arrayValue.values,
+                profilePicture: checker.profilePicture.stringValue,
+                username: checker.username.stringValue
+        }
+      )
+    } else {
+        createProfile(username, ppic , name)
+        setUserData(
+          {
+            name:  data.currentUser.displayName,
+            username: username,
+            profilePicture: `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`,
+            description: ""
+          })
+    }
+/*
     setUserData(
       {
         name:  data.currentUser.displayName,
         username: username,
         ppic: `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`
-      })
+      }) */
+
+    createProfile() 
     console.log(data)
     setLoggedIn(true)
 
   }
 
-  console.log(userData.ppic)
+  console.log(profiles)
  
     // Returns the signed-in user's profile Pic URL.
   function getProfilePicUrl() {
