@@ -91,7 +91,7 @@ export default function Homepage(props) {
                         <div>Language</div>
                     </div>
                     <div className="homepage-aside-footer-bottom">
-                        &copy; 2022 INSTAGRAM FROM META
+                        &copy; 2023 INSTAGRAM FROM META
                     </div>
                 </div>
             </aside>

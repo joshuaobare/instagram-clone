@@ -17,6 +17,7 @@ import Story from "./components/Story";
 import FullPost from "./components/FullPost";
 import Homepage from "./components/Homepage";
 import MiniProfile from "./components/MiniProfile";
+import Create from "./components/Create";
 
 
 
@@ -164,7 +165,7 @@ function App() {
         <Routes>
           <Route 
             path="/" 
-            element = {  !loggedIn ? 
+            element = {!loggedIn ? 
               <Login googleLogin = {googleLogin}  /> :      
               <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> } 
           />
@@ -180,8 +181,8 @@ function App() {
         </Routes>
         
       </HashRouter>
-      
-      
+
+           
 
     </div>
   );

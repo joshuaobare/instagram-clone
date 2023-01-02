@@ -18,7 +18,7 @@ export default function Footer() {
                 </div>
                 <div className="footer-bottom">
                     <div>English</div>
-                    <div>&copy; 2022 Instagram from Meta</div>
+                    <div>&copy; 2023 Instagram from Meta</div>
                 </div>
             </footer>
     )
