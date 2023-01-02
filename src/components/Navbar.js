@@ -54,7 +54,9 @@ export default function Navbar(){
                 </div>
                 <div className="navbar-item">
                     <img src={Profile} alt="" height="24" width = "24"/>
-                    <div className="nav-title">Profile</div>
+                    <Link to ="/profile/user">
+                        <div className="nav-title">Profile</div>
+                    </Link>                     
                 </div>               
                 
             </div>

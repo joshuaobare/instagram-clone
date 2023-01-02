@@ -12,6 +12,7 @@ import uniqid from "uniqid"
 
 export default function Profile(props) {
 
+    const [isUser , setIsUser] = useState(false)
     const [data, setData] = useState({
         description: "",
         name: "",
@@ -19,12 +20,22 @@ export default function Profile(props) {
         profilePicture: "",
         username: ""
     })
-    const {username} = useParams()   
-
+    const {username} = useParams()
+    
+    
+    console.log(props.userData)
     useEffect(() => {
         const finder = async () => {
-            const profiles = await props.profiles
-            const profile = profiles.find(item => item.username.stringValue === username.toString())
+            let profile
+            const profiles = await props.profiles            
+            if (username === "user"){
+                setIsUser(true)
+                profile = props.userData
+            } else {
+                profile = profiles.find(item => item.username.stringValue === username.toString())
+            }
+            
+            
             //console.log(profile)
             setData(prevState => {
                 return {...prevState ,

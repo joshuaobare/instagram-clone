@@ -93,10 +93,11 @@ function App() {
     const data = await getAuth()
     const names = data.currentUser.displayName.split(" ")
     const username = names[0][0].toLowerCase() + names[1].toLowerCase()
-    const checker = profiles.find(item => item.username.toString() === username.toString())
+    const checker = profiles.find(item => item.username.stringValue.toString() === username.toString())
     const ppic = `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`
     const name = data.currentUser.displayName
-
+    console.log(checker)
+    
     if (checker) {
       setUserData(
         {
@@ -114,7 +115,8 @@ function App() {
             name:  data.currentUser.displayName,
             username: username,
             profilePicture: `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`,
-            description: ""
+            description: "",
+            posts: []
           })
     }
 /*
@@ -126,7 +128,7 @@ function App() {
       }) */
 
     createProfile() 
-    console.log(data)
+   // console.log(data)
     setLoggedIn(true)
 
   }
@@ -152,7 +154,7 @@ function App() {
   }
   
 
-  console.log(profiles)
+ // console.log(profiles)
 
 
   return (
