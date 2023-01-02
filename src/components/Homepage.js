@@ -65,7 +65,8 @@ export default function Homepage(props) {
                     {
                         props.profiles.map(item => {
                             return (
-                                <MiniProfile 
+                                <MiniProfile
+                                    key = {uniqid()}  
                                     username = {item.username.stringValue}
                                     ppic = {item.profilePicture.stringValue}
                                 />

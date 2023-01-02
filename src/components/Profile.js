@@ -8,6 +8,7 @@ import Waldo from "../images/icons/waldo.png"
 import "../Profile.css"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import uniqid from "uniqid"
 
 export default function Profile(props) {
 
@@ -25,7 +26,7 @@ export default function Profile(props) {
         const finder = async () => {
             const profiles = await props.profiles
             const profile = profiles.find(item => item.username.stringValue === username.toString())
-            console.log(profile)
+            //console.log(profile)
             setData(prevState => {
                 return {...prevState ,
                 description: profile.description.stringValue,
@@ -56,7 +57,7 @@ export default function Profile(props) {
                       />
     }*/
 
-    console.log(data)
+    //console.log(data)
 
     return (
         <div className="Profile">
@@ -74,7 +75,7 @@ export default function Profile(props) {
                         <div><b>154</b> following</div>
                     </div>
                     <div className="profile-details-bottom">
-                        <div>{data.name}</div>
+                        <div><b>{data.name}</b></div>
                         <div>{data.description}</div>
                     </div>
                 </div>
@@ -97,6 +98,7 @@ export default function Profile(props) {
             <div className="profile-posts-grid">
                 {
                     data.posts.map(item => <img 
+                        key = {uniqid()}
                         src={item.mapValue.fields.url.stringValue} 
                         alt="posts"
                         className="profile-post" 

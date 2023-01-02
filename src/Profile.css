@@ -76,6 +76,10 @@ hr {
 
 .profile-posts-grid {
     flex: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding-top: 20px;
 }
 
 .profile-post {
