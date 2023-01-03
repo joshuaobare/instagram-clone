@@ -42,7 +42,7 @@ function App() {
       ref.forEach((doc) => {
         //console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
         const { values } = doc._document.data.value.mapValue.fields.data.arrayValue        
-        //console.log(values)
+        console.log(values)
         setData(prevState => [...prevState, values])
 
         values.forEach(item => {
@@ -50,11 +50,17 @@ function App() {
           const {values} = item.mapValue.fields.posts.arrayValue
 
           setProfiles(prevState => [...prevState , item.mapValue.fields])
-          if (values.length > 1) {
-            values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
-          } else {
-            setPosts(prevState => [...prevState , values[0].mapValue.fields])
+
+          try {
+            if (values.length > 1) {
+              values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
+            } else {
+              setPosts(prevState => [...prevState , values[0].mapValue.fields])
+            }
+          } catch {
+            console.log("Profile has no posts")
           }
+          
         })
       })
     }
@@ -157,10 +163,11 @@ function App() {
     
   }
 
-  async function createPost() {
-      
-      const storageRef = await ref(getStorage() , pictureFile.name)
-      const file = new File(pictureFile)
+  async function createPost(event) { 
+      event.preventDefault()     
+      const storageRef = ref(getStorage(app) , `${pictureFile.name}`)
+      console.log(storageRef)
+      //const file = new File(pictureFile)
 
       await uploadBytesResumable(storageRef , pictureFile).then((snapshot) => {
         console.log("Uploaded a file")

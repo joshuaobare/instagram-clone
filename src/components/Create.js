@@ -8,7 +8,7 @@ export default function Create(props) {
                 <DialogTitle>Create a Post</DialogTitle>
                 <DialogContent>
                     
-                    <form action="" onSubmit={props.createPost}>
+                    <form action="" >
                         <label className="image-input" htmlFor="image-input">
                             <div>Upload Picture</div>
                             <UploadSvg />                    
@@ -21,7 +21,9 @@ export default function Create(props) {
                         
                         <label htmlFor="caption">Caption</label>
                         <textarea name="caption" id="caption" cols="30" rows="10"></textarea>
-                        <button onClick={props.toggleDialog}>Submit</button>
+                        <button onClick={(e) => {
+                            props.toggleDialog(e)
+                            props.createPost(e)}}>Submit</button>
                     </form>
                     
                 </DialogContent>                
