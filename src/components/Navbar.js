@@ -10,7 +10,7 @@ import { ReactComponent as LogoSvg } from "../images/icons/Logo.svg"
 import Profile from "../images/icons/favicon.ico"
 import { Link } from "react-router-dom"
 
-export default function Navbar(){
+export default function Navbar(props){
     return (
         <nav>
             <div className="navbar-heading">
@@ -48,7 +48,7 @@ export default function Navbar(){
                     <NotificationsSvg />
                     <div className="nav-title">Notifications</div>
                 </div>
-                <div className="navbar-item">                    
+                <div className="navbar-item" onClick={props.toggleDialog}>                    
                     <CreateSvg />
                     <div className="nav-title">Create</div>
                 </div>

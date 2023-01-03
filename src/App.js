@@ -31,6 +31,7 @@ function App() {
   const [userData , setUserData] = useState({
     username: "" , ppic: "" , name: ""
   })
+  const [dialogOpen , setDialogOpen] = useState(false)
 
   useEffect(() => {
     async function fetcher(){
@@ -153,6 +154,12 @@ function App() {
     }
     return url;
   }
+
+  function toggleDialog(event) {
+    event.preventDefault()
+    setDialogOpen(prevState => !prevState)
+    
+  }
   
 
  // console.log(profiles)
@@ -161,11 +168,11 @@ function App() {
   return (
     <div className="App">
       <HashRouter>
-        {<Navbar />}
+        {<Navbar dialogOpen = {dialogOpen} userData={userData} toggleDialog={toggleDialog} />}
         <Routes>
           <Route 
             path="/" 
-            element = {<Create /> } 
+            element = {<Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} /> } 
           />
           <Route 
             path = "/profile/:username"

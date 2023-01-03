@@ -2,9 +2,9 @@ import { Dialog , DialogContent , DialogTitle } from "@mui/material"
 import {ReactComponent as UploadSvg} from "../images/icons/UploadImage.svg"
 import "../Create.css"
 
-export default function Create() {
+export default function Create(props) {
     return (        
-            <Dialog>
+            <Dialog open={props.dialogOpen ? "open" : false}>
                 <DialogTitle>Create a Post</DialogTitle>
                 <DialogContent>
                     <div className="Create">
@@ -20,7 +20,7 @@ export default function Create() {
                             
                             <label htmlFor="caption">Caption</label>
                             <textarea name="caption" id="caption" cols="30" rows="10"></textarea>
-                            <button>Submit</button>
+                            <button onClick={props.toggleDialog}>Submit</button>
                         </form>
                     </div>
                 </DialogContent>                
