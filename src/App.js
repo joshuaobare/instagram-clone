@@ -76,9 +76,13 @@ function App() {
     setAuthData(getAuth())
   }
 
-  function signOutUser() {
+  async function signOutUser() {
     // Sign out of Firebase.
-    signOut(getAuth());
+    await signOut(getAuth()).then(() => {
+      console.log("Sign Out successful")
+    }).catch((error) => {
+      console.error("Unsuccessful Sign Out")
+    })
     setLoggedIn(false)
   }
 
