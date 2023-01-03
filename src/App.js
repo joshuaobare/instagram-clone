@@ -10,7 +10,7 @@ import {
   signOut,
 } from 'firebase/auth';
 
-import { getStorage, ref , uploadBytesResumable } from "firebase/storage"
+import { getDownloadURL, getStorage, ref , uploadBytesResumable } from "firebase/storage"
 import { app } from "./firebase-config"
 import { HashRouter , Routes , Route } from "react-router-dom";
 import Post from "./components/Home-Post";
@@ -35,6 +35,7 @@ function App() {
   })
   const [dialogOpen , setDialogOpen] = useState(false)
   const [pictureFile , setPictureFile] = useState("")
+  const [caption , setCaption] = useState("")
 
   useEffect(() => {
     async function fetcher(){
@@ -166,12 +167,13 @@ function App() {
   async function createPost(event) { 
       event.preventDefault()     
       const storageRef = ref(getStorage(app) , `${pictureFile.name}`)
-      console.log(storageRef)
-      //const file = new File(pictureFile)
-
+      
       await uploadBytesResumable(storageRef , pictureFile).then((snapshot) => {
         console.log("Uploaded a file")
       })
+
+      const fileUrl = await getDownloadURL(storageRef)
+      
   }
 
   function handleChange(event){
