@@ -9,6 +9,8 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
+
+import { getStorage, ref , uploadBytesResumable } from "firebase/storage"
 import { app } from "./firebase-config"
 import { HashRouter , Routes , Route } from "react-router-dom";
 import Post from "./components/Home-Post";
@@ -32,6 +34,7 @@ function App() {
     username: "" , ppic: "" , name: ""
   })
   const [dialogOpen , setDialogOpen] = useState(false)
+  const [pictureFile , setPictureFile] = useState("")
 
   useEffect(() => {
     async function fetcher(){
@@ -121,13 +124,6 @@ function App() {
             posts: []
           })
     }
-/*
-    setUserData(
-      {
-        name:  data.currentUser.displayName,
-        username: username,
-        ppic: `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`
-      }) */
 
     createProfile() 
    // console.log(data)
@@ -160,9 +156,24 @@ function App() {
     setDialogOpen(prevState => !prevState)
     
   }
+
+  async function createPost() {
+      
+      const storageRef = await ref(getStorage() , pictureFile.name)
+      const file = new File(pictureFile)
+
+      await uploadBytesResumable(storageRef , pictureFile).then((snapshot) => {
+        console.log("Uploaded a file")
+      })
+  }
+
+  function handleChange(event){
+    setPictureFile(event.target.files[0])
+
+  }
   
 
-  console.log(userData)
+  console.log(pictureFile)
 
 
   return (
@@ -186,7 +197,7 @@ function App() {
             }
           /> 
         </Routes>
-        <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} />
+        <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handleChange}/>
       </HashRouter>
 
            

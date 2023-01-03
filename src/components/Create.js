@@ -8,13 +8,14 @@ export default function Create(props) {
                 <DialogTitle>Create a Post</DialogTitle>
                 <DialogContent>
                     
-                    <form action="">
+                    <form action="" onSubmit={props.createPost}>
                         <label className="image-input" htmlFor="image-input">
                             <div>Upload Picture</div>
                             <UploadSvg />                    
                             <input type="file"
                                     id="image-input"
                                     accept="image/jpeg, image/png"
+                                    onChange={props.handleChange}
                                     style={{display:"none"}} />
                         </label>
                         
