@@ -53,7 +53,7 @@ export default function Navbar(props){
                     <div className="nav-title">Create</div>
                 </div>
                 <div className="navbar-item">
-                    <img src={Profile} alt="" height="24" width = "24"/>
+                    <img src={props.userData.profilePicture} alt="" height="24" width = "24" className="navbar-item-profile-img"/>
                     <Link to ="/profile/user">
                         <div className="nav-title">Profile</div>
                     </Link>                     

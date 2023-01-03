@@ -162,17 +162,19 @@ function App() {
   }
   
 
- // console.log(profiles)
+  console.log(userData)
 
 
   return (
     <div className="App">
       <HashRouter>
-        {<Navbar dialogOpen = {dialogOpen} userData={userData} toggleDialog={toggleDialog} />}
+        {loggedIn ? <Navbar dialogOpen = {dialogOpen} userData={userData} toggleDialog={toggleDialog} /> : ""}
         <Routes>
           <Route 
             path="/" 
-            element = {<Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} /> } 
+            element = {!loggedIn ? 
+              <Login googleLogin = {googleLogin}  /> :      
+              <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> } 
           />
           <Route 
             path = "/profile/:username"
@@ -184,7 +186,7 @@ function App() {
             }
           /> 
         </Routes>
-        
+        <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} />
       </HashRouter>
 
            
