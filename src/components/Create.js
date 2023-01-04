@@ -13,6 +13,7 @@ export default function Create(props) {
                             <div>Upload Picture</div>
                             <UploadSvg />                    
                             <input type="file"
+                                    name = "pictureFile"
                                     id="image-input"
                                     accept="image/jpeg, image/png"
                                     onChange={props.handleChange}
@@ -20,7 +21,13 @@ export default function Create(props) {
                         </label>
                         
                         <label htmlFor="caption">Caption</label>
-                        <textarea name="caption" id="caption" cols="30" rows="10"></textarea>
+                        <textarea 
+                                name="caption" 
+                                id="caption" 
+                                cols="30" 
+                                rows="10"
+                                value = {props.pictureData.caption}  
+                                onChange={props.handleChange}></textarea>
                         <button onClick={(e) => {
                             props.toggleDialog(e)
                             props.createPost(e)}}>Submit</button>

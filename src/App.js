@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login"
-import { getFirestore , collection, addDoc, getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore"
+import { getFirestore , collection, addDoc, getDocs, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
 import {
   getAuth,
   onAuthStateChanged,
@@ -31,9 +31,13 @@ function App() {
   const [loggedIn , setLoggedIn] = useState(false)
   const [authData , setAuthData] = useState("")
   const [userData , setUserData] = useState({
-    username: "" , ppic: "" , name: ""
+    username: "" , profilePicture: "" , name: "" , description: "" , posts: []
   })
   const [dialogOpen , setDialogOpen] = useState(false)
+  const [pictureData , setPictureData] = useState({
+    pictureFile: "",
+    caption: ""
+  })
   const [pictureFile , setPictureFile] = useState("")
   const [caption , setCaption] = useState("")
 
@@ -67,6 +71,7 @@ function App() {
     }
   
     fetcher()
+    
   } , [])
 
   async function signIn() {
@@ -142,7 +147,7 @@ function App() {
 
   }
 
-  console.log(profiles)
+  console.log(userData)
  
     // Returns the signed-in user's profile Pic URL.
   function getProfilePicUrl() {
@@ -182,11 +187,33 @@ function App() {
 
   function handleChange(event){
     setPictureFile(event.target.files[0])
-
+    setPictureData()
   }
   
 
   console.log(pictureFile)
+
+
+  async function alterProfile(caption,url) {
+
+    const profileData = doc(getFirestore(app), "profiles" , "Profile")
+    //console.log(profileData)
+
+    await updateDoc(profileData , {
+
+      data: arrayRemove({userData
+      })
+                
+    })
+
+    await updateDoc(profileData , {
+
+      data: arrayUnion({...userData , posts: [...userData.posts , {caption:caption},{url:url},{username:userData.username}]
+      })
+                
+    })
+
+  }
 
 
   return (
@@ -210,7 +237,7 @@ function App() {
             }
           /> 
         </Routes>
-        <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handleChange}/>
+        <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handleChange} pictureData={pictureData}/>
       </HashRouter>
 
            
