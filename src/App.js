@@ -41,38 +41,45 @@ function App() {
   const [pictureFile , setPictureFile] = useState("")
   const [caption , setCaption] = useState("")
 
-  useEffect(() => {
-    async function fetcher(){
-      const ref = await getDocs(collection(getFirestore(app), "profiles"))
-      ref.forEach((doc) => {
-        //console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
-        const { values } = doc._document.data.value.mapValue.fields.data.arrayValue        
-        console.log(values)
-        setData(prevState => [...prevState, values])
+  async function fetcher(){
 
-        values.forEach(item => {
+    /*setData([])
+    setPosts([])
+    setProfiles([])*/
+    const ref = await getDocs(collection(getFirestore(app), "profiles"))
+    ref.forEach((doc) => {
+      //console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
+      const { values } = doc._document.data.value.mapValue.fields.data.arrayValue        
+      console.log(values)
+      setData(prevState => [...prevState, values])
 
-          const {values} = item.mapValue.fields.posts.arrayValue
+      values.forEach(item => {
 
-          setProfiles(prevState => [...prevState , item.mapValue.fields])
+        const {values} = item.mapValue.fields.posts.arrayValue
 
-          try {
-            if (values.length > 1) {
-              values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
-            } else {
-              setPosts(prevState => [...prevState , values[0].mapValue.fields])
-            }
-          } catch {
-            console.log("Profile has no posts")
+        setProfiles(prevState => [...prevState , item.mapValue.fields])
+
+        try {
+          if (values.length > 1) {
+            values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
+          } else {
+            setPosts(prevState => [...prevState , values[0].mapValue.fields])
           }
-          
-        })
+        } catch {
+          console.log("Profile has no posts")
+        }
+        
       })
-    }
+    })
+  }  
+  
+  useEffect(() => {    
   
     fetcher()
     
   } , [])
+
+  
 
   async function signIn() {
     // Sign in Firebase using popup auth and Google as the identity provider.
@@ -218,7 +225,6 @@ function App() {
       })
                 
     })
-
   
 
     await updateDoc(profileData , {
@@ -233,6 +239,9 @@ function App() {
                 
     })
 
+    setUserData(prevState => {
+      return {...prevState, posts: [...userData.posts , {caption:caption,url:url,username:userData.username}]}
+    })
 
 
   }

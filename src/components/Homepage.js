@@ -23,26 +23,36 @@ export default function Homepage(props) {
             <div className="homepage-left-section">
                 <div className="homepage-stories-section">
                     {props.profiles.map(item => {
-                        return (
-                            <Story
-                                key = {uniqid()} 
-                                username ={item.username.stringValue}
-                                ppic = {item.profilePicture.stringValue}
-                            />
-                        )
+                        if (item.username.stringValue.toString() === props.userData.username.toString()){
+                            return null
+                        } else {
+                            return (
+                                <Story
+                                    key = {uniqid()} 
+                                    username ={item.username.stringValue}
+                                    ppic = {item.profilePicture.stringValue}
+                                />
+                            )
+                        }
+                        
                     })}
                 </div>
                 <div className="homepage-posts-section">
                     {
                         props.posts.map(item => {
-                            return (
-                            <Post 
-                                key = {uniqid()}
-                                username = {item.username.stringValue}
-                                caption = {item.caption.stringValue}
-                                url = {item.url.stringValue}
-                                ppic = {profileFinder(item.username.stringValue)}
-                            />)
+                            if (item.username.stringValue.toString() === props.userData.username.toString()){
+                                return null
+                            } else {
+                                return (
+                                    <Post 
+                                        key = {uniqid()}
+                                        username = {item.username.stringValue}
+                                        caption = {item.caption.stringValue}
+                                        url = {item.url.stringValue}
+                                        ppic = {profileFinder(item.username.stringValue)}
+                                    />)
+                            }
+                            
                         })
                     }
                 </div>
@@ -67,13 +77,18 @@ export default function Homepage(props) {
                 <div>
                     {
                         props.profiles.map(item => {
-                            return (
-                                <MiniProfile
-                                    key = {uniqid()}  
-                                    username = {item.username.stringValue}
-                                    ppic = {item.profilePicture.stringValue}
-                                />
-                            )
+                            if (item.username.stringValue.toString() === props.userData.username.toString()){
+                                return null
+                            } else {
+                                return (
+                                    <MiniProfile
+                                        key = {uniqid()}  
+                                        username = {item.username.stringValue}
+                                        ppic = {item.profilePicture.stringValue}
+                                    />
+                                )
+                            }
+                            
                         })
                     
                     }
