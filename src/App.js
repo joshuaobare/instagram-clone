@@ -141,7 +141,7 @@ function App() {
           })
     }
 
-    createProfile() 
+    //createProfile() 
    // console.log(data)
     setLoggedIn(true)
 
@@ -175,19 +175,27 @@ function App() {
 
   async function createPost(event) { 
       event.preventDefault()     
-      const storageRef = ref(getStorage(app) , `${pictureFile.name}`)
+      const storageRef = ref(getStorage(app) , `${pictureData.pictureFile.name}`)
       
-      await uploadBytesResumable(storageRef , pictureFile).then((snapshot) => {
+      await uploadBytesResumable(storageRef , pictureData.pictureFile).then((snapshot) => {
         console.log("Uploaded a file")
       })
 
       const fileUrl = await getDownloadURL(storageRef)
+
+      alterProfile(pictureData.caption , fileUrl)
       
   }
 
   function handleChange(event){
-    setPictureFile(event.target.files[0])
-    setPictureData()
+    //setPictureFile(event.target.files[0])
+
+    const {name , type , value , files} = event.target
+
+
+    setPictureData(prevState => {
+      return {...prevState, [name] : type === "file" ? files[0] : value}
+    })
   }
   
 
@@ -201,17 +209,31 @@ function App() {
 
     await updateDoc(profileData , {
 
-      data: arrayRemove({userData
+      data: arrayRemove({
+                description: userData.description,
+                name: userData.name,
+                posts: userData.posts,
+                profilePicture: userData.profilePicture,
+                username: userData.username
       })
                 
     })
+
+  
 
     await updateDoc(profileData , {
 
-      data: arrayUnion({...userData , posts: [...userData.posts , {caption:caption},{url:url},{username:userData.username}]
+      data: arrayUnion({
+        description: userData.description,
+        name: userData.name,
+        profilePicture: userData.profilePicture,
+        username: userData.username , 
+        posts: [...userData.posts , {caption:caption,url:url,username:userData.username}] 
       })
                 
     })
+
+
 
   }
 

@@ -27,7 +27,8 @@ export default function Create(props) {
                                 cols="30" 
                                 rows="10"
                                 value = {props.pictureData.caption}  
-                                onChange={props.handleChange}></textarea>
+                                onChange={props.handleChange} 
+                        />
                         <button onClick={(e) => {
                             props.toggleDialog(e)
                             props.createPost(e)}}>Submit</button>
