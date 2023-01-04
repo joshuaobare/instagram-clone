@@ -43,9 +43,9 @@ function App() {
 
   async function fetcher(){
 
-    /*setData([])
+    setData([])
     setPosts([])
-    setProfiles([])*/
+    setProfiles([])
     const ref = await getDocs(collection(getFirestore(app), "profiles"))
     ref.forEach((doc) => {
       //console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
@@ -97,6 +97,7 @@ function App() {
     })
     setLoggedIn(false)
   }
+  console.log(profiles)
 
   async function createProfile(username , ppic , name) {
 
@@ -154,7 +155,7 @@ function App() {
 
   }
 
-  console.log(userData)
+  //console.log(userData)
  
     // Returns the signed-in user's profile Pic URL.
   function getProfilePicUrl() {
@@ -221,6 +222,7 @@ function App() {
         url:item.mapValue.fields.url.stringValue, 
         username:item.mapValue.fields.username.stringValue})
     })
+    const username = userData.username
 
     await updateDoc(profileData , {
 
@@ -232,9 +234,7 @@ function App() {
                 username: userData.username
       })
                 
-    })
-
-    
+    })   
   
 
     await updateDoc(profileData , {
@@ -249,12 +249,30 @@ function App() {
                 
     })
 
-    /*setUserData(prevState => {
-      return {...prevState, posts: [...userData.posts , {caption:caption,url:url,username:userData.username}]}
-    })*/
-
+    await fetcher()
+    
 
   }
+
+
+  useEffect(() => {
+
+    async function rerender(){
+      const checker = await profiles.find(item => item.username.stringValue.toString() === userData.username.toString())
+      setUserData(
+        {
+                description: checker.description.stringValue,
+                name: checker.name.stringValue,
+                posts: checker.posts.arrayValue.values ? checker.posts.arrayValue.values : [],
+                profilePicture: checker.profilePicture.stringValue,
+                username: checker.username.stringValue
+        }
+      )
+    }
+    rerender()
+
+
+  } , [profiles])
 
 
   return (

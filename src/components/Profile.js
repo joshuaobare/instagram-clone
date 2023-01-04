@@ -24,7 +24,7 @@ export default function Profile(props) {
     
     
     console.log(props.userData)
-    console.log(props.profiles[0])
+    //console.log(props.profiles[0])
     useEffect(() => {
         const finder = async () => {
             
@@ -59,7 +59,7 @@ export default function Profile(props) {
             
         }
         finder()
-    }, [])
+    }, [props.profiles , props.userData, username])
     
 
     return (
