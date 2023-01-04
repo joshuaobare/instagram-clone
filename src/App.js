@@ -50,7 +50,7 @@ function App() {
     ref.forEach((doc) => {
       //console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
       const { values } = doc._document.data.value.mapValue.fields.data.arrayValue        
-      console.log(values)
+      //console.log(values)
       setData(prevState => [...prevState, values])
 
       values.forEach(item => {
@@ -124,7 +124,7 @@ function App() {
     const checker = profiles.find(item => item.username.stringValue.toString() === username.toString())
     const ppic = `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`
     const name = data.currentUser.displayName
-    console.log(checker)
+    //console.log(checker)
     
     if (checker) {
       setUserData(
@@ -206,7 +206,7 @@ function App() {
   }
   
 
-  console.log(pictureFile)
+  //console.log(pictureFile)
 
 
   async function alterProfile(caption,url) {
@@ -214,17 +214,27 @@ function App() {
     const profileData = doc(getFirestore(app), "profiles" , "Profile")
     //console.log(profileData)
 
+    const userPosts = []
+    userData.posts.forEach(item => {
+      userPosts.push({
+        caption:item.mapValue.fields.caption.stringValue , 
+        url:item.mapValue.fields.url.stringValue, 
+        username:item.mapValue.fields.username.stringValue})
+    })
+
     await updateDoc(profileData , {
 
       data: arrayRemove({
                 description: userData.description,
                 name: userData.name,
-                posts: userData.posts,
+                posts: userPosts,
                 profilePicture: userData.profilePicture,
                 username: userData.username
       })
                 
     })
+
+    
   
 
     await updateDoc(profileData , {
@@ -234,14 +244,14 @@ function App() {
         name: userData.name,
         profilePicture: userData.profilePicture,
         username: userData.username , 
-        posts: [...userData.posts , {caption:caption,url:url,username:userData.username}] 
+        posts: [...userPosts , {caption:caption,url:url,username:userData.username}] 
       })
                 
     })
 
-    setUserData(prevState => {
+    /*setUserData(prevState => {
       return {...prevState, posts: [...userData.posts , {caption:caption,url:url,username:userData.username}]}
-    })
+    })*/
 
 
   }
