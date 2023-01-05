@@ -53,6 +53,7 @@ export default function Homepage(props) {
                                         comment = {props.comment}
                                         handleCommentChange = {props.handleCommentChange}
                                         id = {item.id.stringValue}
+                                        createComment = {props.createComment}
                                     />)
                             }
                             

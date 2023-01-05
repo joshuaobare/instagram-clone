@@ -59,7 +59,11 @@ export default function Post(props){
                             value = {props.comment[props.id] || ""}
                             onChange= {(e) => props.handleCommentChange(e , props.id)}
                         />
-                        <button className="home-post-comment-post">Post</button>
+                        <button 
+                            className="home-post-comment-post"
+                            onClick={(e) => props.createComment(e , props.id)}
+                        
+                        >Post</button>
                     </form>
                 </div>
             </div>

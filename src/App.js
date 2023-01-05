@@ -216,7 +216,15 @@ function App() {
     
   }
 
-  //console.log(comment)
+  function createComment(event , id){
+    event.preventDefault()
+    const profile = profiles.find(items => {
+      return items.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
+    })
+
+    console.log(profile)
+
+  }
 
   async function alterProfile(caption,url) {
 
@@ -298,7 +306,8 @@ function App() {
                 userData = {userData} 
                 signOut ={signOutUser}
                 comment = {comment}
-                handleCommentChange = {handleCommentChange} 
+                handleCommentChange = {handleCommentChange}
+                createComment = {createComment} 
               /> } 
           />
           <Route 
