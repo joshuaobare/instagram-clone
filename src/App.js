@@ -231,22 +231,56 @@ function App() {
     })
     const postsBefore = []
     profile.posts.arrayValue.values.forEach(item => {
+
+      const comments = []
+      let data
+      if (item.mapValue.fields.comments.arrayValue.values) {
+        item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+          comments.push(
+            {
+              comment: item.mapValue.fields.comment.stringValue , 
+              username:item.mapValue.fields.username.stringValue})
+        })
+        data = comments
+      } else {
+        data = []
+      }
       postsBefore.push({
         caption:item.mapValue.fields.caption.stringValue ,
         id:item.mapValue.fields.id.stringValue, 
         url:item.mapValue.fields.url.stringValue, 
-        username:item.mapValue.fields.username.stringValue})
+        username:item.mapValue.fields.username.stringValue,
+        comments:data
+      
+      })
     })
 
     const postsAfter = []
     profile.posts.arrayValue.values.forEach(item => {
+      
 
       if(item.mapValue.fields.id.stringValue !== id){
+        const comments = []
+        let data
+        if (item.mapValue.fields.comments.arrayValue.values) {
+          item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+            comments.push(
+              {
+                comment: item.mapValue.fields.comment.stringValue , 
+                username:item.mapValue.fields.username.stringValue})
+          })
+          data = comments
+        } else {
+          data = []
+        }
+
         postsAfter.push({
           caption:item.mapValue.fields.caption.stringValue ,
           id:item.mapValue.fields.id.stringValue, 
           url:item.mapValue.fields.url.stringValue, 
-          username:item.mapValue.fields.username.stringValue})
+          username:item.mapValue.fields.username.stringValue,
+          comments : data
+        })
       }
       
     })
@@ -270,47 +304,39 @@ function App() {
                 
     })
 
-    /*const data = {
-      description: profile.description.stringValue,
-              name: profile.name.stringValue,
-              posts: [...postsAfter , {
-                caption:post.mapValue.fields.caption.stringValue,
-                url:post.mapValue.fields.url.stringValue,
-                username:username,
-                id:uniqid(),
-                comments: [{[`${userData.username}`]:comment[id]}]
-              }] ,
-              profilePicture: profile.profilePicture.stringValue,
-              username: profile.username.stringValue
+    let postComments = []
+    let commentData
+    if (post.mapValue.fields.comments.arrayValue.values) {
+      post.mapValue.fields.comments.arrayValue.values.forEach(item => {
+        postComments.push(
+          {
+            comment: item.mapValue.fields.comment.stringValue , 
+            username:item.mapValue.fields.username.stringValue})
+      })
+      commentData = postComments
+    } else {
+      commentData = []
     }
-    console.log(data) 
-    {[`${userData.username}`.toString()]:comment[id]}
-    */
-    console.log(postsAfter)
-    console.log([...postsAfter , {
-      caption:post.mapValue.fields.caption.stringValue,
-      url:post.mapValue.fields.url.stringValue,
-      username:username,
-      id:uniqid(),
-      comments: [{[`${userData.username}`]:comment[id]}]
-    }])
+
     await updateDoc(profileData , {
 
       data: arrayUnion({
-        description: profile.description.stringValue,
+                description: profile.description.stringValue,
                 name: profile.name.stringValue,
                 posts: [...postsAfter , {
                   caption:post.mapValue.fields.caption.stringValue,
                   url:post.mapValue.fields.url.stringValue,
                   username:username,
                   id:uniqid(),
-                  comments: [{[`${userData.username}`.toString()]:comment[id]}]
+                  comments: [...commentData, {username: userData.username , comment: comment[id]}]
                 }] ,
                 profilePicture: profile.profilePicture.stringValue,
                 username: profile.username.stringValue
       })
                 
     })
+    setComment({})
+    fetcher()
 
   }
 
