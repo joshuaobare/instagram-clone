@@ -8,7 +8,7 @@ export default function Create(props) {
                 <DialogTitle>Create a Post</DialogTitle>
                 <DialogContent>
                     
-                    <form action="" >
+                    <form action="" className="form-create">
                         <label className="image-input" htmlFor="image-input">
                             <div>Upload Picture</div>
                             <UploadSvg />                    

@@ -49,8 +49,10 @@ export default function Post(props){
                 <div className="home-post-time">14 HOURS AGO</div>
                 <div className="home-post-comment">
                     <AddEmojiSvg />
-                    <input type="text" placeholder="Add a comment..." className="add-comment"/>
-                    <div className="home-post-comment-post">Post</div>
+                    <form action="" className="home-post-comment-form">
+                        <input type="text" placeholder="Add a comment..." className="add-comment"/>
+                        <button className="home-post-comment-post">Post</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -75,12 +75,17 @@
 
 .home-post-comment {
     display: flex;
-    gap: 10px;
     align-items: center;
-    width: auto;
-    border-top: 1px solid #dbdbdb;
     height: 40px;
+    gap: 10px;
     
+    border-top: 1px solid #dbdbdb;
+    
+    
+}
+
+.home-post-comment-form{
+    display: flex;
 }
 
 .add-comment {
@@ -92,4 +97,7 @@
 
 .home-post-comment-post {
    color: #0095F6;
+   outline: none;
+   border: none;
+   background-color: #fff;
 }

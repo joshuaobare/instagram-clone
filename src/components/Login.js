@@ -13,7 +13,7 @@ export default function Login(props) {
                 <img src={LoginImg} alt="Phones on login page" className="login-main-img" />
                 <div className="form-section">
                     
-                    <form action="">
+                    <form action="" className="form">
                         {/*<LogoSvg /> */}
                         <div className="login-logo">
                             <img src={IGlogo} alt="" />
