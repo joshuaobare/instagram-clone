@@ -222,8 +222,8 @@ function App() {
       return items.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
     })
 
-    console.log(profile)
-
+    const post = profile.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
+    console.log(post)
   }
 
   async function alterProfile(caption,url) {
