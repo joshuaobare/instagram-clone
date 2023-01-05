@@ -320,14 +320,42 @@ function App() {
     //console.log(profileData)
 
     const userPosts = []
+    //const postComments = []
     userData.posts.forEach(item => {
+
+      const comments = []
+      let data
+      if (item.mapValue.fields.comments.arrayValue.values) {
+        item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+          comments.push(
+            {
+              comment: item.mapValue.fields.comment.stringValue , 
+              username:item.mapValue.fields.username.stringValue})
+        })
+        data = comments
+      } else {
+        data = []
+      }
+      
+
       userPosts.push({
         caption:item.mapValue.fields.caption.stringValue ,
-        id:item.mapValue.fields.caption.stringValue, 
+        id:item.mapValue.fields.id.stringValue, 
         url:item.mapValue.fields.url.stringValue, 
-        username:item.mapValue.fields.username.stringValue})
+        username:item.mapValue.fields.username.stringValue,
+        comments: data
+      })
     })
     const username = userData.username
+    console.log(userPosts)
+
+    console.log({
+      description: userData.description,
+      name: userData.name,
+      posts: userPosts,
+      profilePicture: userData.profilePicture,
+      username: userData.username
+})
 
     await updateDoc(profileData , {
 
@@ -349,7 +377,7 @@ function App() {
         name: userData.name,
         profilePicture: userData.profilePicture,
         username: userData.username , 
-        posts: [...userPosts , {caption:caption,url:url,username:userData.username,id:uniqid()}] 
+        posts: [...userPosts , {caption:caption,comments: [], url:url,username:userData.username,id:uniqid()}] 
       })
                 
     })
