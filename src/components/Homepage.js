@@ -45,11 +45,14 @@ export default function Homepage(props) {
                             } else {
                                 return (
                                     <Post 
-                                        key = {uniqid()}
+                                        key = {item.id.stringValue}
                                         username = {item.username.stringValue}
                                         caption = {item.caption.stringValue}
                                         url = {item.url.stringValue}
                                         ppic = {profileFinder(item.username.stringValue)}
+                                        comment = {props.comment}
+                                        handleCommentChange = {props.handleCommentChange}
+                                        id = {item.id.stringValue}
                                     />)
                             }
                             

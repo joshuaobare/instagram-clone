@@ -38,8 +38,8 @@ function App() {
     pictureFile: "",
     caption: ""
   })
-  const [pictureFile , setPictureFile] = useState("")
-  const [caption , setCaption] = useState("")
+  
+  const [comment , setComment] = useState({})
 
   async function fetcher(){
 
@@ -195,7 +195,7 @@ function App() {
       
   }
 
-  function handleChange(event){
+  function handlePictureChange(event){
     //setPictureFile(event.target.files[0])
 
     const {name , type , value , files} = event.target
@@ -207,8 +207,16 @@ function App() {
   }
   
 
-  //console.log(pictureFile)
+  function handleCommentChange(event , id) {
 
+    setComment(prevState => {
+      return {...prevState , [id]: event.target.value}
+    })
+
+    
+  }
+
+  //console.log(comment)
 
   async function alterProfile(caption,url) {
 
@@ -284,7 +292,14 @@ function App() {
             path="/" 
             element = {!loggedIn ? 
               <Login googleLogin = {googleLogin}  /> :      
-              <Homepage posts = {posts} profiles= {profiles} userData = {userData} signOut ={signOutUser} /> } 
+              <Homepage 
+                posts = {posts} 
+                profiles= {profiles} 
+                userData = {userData} 
+                signOut ={signOutUser}
+                comment = {comment}
+                handleCommentChange = {handleCommentChange} 
+              /> } 
           />
           <Route 
             path = "/profile/:username"
@@ -296,7 +311,7 @@ function App() {
             }
           /> 
         </Routes>
-        <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handleChange} pictureData={pictureData}/>
+        <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handlePictureChange} pictureData={pictureData}/>
       </HashRouter>
 
            

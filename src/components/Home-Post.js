@@ -50,7 +50,15 @@ export default function Post(props){
                 <div className="home-post-comment">
                     <AddEmojiSvg />
                     <form action="" className="home-post-comment-form">
-                        <input type="text" placeholder="Add a comment..." className="add-comment"/>
+                        <input 
+                            type="text" 
+                            placeholder="Add a comment..." 
+                            className="add-comment"
+                            name = "comment"
+                            id = {props.id}
+                            value = {props.comment[props.id] || ""}
+                            onChange= {(e) => props.handleCommentChange(e , props.id)}
+                        />
                         <button className="home-post-comment-post">Post</button>
                     </form>
                 </div>
