@@ -20,6 +20,7 @@ import FullPost from "./components/FullPost";
 import Homepage from "./components/Homepage";
 import MiniProfile from "./components/MiniProfile";
 import Create from "./components/Create";
+import uniqid from "uniqid"
 
 
 
@@ -216,14 +217,101 @@ function App() {
     
   }
 
-  function createComment(event , id){
+  async function createComment(event , id, username){
     event.preventDefault()
     const profile = profiles.find(items => {
-      return items.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
+
+      if(items.posts.arrayValue.values) {
+        console.log(items.posts)
+        return items.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
+      } else {
+        return null
+      }
+      
     })
+    const postsBefore = []
+    profile.posts.arrayValue.values.forEach(item => {
+      postsBefore.push({
+        caption:item.mapValue.fields.caption.stringValue ,
+        id:item.mapValue.fields.id.stringValue, 
+        url:item.mapValue.fields.url.stringValue, 
+        username:item.mapValue.fields.username.stringValue})
+    })
+
+    const postsAfter = []
+    profile.posts.arrayValue.values.forEach(item => {
+
+      if(item.mapValue.fields.id.stringValue !== id){
+        postsAfter.push({
+          caption:item.mapValue.fields.caption.stringValue ,
+          id:item.mapValue.fields.id.stringValue, 
+          url:item.mapValue.fields.url.stringValue, 
+          username:item.mapValue.fields.username.stringValue})
+      }
+      
+    })
+      
 
     const post = profile.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
     console.log(post)
+    console.log(profile)
+
+    const profileData = doc(getFirestore(app), "profiles" , "Profile")
+
+    await updateDoc(profileData , {
+
+      data: arrayRemove({
+                description: profile.description.stringValue,
+                name: profile.name.stringValue,
+                posts: postsBefore,
+                profilePicture: profile.profilePicture.stringValue,
+                username: profile.username.stringValue
+      })
+                
+    })
+
+    /*const data = {
+      description: profile.description.stringValue,
+              name: profile.name.stringValue,
+              posts: [...postsAfter , {
+                caption:post.mapValue.fields.caption.stringValue,
+                url:post.mapValue.fields.url.stringValue,
+                username:username,
+                id:uniqid(),
+                comments: [{[`${userData.username}`]:comment[id]}]
+              }] ,
+              profilePicture: profile.profilePicture.stringValue,
+              username: profile.username.stringValue
+    }
+    console.log(data) 
+    {[`${userData.username}`.toString()]:comment[id]}
+    */
+    console.log(postsAfter)
+    console.log([...postsAfter , {
+      caption:post.mapValue.fields.caption.stringValue,
+      url:post.mapValue.fields.url.stringValue,
+      username:username,
+      id:uniqid(),
+      comments: [{[`${userData.username}`]:comment[id]}]
+    }])
+    await updateDoc(profileData , {
+
+      data: arrayUnion({
+        description: profile.description.stringValue,
+                name: profile.name.stringValue,
+                posts: [...postsAfter , {
+                  caption:post.mapValue.fields.caption.stringValue,
+                  url:post.mapValue.fields.url.stringValue,
+                  username:username,
+                  id:uniqid(),
+                  comments: [{[`${userData.username}`.toString()]:comment[id]}]
+                }] ,
+                profilePicture: profile.profilePicture.stringValue,
+                username: profile.username.stringValue
+      })
+                
+    })
+
   }
 
   async function alterProfile(caption,url) {
@@ -234,7 +322,8 @@ function App() {
     const userPosts = []
     userData.posts.forEach(item => {
       userPosts.push({
-        caption:item.mapValue.fields.caption.stringValue , 
+        caption:item.mapValue.fields.caption.stringValue ,
+        id:item.mapValue.fields.caption.stringValue, 
         url:item.mapValue.fields.url.stringValue, 
         username:item.mapValue.fields.username.stringValue})
     })
@@ -260,7 +349,7 @@ function App() {
         name: userData.name,
         profilePicture: userData.profilePicture,
         username: userData.username , 
-        posts: [...userPosts , {caption:caption,url:url,username:userData.username}] 
+        posts: [...userPosts , {caption:caption,url:url,username:userData.username,id:uniqid()}] 
       })
                 
     })

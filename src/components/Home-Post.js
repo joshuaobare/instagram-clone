@@ -61,7 +61,7 @@ export default function Post(props){
                         />
                         <button 
                             className="home-post-comment-post"
-                            onClick={(e) => props.createComment(e , props.id)}
+                            onClick={(e) => props.createComment(e , props.id  , props.username)}
                         
                         >Post</button>
                     </form>
