@@ -217,8 +217,14 @@ function App() {
     
   }
 
+  
+  
+
   async function createComment(event , id, username){
     event.preventDefault()
+
+    // createComment retrieves the profile with a post whose id matches the id of the post commented on. 
+
     const profile = profiles.find(items => {
 
       if(items.posts.arrayValue.values) {
@@ -229,6 +235,15 @@ function App() {
       }
       
     })
+
+    // The post commented on is also retrieved 
+
+    const post = profile.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
+
+    /* The posts in the retrieved profile are looped through, so the format can be matched to the data on the database, 
+     for each, we also loop the comments array and append it to the postsBefore array */
+
+
     const postsBefore = []
     profile.posts.arrayValue.values.forEach(item => {
 
@@ -254,6 +269,10 @@ function App() {
       
       })
     })
+
+    /* postsBefore is used to remove the profile from the array on the DB, so it's exclusive of the changes made to the data by the function.
+     postsAfter separates the retrieved post from postsBefore, so that we can alter the post by adding comments , then merge postsAfter 
+     and the post before adding it to the DB */
 
     const postsAfter = []
     profile.posts.arrayValue.values.forEach(item => {
@@ -283,13 +302,9 @@ function App() {
         })
       }
       
-    })
-      
-
-    const post = profile.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
-    console.log(post)
-    console.log(profile)
-
+    })   
+   
+    
     const profileData = doc(getFirestore(app), "profiles" , "Profile")
 
     await updateDoc(profileData , {
@@ -303,6 +318,8 @@ function App() {
       })
                 
     })
+
+    // a check for whether there was any comments in the retrieved post
 
     let postComments = []
     let commentData
@@ -343,10 +360,9 @@ function App() {
   async function alterProfile(caption,url) {
 
     const profileData = doc(getFirestore(app), "profiles" , "Profile")
-    //console.log(profileData)
 
     const userPosts = []
-    //const postComments = []
+    
     userData.posts.forEach(item => {
 
       const comments = []
@@ -372,17 +388,7 @@ function App() {
         comments: data
       })
     })
-    const username = userData.username
-    console.log(userPosts)
-
-    console.log({
-      description: userData.description,
-      name: userData.name,
-      posts: userPosts,
-      profilePicture: userData.profilePicture,
-      username: userData.username
-})
-
+    
     await updateDoc(profileData , {
 
       data: arrayRemove({
@@ -393,8 +399,7 @@ function App() {
                 username: userData.username
       })
                 
-    })   
-  
+    })     
 
     await updateDoc(profileData , {
 
