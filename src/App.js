@@ -43,6 +43,9 @@ function App() {
   
   const [comment , setComment] = useState({})
   const [editDialogOpen , setEditDialogOpen] = useState(false)
+  const [profileEdits , setProfileEdits] = useState({
+    name: "", description: ""
+  })
 
   async function fetcher(){
 
@@ -81,6 +84,10 @@ function App() {
     fetcher()
     
   } , [])
+
+  useEffect(() => {
+    setProfileEdits({name:userData.name , description: userData.description, username:userData.username , profilePicture:userData.profilePicture})
+  } , [userData])
 
   
 
@@ -203,7 +210,11 @@ function App() {
     setComment(prevState => {
       return {...prevState , [id]: event.target.value}
     })    
-  } 
+  }
+  
+  function handleProfileEdit(){
+    
+  }
   
   async function createComment(event , id, username){
     event.preventDefault()
@@ -460,7 +471,7 @@ function App() {
           /> 
         </Routes>
         <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handlePictureChange} pictureData={pictureData}/>
-        <EditProfile dialogOpen = {editDialogOpen} userData={userData}/>
+        <EditProfile dialogOpen = {editDialogOpen} profileEdits={profileEdits} />
       </HashRouter>
 
            
