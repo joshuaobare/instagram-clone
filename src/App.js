@@ -108,6 +108,7 @@ function App() {
     setLoggedIn(false)
   }
   console.log(profiles)
+  console.log(posts)
 
   async function createProfile(username , ppic , name) {
 
@@ -121,7 +122,9 @@ function App() {
         name: name,
         posts: [],
         profilePicture: ppic,
-        username: username
+        username: username,
+        followers: [],
+        following: []
       })
                 
     })
@@ -144,7 +147,9 @@ function App() {
                 name: checker.name.stringValue,
                 posts: checker.posts.arrayValue.values ? checker.posts.arrayValue.values : [],
                 profilePicture: checker.profilePicture.stringValue,
-                username: checker.username.stringValue
+                username: checker.username.stringValue,
+                followers: checker.followers.arrayValue.values ? checker.followers.arrayValue.values : [],
+                following: checker.following.arrayValue.values ? checker.following.arrayValue.values : []
         }
       )
     } else {
@@ -155,7 +160,9 @@ function App() {
             username: username,
             profilePicture: `${addSizeToGoogleProfilePic(data.currentUser.photoURL).toString()}` || `${addSizeToGoogleProfilePic('/images/profile_placeholder.png').toString()}`,
             description: "",
-            posts: []
+            posts: [],
+            followers: [],
+            following: []
           })
     }
 
