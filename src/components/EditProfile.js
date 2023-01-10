@@ -33,7 +33,7 @@ export default function EditProfile(props){
                         <label htmlFor="form-edit-profile-description" className="form-edit-profile-item-title">Bio</label>
                         <textarea name="description" id="form-edit-profile-description" value = {props.profileEdits.description} onChange={props.handleProfileEdit}/>
                     </div>
-                    <button className="form-edit-profile-button">Submit</button>
+                    <button className="form-edit-profile-button" onClick={props.editProfile}>Submit</button>
 
 
                 </form>

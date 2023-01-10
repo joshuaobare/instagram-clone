@@ -219,8 +219,7 @@ function App() {
     })
 
   }
-  console.log(profileEdits)
-  
+    
   async function createComment(event , id, username){
     event.preventDefault()
 
@@ -419,6 +418,69 @@ function App() {
 
   }
 
+  async function editProfile(event){
+    event.preventDefault()
+
+    const profileData = doc(getFirestore(app), "profiles" , "Profile")
+
+    const userPosts = []
+    
+    userData.posts.forEach(item => {
+
+      const comments = []
+      let data
+      if (item.mapValue.fields.comments.arrayValue.values) {
+        item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+          comments.push(
+            {
+              comment: item.mapValue.fields.comment.stringValue , 
+              username:item.mapValue.fields.username.stringValue})
+        })
+        data = comments
+      } else {
+        data = []
+      }
+      
+
+      userPosts.push({
+        caption:item.mapValue.fields.caption.stringValue ,
+        id:item.mapValue.fields.id.stringValue, 
+        url:item.mapValue.fields.url.stringValue, 
+        username:item.mapValue.fields.username.stringValue,
+        comments: data
+      })
+    })
+
+    await updateDoc(profileData , {
+
+      data: arrayRemove({
+                description: userData.description,
+                name: userData.name,
+                posts: userPosts,
+                profilePicture: userData.profilePicture,
+                username: userData.username
+      })
+                
+    })     
+
+    await updateDoc(profileData , {
+
+      data: arrayUnion({
+        description: profileEdits.description,
+        name: profileEdits.name,
+        profilePicture: userData.profilePicture,
+        username: userData.username , 
+        posts: userPosts 
+      })
+                
+    })
+
+    await fetcher()
+    toggleEditDialog()
+
+
+  }
+
 
   useEffect(() => {
 
@@ -476,7 +538,7 @@ function App() {
           /> 
         </Routes>
         <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handlePictureChange} pictureData={pictureData}/>
-        <EditProfile dialogOpen = {editDialogOpen} profileEdits={profileEdits} handleProfileEdit= {handleProfileEdit} />
+        <EditProfile dialogOpen = {editDialogOpen} profileEdits={profileEdits} handleProfileEdit= {handleProfileEdit} editProfile={editProfile} />
       </HashRouter>
 
            
