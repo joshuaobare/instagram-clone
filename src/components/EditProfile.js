@@ -21,7 +21,7 @@ export default function EditProfile(props){
                     </div>
                     <div className="form-edit-profile-item">
                         <label htmlFor="form-edit-profile-name" className="form-edit-profile-item-title">Name</label>
-                        <input type="text" value = {props.profileEdits.name} id="form-edit-profile-name"/>
+                        <input name="name" type="text" value = {props.profileEdits.name} id="form-edit-profile-name" onChange={props.handleProfileEdit}/>
                         
                     </div>
                     <div className="form-edit-profile-item">
@@ -31,7 +31,7 @@ export default function EditProfile(props){
                     </div>
                     <div className="form-edit-profile-item">
                         <label htmlFor="form-edit-profile-description" className="form-edit-profile-item-title">Bio</label>
-                        <textarea name="" id="form-edit-profile-description" value = {props.profileEdits.description} />
+                        <textarea name="description" id="form-edit-profile-description" value = {props.profileEdits.description} onChange={props.handleProfileEdit}/>
                     </div>
                     <button className="form-edit-profile-button">Submit</button>
 

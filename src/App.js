@@ -212,9 +212,14 @@ function App() {
     })    
   }
   
-  function handleProfileEdit(){
-    
+  function handleProfileEdit(event){
+
+    setProfileEdits(prevState => {
+      return {...prevState, [event.target.name]:event.target.value}
+    })
+
   }
+  console.log(profileEdits)
   
   async function createComment(event , id, username){
     event.preventDefault()
@@ -471,7 +476,7 @@ function App() {
           /> 
         </Routes>
         <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handlePictureChange} pictureData={pictureData}/>
-        <EditProfile dialogOpen = {editDialogOpen} profileEdits={profileEdits} />
+        <EditProfile dialogOpen = {editDialogOpen} profileEdits={profileEdits} handleProfileEdit= {handleProfileEdit} />
       </HashRouter>
 
            
