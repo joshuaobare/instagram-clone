@@ -460,7 +460,7 @@ function App() {
           /> 
         </Routes>
         <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handlePictureChange} pictureData={pictureData}/>
-        <EditProfile dialogOpen = {editDialogOpen}/>
+        <EditProfile dialogOpen = {editDialogOpen} userData={userData}/>
       </HashRouter>
 
            

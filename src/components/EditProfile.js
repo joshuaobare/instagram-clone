@@ -1,4 +1,5 @@
 import { Dialog , DialogContent , DialogTitle } from "@mui/material"
+import "../EditProfile.css"
 
 export default function EditProfile(props){
     return (
@@ -6,25 +7,33 @@ export default function EditProfile(props){
             <DialogTitle>Edit Profile</DialogTitle>
             <DialogContent>
                 <form action="" className="form-edit-profile">
-                    <div>
-                        <label htmlFor=""></label>
-                        <input type="text" />
+                    <div className="form-edit-profile-item">
+                        <div className="form-edit-profile-item-title form-edit-img-container">
+                         <img src={props.userData.profilePicture} alt="user's profile" className="form-edit-profile-img" />
+                        </div>
+                        
+                        <div>
+                            <div>{props.userData.username}</div>
+                            <div>Change profile picture</div>
+                        </div>
+                    
                         
                     </div>
-                    <div>
-                        <label htmlFor="">Name</label>
-                        <input type="text" />
+                    <div className="form-edit-profile-item">
+                        <label htmlFor="form-edit-profile-name" className="form-edit-profile-item-title">Name</label>
+                        <input type="text" value = {props.userData.name} id="form-edit-profile-name"/>
                         
                     </div>
-                    <div>
-                        <label htmlFor="">Username</label>
-                        <input type="text" />
+                    <div className="form-edit-profile-item">
+                        <label htmlFor="form-edit-profile-username" className="form-edit-profile-item-title">Username</label>
+                        <input type="text" value = {props.userData.username} disabled id="form-edit-profile-username"/>
                         
                     </div>
-                    <div>
-                        <label htmlFor="">Bio</label>
-                        <textarea name="" id="" cols="30" rows="10" />
+                    <div className="form-edit-profile-item">
+                        <label htmlFor="form-edit-profile-description" className="form-edit-profile-item-title">Bio</label>
+                        <textarea name="" id="form-edit-profile-description" value = {props.userData.description} />
                     </div>
+                    <button className="form-edit-profile-button">Submit</button>
 
 
                 </form>
