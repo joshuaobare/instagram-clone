@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login"
-import { getFirestore , collection, addDoc, getDocs, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"
+import { getFirestore , collection, addDoc, getDocs, doc, updateDoc, arrayUnion, arrayRemove, serverTimestamp } from "firebase/firestore"
 import {
   getAuth,
   onAuthStateChanged,
@@ -415,7 +415,7 @@ function App() {
         name: userData.name,
         profilePicture: userData.profilePicture,
         username: userData.username , 
-        posts: [...userPosts , {caption:caption,comments: [], url:url,username:userData.username,id:uniqid()}] 
+        posts: [...userPosts , {caption:caption,comments: [],likes:[], timestamp:serverTimestamp(), url:url,username:userData.username,id:uniqid()}] 
       })
                 
     })
