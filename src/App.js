@@ -21,6 +21,7 @@ import Homepage from "./components/Homepage";
 import MiniProfile from "./components/MiniProfile";
 import Create from "./components/Create";
 import uniqid from "uniqid"
+import EditProfile from "./components/EditProfile"
 
 
 
@@ -41,6 +42,7 @@ function App() {
   })
   
   const [comment , setComment] = useState({})
+  const [editDialogOpen , setEditDialogOpen] = useState(false)
 
   async function fetcher(){
 
@@ -421,6 +423,11 @@ function App() {
 
   } , [profiles])
 
+  function toggleEditDialog(){
+    setEditDialogOpen(prevState => !prevState)
+
+  }
+
 
   return (
     <div className="App">
@@ -447,11 +454,13 @@ function App() {
               <Profile
                 profiles = {profiles}
                 userData = {userData}
+                toggleEditDialog = {toggleEditDialog}
               />
             }
           /> 
         </Routes>
         <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handlePictureChange} pictureData={pictureData}/>
+        <EditProfile dialogOpen = {editDialogOpen}/>
       </HashRouter>
 
            

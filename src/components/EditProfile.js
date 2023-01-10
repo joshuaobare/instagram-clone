@@ -2,7 +2,7 @@ import { Dialog , DialogContent , DialogTitle } from "@mui/material"
 
 export default function EditProfile(props){
     return (
-        <Dialog>
+        <Dialog open={props.dialogOpen ? true : false}>
             <DialogTitle>Edit Profile</DialogTitle>
             <DialogContent>
                 <form action="" className="form-edit-profile">

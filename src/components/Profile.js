@@ -69,7 +69,7 @@ export default function Profile(props) {
                 <div className="profile-details">
                     <div className="profile-details-header">
                         <div className="profile-details-username">{data.username}</div>
-                        <button className="profile-details-follow">{isUser ? "Edit Profile" : "Follow"}</button>
+                        <button className="profile-details-follow" onClick={isUser? props.toggleEditDialog : null}>{isUser ? "Edit Profile" : "Follow"}</button>
                         <OptionsSvg />
                     </div>
                     <div className="profile-details-mid">
