@@ -156,18 +156,6 @@ function App() {
 
   }
 
-  //console.log(userData)
- 
-    // Returns the signed-in user's profile Pic URL.
-  function getProfilePicUrl() {
-    return getAuth().currentUser.photoURL || '/images/profile_placeholder.png';
-  }
-
-
-  // Returns the signed-in user's display name.
-  function getUserName() {
-    return getAuth().currentUser.displayName;
-  }
 
   function addSizeToGoogleProfilePic(url) {
     if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
@@ -212,14 +200,9 @@ function App() {
 
     setComment(prevState => {
       return {...prevState , [id]: event.target.value}
-    })
-
-    
-  }
-
+    })    
+  } 
   
-  
-
   async function createComment(event , id, username){
     event.preventDefault()
 
@@ -271,8 +254,8 @@ function App() {
     })
 
     /* postsBefore is used to remove the profile from the array on the DB, so it's exclusive of the changes made to the data by the function.
-     postsAfter separates the retrieved post from postsBefore, so that we can alter the post by adding comments , then merge postsAfter 
-     and the post before adding it to the DB */
+     postsAfter separates the retrieved post from postsBefore, so that the post can be altered by adding comments , then merged with postsAfter 
+     before adding it to the DB */
 
     const postsAfter = []
     profile.posts.arrayValue.values.forEach(item => {
