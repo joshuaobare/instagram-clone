@@ -52,6 +52,8 @@ function App() {
     setData([])
     setPosts([])
     setProfiles([])
+
+    console.log("profiles emptied")
     const ref = await getDocs(collection(getFirestore(app), "profiles"))
     ref.forEach((doc) => {
       //console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
@@ -77,6 +79,7 @@ function App() {
         
       })
     })
+    console.log("fetcher ran")
   }  
   
   useEffect(() => {    
@@ -107,8 +110,8 @@ function App() {
     })
     setLoggedIn(false)
   }
-  console.log(profiles)
-  console.log(posts)
+  //console.log(profiles)
+  //console.log(posts)
 
   async function createProfile(username , ppic , name) {
 
@@ -235,7 +238,7 @@ function App() {
     const profile = profiles.find(items => {
 
       if(items.posts.arrayValue.values) {
-        console.log(items.posts)
+        //console.log(items.posts)
         return items.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
       } else {
         return null
@@ -588,11 +591,114 @@ function App() {
 
   }
 
+  async function follow(user) {
+    
+    const checker = userData.following.some(item => item.stringValue === user)
+    const userPosts = []
+    const followers = []
+    const following = []
+    let followingAfter = []
+
+    userData.posts.forEach(item => {
+
+      const comments = []
+      const likes = []
+      let data
+      if (item.mapValue.fields.comments.arrayValue.values) {
+        item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+          comments.push(
+            {
+              comment: item.mapValue.fields.comment.stringValue , 
+              username:item.mapValue.fields.username.stringValue})
+        })
+        data = comments
+      } else {
+        data = []
+      }
+
+      if (item.mapValue.fields.likes.arrayValue.values) {
+        item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+          likes.push(item.stringValue)
+        })
+      }
+      
+
+      userPosts.push({
+        caption:item.mapValue.fields.caption.stringValue ,
+        id:item.mapValue.fields.id.stringValue, 
+        url:item.mapValue.fields.url.stringValue, 
+        username:item.mapValue.fields.username.stringValue,
+        comments: data,
+        likes: likes,
+        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
+      })
+    })
+
+    if (userData.followers.length > 0) {
+      userData.followers.forEach(item => {
+        followers.push(item.stringValue)
+      })      
+    }
+
+    if (userData.following.length > 0) {
+      userData.following.forEach(item => {
+        following.push(item.stringValue)
+      })
+      followingAfter = [...following]
+    }
+  
+    
+
+
+    if (checker){
+      const index = following.indexOf(user)
+      console.log(index)
+      followingAfter.splice(index,1)
+    }else{
+      followingAfter.push(user)
+    }
+
+    const profileData = doc(getFirestore(app), "profiles" , "Profile")
+
+    await updateDoc(profileData , {
+
+      data: arrayRemove({
+                description: userData.description,
+                name: userData.name,
+                posts: userPosts,
+                profilePicture: userData.profilePicture,
+                username: userData.username,
+                following: following,
+                followers: followers 
+      })
+                
+    })
+
+    await updateDoc(profileData , {
+
+      data: arrayUnion({
+        description: userData.description,
+        name: userData.name,
+        profilePicture: userData.profilePicture,
+        username: userData.username , 
+        posts: userPosts,
+        followers: followers,
+        following: followingAfter 
+      })
+                
+    })
+    
+    await fetcher()
+
+
+  }
+
 
   useEffect(() => {
 
     async function rerender(){
-      const checker = await profiles.find(item => item.username.stringValue.toString() === userData.username.toString())
+      const profileData = await profiles
+      const checker = await profileData.find(item => item.username.stringValue.toString() === userData.username.toString())
       setUserData(
         {
                 description: checker.description.stringValue,
@@ -608,13 +714,13 @@ function App() {
     rerender()
 
 
-  } , [profiles])
+  } , [profiles,data])
 
   function toggleEditDialog(){
     setEditDialogOpen(prevState => !prevState)
 
   }
-  console.log(userData)
+  //console.log(userData)
 
 
   return (
@@ -643,6 +749,8 @@ function App() {
                 profiles = {profiles}
                 userData = {userData}
                 toggleEditDialog = {toggleEditDialog}
+                follow = {follow}
+                
               />
             }
           /> 

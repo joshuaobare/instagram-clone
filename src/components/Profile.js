@@ -23,14 +23,13 @@ export default function Profile(props) {
     const {username} = useParams()
     
     
-    console.log(props.userData)
+    //console.log(props.userData)
     //console.log(props.profiles[0])
     useEffect(() => {
         const finder = async () => {
             
             const profiles = await props.profiles   
-            console.log(username)         
-
+            
             if (username === "user"){
                 setIsUser(true)
                 const profile = props.userData
@@ -43,14 +42,16 @@ export default function Profile(props) {
                     username: profile.username}
                 })
             } else {
-                const profile = profiles.find(item => item.username.stringValue === username.toString())
+                const profile = await profiles.find(item => item.username.stringValue === username.toString())
+                console.log(profile)
                 setData(prevState => {
                     return {...prevState ,
                     description: profile.description.stringValue,
                     name: profile.name.stringValue,
                     posts: profile.posts.arrayValue.values,
                     profilePicture: profile.profilePicture.stringValue,
-                    username: profile.username.stringValue}
+                    username: profile.username.stringValue
+                }
                 })
             }
             
@@ -61,7 +62,8 @@ export default function Profile(props) {
         finder()
     }, [props.profiles , props.userData, username])
     
-
+    //console.log(props.userData)
+    //console.log(props.profiles)
     return (
         <div className="Profile">
             <div className="profile-main">
@@ -69,7 +71,7 @@ export default function Profile(props) {
                 <div className="profile-details">
                     <div className="profile-details-header">
                         <div className="profile-details-username">{data.username}</div>
-                        <button className="profile-details-follow" onClick={isUser? props.toggleEditDialog : null}>{isUser ? "Edit Profile" : "Follow"}</button>
+                        <button className="profile-details-follow" onClick={isUser? props.toggleEditDialog : () => props.follow(username)}>{isUser ? "Edit Profile" : "Follow"}</button>
                         <OptionsSvg />
                     </div>
                     <div className="profile-details-mid">
