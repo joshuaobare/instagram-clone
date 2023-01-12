@@ -18,7 +18,10 @@ export default function Profile(props) {
         name: "",
         posts: [],
         profilePicture: "",
-        username: ""
+        username: "",
+        following: 0,
+        followers: 0,
+        postCount: 0
     })
     const {username} = useParams()
     
@@ -39,7 +42,11 @@ export default function Profile(props) {
                     name: profile.name,
                     posts: profile.posts,
                     profilePicture: profile.profilePicture,
-                    username: profile.username}
+                    username: profile.username,
+                    following: profile.following.length,
+                    followers: profile.followers.length,
+                    postCount:profile.posts.length
+                }
                 })
             } else {
                 const profile = await profiles.find(item => item.username.stringValue === username.toString())
@@ -50,7 +57,10 @@ export default function Profile(props) {
                     name: profile.name.stringValue,
                     posts: profile.posts.arrayValue.values,
                     profilePicture: profile.profilePicture.stringValue,
-                    username: profile.username.stringValue
+                    username: profile.username.stringValue,
+                    following: profile.following.arrayValue.values.length,
+                    followers: profile.followers.arrayValue.values.length,
+                    postCount: profile.posts.arrayValue.values.length
                 }
                 })
             }
@@ -62,8 +72,9 @@ export default function Profile(props) {
         finder()
     }, [props.profiles , props.userData, username])
     
-    //console.log(props.userData)
-    //console.log(props.profiles)
+    console.log(props.userData)
+    console.log(props.profiles)
+    console.log(data)
     return (
         <div className="Profile">
             <div className="profile-main">
@@ -75,9 +86,9 @@ export default function Profile(props) {
                         <OptionsSvg />
                     </div>
                     <div className="profile-details-mid">
-                        <div><b>1</b> post</div>
-                        <div><b>216</b> followers</div>
-                        <div><b>154</b> following</div>
+                        <div><b>{data.postCount}</b> post{data.postCount === 1 ? "" : "s"}</div>
+                        <div><b>{data.followers}</b> follower{data.followers === 1 ? "" : "s"}</div>
+                        <div><b>{data.following}</b> following</div>
                     </div>
                     <div className="profile-details-bottom">
                         <div><b>{data.name}</b></div>
