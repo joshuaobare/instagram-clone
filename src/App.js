@@ -419,16 +419,7 @@ function App() {
       })
     }
 
-    console.log({
-      description: userData.description,
-      name: userData.name,
-      posts: userPosts,
-      profilePicture: userData.profilePicture,
-      username: userData.username,
-      following: following,
-      followers: followers 
-})
-    
+        
     await updateDoc(profileData , {
 
       data: arrayRemove({
@@ -468,10 +459,13 @@ function App() {
     const profileData = doc(getFirestore(app), "profiles" , "Profile")
 
     const userPosts = []
+    const followers = []
+    const following = []
     
     userData.posts.forEach(item => {
 
       const comments = []
+      const likes = []
       let data
       if (item.mapValue.fields.comments.arrayValue.values) {
         item.mapValue.fields.comments.arrayValue.values.forEach(item => {
@@ -484,6 +478,12 @@ function App() {
       } else {
         data = []
       }
+
+      if (item.mapValue.fields.likes.arrayValue.values) {
+        item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+          likes.push(item.stringValue)
+        })
+      }
       
 
       userPosts.push({
@@ -491,9 +491,23 @@ function App() {
         id:item.mapValue.fields.id.stringValue, 
         url:item.mapValue.fields.url.stringValue, 
         username:item.mapValue.fields.username.stringValue,
-        comments: data
+        comments: data,
+        likes: likes,
+        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
       })
     })
+
+    if (userData.followers.length > 0) {
+      userData.followers.forEach(item => {
+        followers.push(item.stringValue)
+      })
+    }
+    
+    if (userData.following.length > 0) {
+      userData.following.forEach(item => {
+        following.push(item.stringValue)
+      })
+    }
 
     await updateDoc(profileData , {
 
@@ -502,7 +516,9 @@ function App() {
                 name: userData.name,
                 posts: userPosts,
                 profilePicture: userData.profilePicture,
-                username: userData.username
+                username: userData.username,
+                following: following,
+                followers: followers 
       })
                 
     })     
@@ -514,7 +530,9 @@ function App() {
         name: profileEdits.name,
         profilePicture: userData.profilePicture,
         username: userData.username , 
-        posts: userPosts 
+        posts: userPosts,
+        following: following,
+        followers: followers  
       })
                 
     })
