@@ -49,35 +49,39 @@ function App() {
 
   async function fetcher(){
 
-    setData([])
-    setPosts([])
-    setProfiles([])
-
-    console.log("profiles emptied")
     const ref = await getDocs(collection(getFirestore(app), "profiles"))
     ref.forEach((doc) => {
       //console.log(doc._document.data.value.mapValue.fields.data.arrayValue)
       const { values } = doc._document.data.value.mapValue.fields.data.arrayValue        
       //console.log(values)
-      setData(prevState => [...prevState, values])
-
+      setData(values)
+      const profs = []
+      const fullposts = []
       values.forEach(item => {
 
         const {values} = item.mapValue.fields.posts.arrayValue
-
-        setProfiles(prevState => [...prevState , item.mapValue.fields])
+        //console.log(values)
+        //console.log(item.mapValue.fields)
+        //setProfiles(prevState => [...prevState , item.mapValue.fields])
+        profs.push(item.mapValue.fields)
 
         try {
           if (values.length > 1) {
-            values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
+            //values.forEach(item => setPosts(prevState => [...prevState , item.mapValue.fields]))
+            values.forEach(item => fullposts.push(item.mapValue.fields))
+            //fullposts.push(item.mapValue.fields)
           } else {
-            setPosts(prevState => [...prevState , values[0].mapValue.fields])
+            //setPosts(prevState => [...prevState , values[0].mapValue.fields])
+            fullposts.push(values[0].mapValue.fields)
           }
         } catch {
           console.log("Profile has no posts")
         }
         
       })
+
+      setProfiles(profs)
+      setPosts(fullposts)
     })
     console.log("fetcher ran")
   }  
@@ -110,8 +114,8 @@ function App() {
     })
     setLoggedIn(false)
   }
-  //console.log(profiles)
-  //console.log(posts)
+  console.log(profiles)
+  console.log(posts)
 
   async function createProfile(username , ppic , name) {
 
