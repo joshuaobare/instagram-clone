@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login"
-import { getFirestore , collection, addDoc, getDocs, doc, updateDoc, arrayUnion, arrayRemove, serverTimestamp } from "firebase/firestore"
+import { getFirestore , collection, addDoc, getDocs, doc, updateDoc, arrayUnion, arrayRemove, Timestamp } from "firebase/firestore"
 import {
   getAuth,
   onAuthStateChanged,
@@ -33,7 +33,7 @@ function App() {
   const [loggedIn , setLoggedIn] = useState(false)
   const [authData , setAuthData] = useState("")
   const [userData , setUserData] = useState({
-    username: "" , profilePicture: "" , name: "" , description: "" , posts: []
+    username: "" , profilePicture: "" , name: "" , description: "" , posts: [] , followers: [], following: []
   })
   const [dialogOpen , setDialogOpen] = useState(false)
   const [pictureData , setPictureData] = useState({
@@ -369,10 +369,13 @@ function App() {
     const profileData = doc(getFirestore(app), "profiles" , "Profile")
 
     const userPosts = []
+    const followers = []
+    const following = []
     
     userData.posts.forEach(item => {
 
       const comments = []
+      const likes = []
       let data
       if (item.mapValue.fields.comments.arrayValue.values) {
         item.mapValue.fields.comments.arrayValue.values.forEach(item => {
@@ -385,6 +388,12 @@ function App() {
       } else {
         data = []
       }
+
+      if (item.mapValue.fields.likes.arrayValue.values) {
+        item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+          likes.push(item.stringValue)
+        })
+      }
       
 
       userPosts.push({
@@ -392,9 +401,33 @@ function App() {
         id:item.mapValue.fields.id.stringValue, 
         url:item.mapValue.fields.url.stringValue, 
         username:item.mapValue.fields.username.stringValue,
-        comments: data
+        comments: data,
+        likes: likes,
+        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
       })
     })
+
+    if (userData.followers.length > 0) {
+      userData.followers.forEach(item => {
+        followers.push(item.stringValue)
+      })
+    }
+    
+    if (userData.following.length > 0) {
+      userData.following.forEach(item => {
+        following.push(item.stringValue)
+      })
+    }
+
+    console.log({
+      description: userData.description,
+      name: userData.name,
+      posts: userPosts,
+      profilePicture: userData.profilePicture,
+      username: userData.username,
+      following: following,
+      followers: followers 
+})
     
     await updateDoc(profileData , {
 
@@ -403,7 +436,9 @@ function App() {
                 name: userData.name,
                 posts: userPosts,
                 profilePicture: userData.profilePicture,
-                username: userData.username
+                username: userData.username,
+                following: following,
+                followers: followers 
       })
                 
     })     
@@ -415,7 +450,9 @@ function App() {
         name: userData.name,
         profilePicture: userData.profilePicture,
         username: userData.username , 
-        posts: [...userPosts , {caption:caption,comments: [],likes:[], timestamp:serverTimestamp(), url:url,username:userData.username,id:uniqid()}] 
+        posts: [...userPosts , {caption:caption,comments: [],likes:[], timestamp: Timestamp.now(), url:url,username:userData.username,id:uniqid()}],
+        followers: followers,
+        following: following 
       })
                 
     })
@@ -499,7 +536,9 @@ function App() {
                 name: checker.name.stringValue,
                 posts: checker.posts.arrayValue.values ? checker.posts.arrayValue.values : [],
                 profilePicture: checker.profilePicture.stringValue,
-                username: checker.username.stringValue
+                username: checker.username.stringValue,
+                following: checker.following.arrayValue.values ? checker.following.arrayValue.values : [],
+                followers: checker.followers.arrayValue.values ? checker.followers.arrayValue.values : []
         }
       )
     }
@@ -512,6 +551,7 @@ function App() {
     setEditDialogOpen(prevState => !prevState)
 
   }
+  console.log(userData)
 
 
   return (
