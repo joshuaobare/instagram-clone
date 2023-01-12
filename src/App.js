@@ -255,6 +255,7 @@ function App() {
     profile.posts.arrayValue.values.forEach(item => {
 
       const comments = []
+      const likes = []
       let data
       if (item.mapValue.fields.comments.arrayValue.values) {
         item.mapValue.fields.comments.arrayValue.values.forEach(item => {
@@ -267,12 +268,21 @@ function App() {
       } else {
         data = []
       }
+
+      if (item.mapValue.fields.likes.arrayValue.values) {
+        item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+          likes.push(item.stringValue)
+        })
+      }
+
       postsBefore.push({
         caption:item.mapValue.fields.caption.stringValue ,
         id:item.mapValue.fields.id.stringValue, 
         url:item.mapValue.fields.url.stringValue, 
         username:item.mapValue.fields.username.stringValue,
-        comments:data
+        comments:data,
+        likes: likes,
+        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
       
       })
     })
@@ -287,6 +297,7 @@ function App() {
 
       if(item.mapValue.fields.id.stringValue !== id){
         const comments = []
+        const likes = []
         let data
         if (item.mapValue.fields.comments.arrayValue.values) {
           item.mapValue.fields.comments.arrayValue.values.forEach(item => {
@@ -300,12 +311,20 @@ function App() {
           data = []
         }
 
+        if (item.mapValue.fields.likes.arrayValue.values) {
+          item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+            likes.push(item.stringValue)
+          })
+        }
+
         postsAfter.push({
           caption:item.mapValue.fields.caption.stringValue ,
           id:item.mapValue.fields.id.stringValue, 
           url:item.mapValue.fields.url.stringValue, 
           username:item.mapValue.fields.username.stringValue,
-          comments : data
+          comments : data,
+          likes: likes,
+        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
         })
       }
       
@@ -314,6 +333,21 @@ function App() {
     
     const profileData = doc(getFirestore(app), "profiles" , "Profile")
 
+    const followers = []
+    const following = []
+
+    if (profile.followers.length > 0) {
+      profile.followers.forEach(item => {
+        followers.push(item.stringValue)
+      })
+    }
+    
+    if (profile.following.length > 0) {
+      profile.following.forEach(item => {
+        following.push(item.stringValue)
+      })
+    }
+
     await updateDoc(profileData , {
 
       data: arrayRemove({
@@ -321,15 +355,18 @@ function App() {
                 name: profile.name.stringValue,
                 posts: postsBefore,
                 profilePicture: profile.profilePicture.stringValue,
-                username: profile.username.stringValue
+                username: profile.username.stringValue,
+                following: following,
+                followers: followers 
       })
                 
     })
 
     // a check for whether there was any comments in the retrieved post
 
-    let postComments = []
-    let commentData
+    const postComments = []
+    const postLikes = []
+    
     if (post.mapValue.fields.comments.arrayValue.values) {
       post.mapValue.fields.comments.arrayValue.values.forEach(item => {
         postComments.push(
@@ -337,9 +374,13 @@ function App() {
             comment: item.mapValue.fields.comment.stringValue , 
             username:item.mapValue.fields.username.stringValue})
       })
-      commentData = postComments
-    } else {
-      commentData = []
+      
+    }
+    
+    if (post.mapValue.fields.likes.arrayValue.values) {
+      post.mapValue.fields.likes.arrayValue.values.forEach(item => {
+        postLikes.push(item.stringValue)
+      })
     }
 
     await updateDoc(profileData , {
@@ -352,10 +393,14 @@ function App() {
                   url:post.mapValue.fields.url.stringValue,
                   username:username,
                   id:uniqid(),
-                  comments: [...commentData, {username: userData.username , comment: comment[id]}]
+                  timestamp: Timestamp.now(),
+                  likes: postLikes,
+                  comments: [...postComments, {username: userData.username , comment: comment[id]}]
                 }] ,
                 profilePicture: profile.profilePicture.stringValue,
-                username: profile.username.stringValue
+                username: profile.username.stringValue,
+                following: following,
+                followers: followers 
       })
                 
     })
