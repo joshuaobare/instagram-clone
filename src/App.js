@@ -649,14 +649,10 @@ function App() {
         following.push(item.stringValue)
       })
       followingAfter = [...following]
-    }
-  
+    } 
     
-
-
     if (checker){
       const index = following.indexOf(user)
-      console.log(index)
       followingAfter.splice(index,1)
     }else{
       followingAfter.push(user)
@@ -691,6 +687,99 @@ function App() {
       })
                 
     })
+
+    const profile = profiles.find(item => item.username.stringValue === user)
+    const profileFollowers = []
+    const profileFollowing = []
+    const profilePosts = []
+    let profileFollowersAfter = []
+    console.log(profile)
+
+    profile.posts.arrayValue.values.forEach(item => {
+
+      const comments = []
+      const likes = []
+      let data
+      if (item.mapValue.fields.comments.arrayValue.values) {
+        item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+          comments.push(
+            {
+              comment: item.mapValue.fields.comment.stringValue , 
+              username:item.mapValue.fields.username.stringValue})
+        })
+        data = comments
+      } else {
+        data = []
+      }
+
+      if (item.mapValue.fields.likes.arrayValue.values) {
+        item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+          likes.push(item.stringValue)
+        })
+      }
+      
+
+      profilePosts.push({
+        caption:item.mapValue.fields.caption.stringValue ,
+        id:item.mapValue.fields.id.stringValue, 
+        url:item.mapValue.fields.url.stringValue, 
+        username:item.mapValue.fields.username.stringValue,
+        comments: data,
+        likes: likes,
+        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
+      })
+    })
+
+    if (profile.followers.length > 0) {
+      profile.followers.forEach(item => {
+        profileFollowers.push(item.stringValue)
+      })
+      profileFollowersAfter = [...profileFollowers]      
+    }
+
+    if (profile.following.length > 0) {
+      profile.following.forEach(item => {
+        profileFollowing.push(item.stringValue)
+      })
+      
+    } 
+    
+    if (checker){
+      const index = following.indexOf(userData.username)
+      profileFollowersAfter.splice(index,1)
+    }else{
+      profileFollowersAfter.push(userData.username)
+    }
+
+    await updateDoc(profileData , {
+
+      data: arrayRemove({
+                description: profile.description.stringValue,
+                name: profile.name.stringValue,
+                posts: profilePosts,
+                profilePicture: profile.profilePicture.stringValue,
+                username: profile.username.stringValue,
+                following: profileFollowing,
+                followers: profileFollowers 
+      })
+                
+    })
+
+    await updateDoc(profileData , {
+
+      data: arrayUnion({
+        description: profile.description.stringValue,
+        name: profile.name.stringValue,
+        posts: profilePosts,
+        profilePicture: profile.profilePicture.stringValue,
+        username: profile.username.stringValue,
+        following: profileFollowing,
+        followers: profileFollowersAfter 
+      })
+                
+    })
+
+
     
     await fetcher()
 
