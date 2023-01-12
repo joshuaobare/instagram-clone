@@ -730,15 +730,15 @@ function App() {
       })
     })
 
-    if (profile.followers.length > 0) {
-      profile.followers.forEach(item => {
+    if (profile.followers.arrayValue.values) {
+      profile.followers.arrayValue.values.forEach(item => {
         profileFollowers.push(item.stringValue)
       })
       profileFollowersAfter = [...profileFollowers]      
     }
 
-    if (profile.following.length > 0) {
-      profile.following.forEach(item => {
+    if (profile.following.arrayValue.values) {
+      profile.following.arrayValue.values.forEach(item => {
         profileFollowing.push(item.stringValue)
       })
       
@@ -750,6 +750,16 @@ function App() {
     }else{
       profileFollowersAfter.push(userData.username)
     }
+
+    console.log({
+      description: profile.description.stringValue,
+      name: profile.name.stringValue,
+      posts: profilePosts,
+      profilePicture: profile.profilePicture.stringValue,
+      username: profile.username.stringValue,
+      following: profileFollowing,
+      followers: profileFollowers 
+})
 
     await updateDoc(profileData , {
 

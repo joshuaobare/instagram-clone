@@ -50,6 +50,27 @@ export default function Profile(props) {
                 })
             } else {
                 const profile = await profiles.find(item => item.username.stringValue === username.toString())
+                let followers, following,postCount
+
+                if(profile.following.arrayValue.values) {
+                    following = profile.following.arrayValue.values.length
+                } else {
+                    following = 0
+                }
+
+                if(profile.followers.arrayValue.values) {
+                    followers = profile.followers.arrayValue.values.length
+                } else {
+                    followers = 0
+                }
+
+                if(profile.posts.arrayValue.values) {
+                    postCount = profile.posts.arrayValue.values.length
+                } else {
+                    postCount = 0
+                }
+
+
                 console.log(profile)
                 setData(prevState => {
                     return {...prevState ,
@@ -58,9 +79,9 @@ export default function Profile(props) {
                     posts: profile.posts.arrayValue.values,
                     profilePicture: profile.profilePicture.stringValue,
                     username: profile.username.stringValue,
-                    following: profile.following.arrayValue.values.length,
-                    followers: profile.followers.arrayValue.values.length,
-                    postCount: profile.posts.arrayValue.values.length
+                    following: following ,
+                    followers: followers ,
+                    postCount: postCount
                 }
                 })
             }
