@@ -92,10 +92,18 @@ export default function Profile(props) {
         }
         finder()
     }, [props.profiles , props.userData, username])
-    
     console.log(props.userData)
-    console.log(props.profiles)
-    console.log(data)
+    
+    const followChecker = props.userData.following.some(item => item.stringValue === username)
+    let followStatus, style
+    if (followChecker) {
+        followStatus = "Following"
+        style = {backgroundColor : "grey"}
+    } else {
+        followStatus = "Follow"
+        style = {}
+    }
+    
     return (
         <div className="Profile">
             <div className="profile-main">
@@ -103,7 +111,7 @@ export default function Profile(props) {
                 <div className="profile-details">
                     <div className="profile-details-header">
                         <div className="profile-details-username">{data.username}</div>
-                        <button className="profile-details-follow" onClick={isUser? props.toggleEditDialog : () => props.follow(username)}>{isUser ? "Edit Profile" : "Follow"}</button>
+                        <button className="profile-details-follow" onClick={isUser? props.toggleEditDialog : () => props.follow(username)} style ={style}>{isUser ? "Edit Profile" : followStatus}</button>
                         <OptionsSvg />
                     </div>
                     <div className="profile-details-mid">
