@@ -842,7 +842,8 @@ function App() {
                 signOut ={signOutUser}
                 comment = {comment}
                 handleCommentChange = {handleCommentChange}
-                createComment = {createComment} 
+                createComment = {createComment}
+                follow = {follow} 
               /> } 
           />
           <Route 

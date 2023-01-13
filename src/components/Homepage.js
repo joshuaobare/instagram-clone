@@ -89,6 +89,9 @@ export default function Homepage(props) {
                                         key = {uniqid()}  
                                         username = {item.username.stringValue}
                                         ppic = {item.profilePicture.stringValue}
+                                        followers = {item.followers}
+                                        userData = {props.userData}
+                                        follow = {props.follow}                                        
                                     />
                                 )
                             }
