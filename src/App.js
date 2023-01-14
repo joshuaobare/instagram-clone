@@ -233,6 +233,182 @@ function App() {
     })
 
   }
+
+  async function likePost(event , id, username){
+
+    const profile = profiles.find(items => {
+
+      if(items.posts.arrayValue.values) {
+        return items.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
+      } else {
+        return null
+      }
+      
+    })
+
+    const post = profile.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === id)
+
+    const postsBefore = []
+    profile.posts.arrayValue.values.forEach(item => {
+
+      const comments = []
+      const likes = []
+      let data
+      if (item.mapValue.fields.comments.arrayValue.values) {
+        item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+          comments.push(
+            {
+              comment: item.mapValue.fields.comment.stringValue , 
+              username:item.mapValue.fields.username.stringValue})
+        })
+        data = comments
+      } else {
+        data = []
+      }
+
+      if (item.mapValue.fields.likes.arrayValue.values) {
+        item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+          likes.push(item.stringValue)
+        })
+      }
+
+      postsBefore.push({
+        caption:item.mapValue.fields.caption.stringValue ,
+        id:item.mapValue.fields.id.stringValue, 
+        url:item.mapValue.fields.url.stringValue, 
+        username:item.mapValue.fields.username.stringValue,
+        comments:data,
+        likes: likes,
+        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
+      
+      })
+    })
+
+    const postsAfter = []
+    profile.posts.arrayValue.values.forEach(item => {
+      
+
+      if(item.mapValue.fields.id.stringValue !== id){
+        const comments = []
+        const likes = []
+        let data
+        if (item.mapValue.fields.comments.arrayValue.values) {
+          item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+            comments.push(
+              {
+                comment: item.mapValue.fields.comment.stringValue , 
+                username:item.mapValue.fields.username.stringValue})
+          })
+          data = comments
+        } else {
+          data = []
+        }
+
+        if (item.mapValue.fields.likes.arrayValue.values) {
+          item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+            likes.push(item.stringValue)
+          })
+        }
+
+        postsAfter.push({
+          caption:item.mapValue.fields.caption.stringValue ,
+          id:item.mapValue.fields.id.stringValue, 
+          url:item.mapValue.fields.url.stringValue, 
+          username:item.mapValue.fields.username.stringValue,
+          comments : data,
+          likes: likes,
+        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
+        })
+      }
+      
+    })
+
+    const profileData = doc(getFirestore(app), "profiles" , "Profile")
+
+    const followers = []
+    const following = []
+
+    if (profile.followers.length > 0) {
+      profile.followers.forEach(item => {
+        followers.push(item.stringValue)
+      })
+    }
+    
+    if (profile.following.length > 0) {
+      profile.following.forEach(item => {
+        following.push(item.stringValue)
+      })
+    }
+
+    await updateDoc(profileData , {
+
+      data: arrayRemove({
+                description: profile.description.stringValue,
+                name: profile.name.stringValue,
+                posts: postsBefore,
+                profilePicture: profile.profilePicture.stringValue,
+                username: profile.username.stringValue,
+                following: following,
+                followers: followers 
+      })
+                
+    })
+
+    const postComments = []
+    const postLikes = []
+    
+    if (post.mapValue.fields.comments.arrayValue.values) {
+      post.mapValue.fields.comments.arrayValue.values.forEach(item => {
+        postComments.push(
+          {
+            comment: item.mapValue.fields.comment.stringValue , 
+            username:item.mapValue.fields.username.stringValue})
+      })
+      
+    }
+    
+    if (post.mapValue.fields.likes.arrayValue.values) {
+      post.mapValue.fields.likes.arrayValue.values.forEach(item => {
+        postLikes.push(item.stringValue)
+      })
+    }
+
+    if(post.mapValue.fields.likes.arrayValue.values){
+      const checker = post.mapValue.fields.likes.arrayValue.values.find(item => item.stringValue === userData.username)
+      if(checker){
+        const index = postLikes.indexOf(userData.username)
+        postLikes.splice(index, 1)
+      }
+    }else {
+      postLikes.push(userData.username)
+    }
+
+
+
+    await updateDoc(profileData , {
+
+      data: arrayUnion({
+                description: profile.description.stringValue,
+                name: profile.name.stringValue,
+                posts: [...postsAfter , {
+                  caption:post.mapValue.fields.caption.stringValue,
+                  url:post.mapValue.fields.url.stringValue,
+                  username:username,
+                  id:post.mapValue.fields.id.stringValue,
+                  timestamp: Timestamp.fromMillis(Date.parse(post.mapValue.fields.timestamp.timestampValue)),
+                  likes: postLikes,
+                  comments: postComments
+                }] ,
+                profilePicture: profile.profilePicture.stringValue,
+                username: profile.username.stringValue,
+                following: following,
+                followers: followers 
+      })
+                
+    })
+    await fetcher()
+
+  }
     
   async function createComment(event , id, username){
     event.preventDefault()
@@ -257,7 +433,7 @@ function App() {
     /* The posts in the retrieved profile are looped through, so the format can be matched to the data on the database, 
      for each, we also loop the comments array and append it to the postsBefore array */
 
-
+    console.log(post)
     const postsBefore = []
     profile.posts.arrayValue.values.forEach(item => {
 
@@ -355,6 +531,7 @@ function App() {
       })
     }
 
+      
     await updateDoc(profileData , {
 
       data: arrayRemove({
@@ -389,7 +566,7 @@ function App() {
         postLikes.push(item.stringValue)
       })
     }
-
+    
     await updateDoc(profileData , {
 
       data: arrayUnion({
@@ -399,8 +576,8 @@ function App() {
                   caption:post.mapValue.fields.caption.stringValue,
                   url:post.mapValue.fields.url.stringValue,
                   username:username,
-                  id:uniqid(),
-                  timestamp: Timestamp.now(),
+                  id:post.mapValue.fields.id.stringValue,
+                  timestamp: Timestamp.fromMillis(Date.parse(post.mapValue.fields.timestamp.timestampValue)),
                   likes: postLikes,
                   comments: [...postComments, {username: userData.username , comment: comment[id]}]
                 }] ,
@@ -843,7 +1020,8 @@ function App() {
                 comment = {comment}
                 handleCommentChange = {handleCommentChange}
                 createComment = {createComment}
-                follow = {follow} 
+                follow = {follow}
+                likePost = {likePost} 
               /> } 
           />
           <Route 

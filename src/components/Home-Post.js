@@ -25,9 +25,12 @@ export default function Post(props){
             <div className="home-post-main">
                 <div className="home-post-icons">
                     <div className="home-post-icons-main">
-                        <LikeIconSvg />
-                        <CommentIconSvg />
-                        <ShareIconSvg />
+                        <div onClick={(e) => props.likePost(e,props.id,props.username)}><LikeIconSvg /></div>
+                        <div><CommentIconSvg /></div>
+                        <div><ShareIconSvg /></div>
+                        
+                        
+                        
                     </div>
                     <div>
                         <SaveIconSvg />
