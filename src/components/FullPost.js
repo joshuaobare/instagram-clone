@@ -33,6 +33,7 @@ export default function FullPost(props) {
     })
     const [likesCount, setLikesCount] = useState(0)
     const [comments , setComments] = useState([])
+    const [date, setDate] = useState("")
     
 
     useEffect(() => {
@@ -83,7 +84,9 @@ export default function FullPost(props) {
         
         setData(props.currentPost)
         setComments(comms)
-        
+        const time = new Date(props.currentPost.timestamp.timestampValue)
+        const options = {month: "long"}
+        setDate(`${time.getDay()} ${new Intl.DateTimeFormat("en-US",options).format(time)} ${time.getFullYear()}`)
 
 
     }, [props.profiles , props.currentPost])
@@ -141,7 +144,7 @@ return (
                             
                         </div>
                         <div className="full-post-likes">{likesCount} like{likesCount !== 1 ? "s" : ""}</div>
-                        <div className="full-post-time">21 June 2024</div>
+                        <div className="full-post-time">{date}</div>
                     </div>
                     <div className="full-post-addcomment">
                             <AddEmojiSvg />
