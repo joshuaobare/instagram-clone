@@ -22,10 +22,71 @@ export default function FullPost(props) {
         likes: [],
         id: ""
     })
+    const [profile , setProfile] = useState({
+        
+        username:"",
+        name:"",
+        description:"",
+        profilePicture:"",
+        
+
+    })
+    const [likesCount, setLikesCount] = useState(0)
+    const [comments , setComments] = useState([])
+    
 
     useEffect(() => {
+        const currentProfile = props.profiles.find(items => {
+
+            if(items.posts.arrayValue.values) {
+              //console.log(items.posts)
+              return items.posts.arrayValue.values.find(item => item.mapValue.fields.id.stringValue === props.currentPost.id.stringValue)
+            } else {
+              return null
+            }
+            
+        })
+        setProfile({
+            username:currentProfile.username.stringValue,
+            name:currentProfile.name.stringValue,
+            description:currentProfile.description.stringValue,
+            profilePicture:currentProfile.profilePicture.stringValue,           
+    
+        })
+        if(props.currentPost.likes.arrayValue.values){
+            setLikesCount(props.currentPost.likes.arrayValue.values.length)
+        }
+        const comms = []
+        if(props.currentPost.comments.arrayValue.values){
+            
+            
+            props.currentPost.comments.arrayValue.values.forEach(obj => {
+                const profile = props.profiles.find(items => {
+
+                    if(items.posts.arrayValue.values) {
+                      //console.log(items.posts)
+                      return items.posts.arrayValue.values.find(item => item.mapValue.fields.username.stringValue === obj.mapValue.fields.username.stringValue)
+                    } else {
+                      return null
+                    }
+                    
+                })
+                comms.push({
+                    comment:obj.mapValue.fields.comment.stringValue,
+                    profilePicture: profile.profilePicture.stringValue,
+                    username:obj.mapValue.fields.username.stringValue
+
+                })
+            })
+        }
+        
+        
         setData(props.currentPost)
-    }, [])
+        setComments(comms)
+        
+
+
+    }, [props.profiles , props.currentPost])
 
 
 return (
@@ -33,12 +94,12 @@ return (
         
         <DialogContent>
                 <div className="Full-Post">
-                <img src={Waldo} alt="main post" className="full-post-main-img" />
+                <img src={data.url.stringValue} alt="main post" className="full-post-main-img" />
                 <div className="full-post-right-section">
                     <div className="full-post-header">
                         <div className="full-post-header-main">
-                            <img src={Waldo} alt="random-icon" className="full-post-profile-icon"/>
-                            <div>username</div>
+                            <img src={profile.profilePicture} alt="random-icon" className="full-post-profile-icon"/>
+                            <div>{data.username.stringValue}</div>
                         </div>                
                         <OptionsSvg />
                         <div onClick={props.togglePostDialog}>
@@ -50,15 +111,20 @@ return (
                     <div className="full-post-comment-section">
                         <div className="full-post-caption-section">
                             <div className="full-post-caption-section-main">
-                                <img src={Waldo} alt="" className="full-post-profile-icon" />
-                                <div className="full-post-caption-username">username</div>
+                                <img src={profile.profilePicture} alt="" className="full-post-profile-icon" />
+                                <div className="full-post-caption-username">{data.username.stringValue}</div>
                             </div>                    
-                            <div className="full-post-caption">You love to see it</div>
+                            <div className="full-post-caption">{data.caption.stringValue}</div>
                         </div>
                         <div className="full-post-comments">
-                            <Comment />
-                            <Comment />
-                            <Comment />
+                            {comments.map(item => 
+                                <Comment 
+                                    profilePicture = {item.profilePicture}
+                                    comment = {item.comment}
+                                    username = {item.username}
+                                />
+                                
+                            )}
                         </div>
                     </div>
                     <hr />
@@ -74,7 +140,7 @@ return (
                             </div>                   
                             
                         </div>
-                        <div className="full-post-likes">570 likes</div>
+                        <div className="full-post-likes">{likesCount} like{likesCount !== 1 ? "s" : ""}</div>
                         <div className="full-post-time">21 June 2024</div>
                     </div>
                     <div className="full-post-addcomment">

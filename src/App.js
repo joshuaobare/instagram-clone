@@ -84,6 +84,7 @@ function App() {
 
       setProfiles(profs)
       setPosts(fullposts)
+      
     })
     console.log("fetcher ran")
   }  
@@ -1053,14 +1054,14 @@ function App() {
         </Routes>
         <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handlePictureChange} pictureData={pictureData}/>
         <EditProfile dialogOpen = {editDialogOpen} profileEdits={profileEdits} handleProfileEdit= {handleProfileEdit} editProfile={editProfile} />
-        <FullPost 
+        {postDialogOpen ? <FullPost 
                 posts = {posts}
                 profiles = {profiles}
                 userData = {userData}
                 dialogOpen = {postDialogOpen}
                 currentPost = {currentPost}
                 togglePostDialog = {togglePostDialog}
-              />
+              /> : null}
       </HashRouter>
 
            

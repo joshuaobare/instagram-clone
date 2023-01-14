@@ -85,4 +85,5 @@ hr {
 .profile-post {
     width: 290px;
     height: 290px;
+    cursor: pointer;
 }
