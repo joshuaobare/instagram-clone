@@ -55,6 +55,10 @@ export default function Homepage(props) {
                                         id = {item.id.stringValue}
                                         createComment = {props.createComment}
                                         likePost = {props.likePost}
+                                        userData = {props.userData}
+                                        likes = {item.likes}
+                                        profiles = {props.profiles}
+                                        
                                     />)
                             }
                             

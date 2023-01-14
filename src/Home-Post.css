@@ -45,6 +45,8 @@
     display: flex;
     gap: 20px;
     margin-bottom: 5px;
+    align-items: center;
+    justify-content: center;
 }
 
 .home-post-caption-section {
@@ -100,4 +102,9 @@
    outline: none;
    border: none;
    background-color: #fff;
+}
+.home-post-icons-main > div{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
 }

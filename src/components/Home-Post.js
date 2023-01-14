@@ -8,8 +8,29 @@ import { Link } from "react-router-dom"
 import Waldo from "../images/icons/waldo.png"
 import Wrap from "../images/wrap.jpg"
 import "../Home-Post.css"
+import { useEffect, useState } from "react"
 
 export default function Post(props){
+
+    const [likeStatus , setLikeStatus] = useState(false)
+    const [likesCount, setLikesCount] = useState(0)
+
+    useEffect(()=>{
+        if(props.likes.arrayValue.values){
+            const checker = props.likes.arrayValue.values.some(item => item.stringValue === props.userData.username)
+            setLikesCount(props.likes.arrayValue.values.length)
+
+            if(checker){
+                setLikeStatus(true)
+                
+            }
+        } else {
+            setLikeStatus(false)
+            setLikesCount(0)
+        }
+    },[props.likes , props.userData, props.profiles])
+
+
     return (
         <div className="post">
             <div className="home-post-header">
@@ -25,10 +46,11 @@ export default function Post(props){
             <div className="home-post-main">
                 <div className="home-post-icons">
                     <div className="home-post-icons-main">
-                        <div onClick={(e) => props.likePost(e,props.id,props.username)}><LikeIconSvg /></div>
+                        <div onClick={(e) => props.likePost(e,props.id,props.username)}>
+                            <LikeIconSvg fill={likeStatus ? "red" : "black"} />
+                        </div>
                         <div><CommentIconSvg /></div>
-                        <div><ShareIconSvg /></div>
-                        
+                        <div><ShareIconSvg /></div>                       
                         
                         
                     </div>
@@ -37,7 +59,7 @@ export default function Post(props){
                     </div>                   
                     
                 </div>
-                <div className="home-post-likes">28311 likes</div>
+                <div className="home-post-likes">{likesCount} like{likesCount !== 1 ? "s" : ""}</div>
                 <div className="home-post-mid-section">
                     <div className="home-post-caption-section">
                         <Link to={`/profile/${props.username}`}>
