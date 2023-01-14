@@ -14,6 +14,7 @@ export default function Post(props){
 
     const [likeStatus , setLikeStatus] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
+    const [time , setTime] = useState("")
 
     useEffect(()=>{
         if(props.likes.arrayValue.values){
@@ -28,8 +29,26 @@ export default function Post(props){
             setLikeStatus(false)
             setLikesCount(0)
         }
-    },[props.likes , props.userData, props.profiles])
 
+        const timestamp = new Date(props.timestamp)
+        const now = Date.now()
+        const timeDifference = (now-timestamp)/1000
+
+        if(timeDifference < 86400) {
+            const time = Math.floor((timeDifference*24)/86400)
+            setTime(`${time} HOUR${time !== 1 ? "S" : ""} AGO`)
+        } else if(timeDifference < 604800) {
+            const time = Math.floor((timeDifference*7)/604800) 
+            setTime(`${time} DAY${time !== 1 ? "S" : ""} AGO`)
+        } else if(timeDifference >= 604800){
+            const time = Math.floor(timeDifference/604800) 
+            setTime(`${time} WEEK${time !== 1 ? "S" : ""} AGO`)
+        }
+    },[props.likes , props.userData, props.profiles , props.timestamp])
+
+    
+
+    //console.log(timeDifference)
 
     return (
         <div className="post">
@@ -71,7 +90,7 @@ export default function Post(props){
                     <div className="home-post-comments-section">View all comments</div>                   
                     
                 </div>
-                <div className="home-post-time">14 HOURS AGO</div>
+                <div className="home-post-time">{time}</div>
                 <div className="home-post-comment">
                     <AddEmojiSvg />
                     <form action="" className="home-post-comment-form">
