@@ -43,9 +43,11 @@ function App() {
   
   const [comment , setComment] = useState({})
   const [editDialogOpen , setEditDialogOpen] = useState(false)
+  const [postDialogOpen , setPostDialogOpen] = useState(false)
   const [profileEdits , setProfileEdits] = useState({
     name: "", description: ""
   })
+  const [currentPost , setCurrentPost] = useState({})
 
   async function fetcher(){
 
@@ -1002,6 +1004,16 @@ function App() {
   }
   //console.log(userData)
 
+  function displayPost(id){
+    const post = posts.find(item => item.id.stringValue === id)
+    setCurrentPost(post)
+    setPostDialogOpen(prevState => !prevState)
+  }
+
+  function togglePostDialog(){
+    setPostDialogOpen(prevState => !prevState)
+  }
+
 
   return (
     <div className="App">
@@ -1032,13 +1044,23 @@ function App() {
                 userData = {userData}
                 toggleEditDialog = {toggleEditDialog}
                 follow = {follow}
+                displayPost = {displayPost}
                 
               />
             }
-          /> 
+          />
+         
         </Routes>
         <Create dialogOpen = {dialogOpen} toggleDialog={toggleDialog} createPost = {createPost} handleChange = {handlePictureChange} pictureData={pictureData}/>
         <EditProfile dialogOpen = {editDialogOpen} profileEdits={profileEdits} handleProfileEdit= {handleProfileEdit} editProfile={editProfile} />
+        <FullPost 
+                posts = {posts}
+                profiles = {profiles}
+                userData = {userData}
+                dialogOpen = {postDialogOpen}
+                currentPost = {currentPost}
+                togglePostDialog = {togglePostDialog}
+              />
       </HashRouter>
 
            

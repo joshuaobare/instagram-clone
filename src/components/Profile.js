@@ -146,7 +146,8 @@ export default function Profile(props) {
                         key = {uniqid()}
                         src={item.mapValue.fields.url.stringValue} 
                         alt="posts"
-                        className="profile-post" 
+                        className="profile-post"
+                        onClick={() => props.displayPost(item.mapValue.fields.id.stringValue)} 
                     />)
                 }
             </div>
