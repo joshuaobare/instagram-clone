@@ -91,7 +91,10 @@ export default function Post(props){
                         
                         <div className="home-post-caption">{props.caption}</div>
                     </div>                    
-                    <div className="home-post-comments-section">View comments</div>                   
+                    <div 
+                        className="home-post-comments-section"
+                        onClick={() => props.displayPost(props.id)}
+                    >View comments</div>                   
                     
                 </div>
                 <div className="home-post-time">{time}</div>

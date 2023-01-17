@@ -903,40 +903,43 @@ function App() {
     let profileFollowersAfter = []
     console.log(profile)
 
-    profile.posts.arrayValue.values.forEach(item => {
+    if(profile.posts.arrayValue.values) {
+      profile.posts.arrayValue.values.forEach(item => {
 
-      const comments = []
-      const likes = []
-      let data
-      if (item.mapValue.fields.comments.arrayValue.values) {
-        item.mapValue.fields.comments.arrayValue.values.forEach(item => {
-          comments.push(
-            {
-              comment: item.mapValue.fields.comment.stringValue , 
-              username:item.mapValue.fields.username.stringValue})
+        const comments = []
+        const likes = []
+        let data
+        if (item.mapValue.fields.comments.arrayValue.values) {
+          item.mapValue.fields.comments.arrayValue.values.forEach(item => {
+            comments.push(
+              {
+                comment: item.mapValue.fields.comment.stringValue , 
+                username:item.mapValue.fields.username.stringValue})
+          })
+          data = comments
+        } else {
+          data = []
+        }
+  
+        if (item.mapValue.fields.likes.arrayValue.values) {
+          item.mapValue.fields.likes.arrayValue.values.forEach(item => {
+            likes.push(item.stringValue)
+          })
+        }
+        
+  
+        profilePosts.push({
+          caption:item.mapValue.fields.caption.stringValue ,
+          id:item.mapValue.fields.id.stringValue, 
+          url:item.mapValue.fields.url.stringValue, 
+          username:item.mapValue.fields.username.stringValue,
+          comments: data,
+          likes: likes,
+          timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
         })
-        data = comments
-      } else {
-        data = []
-      }
-
-      if (item.mapValue.fields.likes.arrayValue.values) {
-        item.mapValue.fields.likes.arrayValue.values.forEach(item => {
-          likes.push(item.stringValue)
-        })
-      }
-      
-
-      profilePosts.push({
-        caption:item.mapValue.fields.caption.stringValue ,
-        id:item.mapValue.fields.id.stringValue, 
-        url:item.mapValue.fields.url.stringValue, 
-        username:item.mapValue.fields.username.stringValue,
-        comments: data,
-        likes: likes,
-        timestamp:Timestamp.fromMillis(Date.parse(item.mapValue.fields.timestamp.timestampValue)) ,
       })
-    })
+    }
+    
 
     if (profile.followers.arrayValue.values) {
       profile.followers.arrayValue.values.forEach(item => {
@@ -951,24 +954,15 @@ function App() {
       })
       
     } 
-    
-    if (checker){
-      const index = following.indexOf(userData.username)
+    const userFollower = profileFollowersAfter.some(item => item === userData.username)
+    if (userFollower){
+      const index = profileFollowersAfter.indexOf(userData.username)
       profileFollowersAfter.splice(index,1)
     }else{
       profileFollowersAfter.push(userData.username)
     }
 
-    console.log({
-      description: profile.description.stringValue,
-      name: profile.name.stringValue,
-      posts: profilePosts,
-      profilePicture: profile.profilePicture.stringValue,
-      username: profile.username.stringValue,
-      following: profileFollowing,
-      followers: profileFollowers 
-})
-
+    
     await updateDoc(profileData , {
 
       data: arrayRemove({
@@ -1079,7 +1073,8 @@ function App() {
                 handleCommentChange = {handleCommentChange}
                 createComment = {createComment}
                 follow = {follow}
-                likePost = {likePost} 
+                likePost = {likePost}
+                displayPost = {displayPost} 
               /> } 
           />
           <Route 

@@ -59,6 +59,7 @@ export default function Homepage(props) {
                                         likes = {item.likes}
                                         profiles = {props.profiles}
                                         timestamp = {item.timestamp.timestampValue}
+                                        displayPost = {props.displayPost}
                                         
                                     />)
                             }
