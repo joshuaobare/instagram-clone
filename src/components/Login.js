@@ -20,9 +20,9 @@ export default function Login(props) {
                         </div>
                                                
                         <div className="form-inputs">
-                            <input type="text" placeholder="Phone number, username, or email"/>
-                            <input type="password" placeholder="Password"/>                        
-                            <button className="form-button">Log in</button>
+                            <input type="text" placeholder="Phone number, username, or email" disabled/>
+                            <input type="password" placeholder="Password" disabled/>                        
+                            <button className="form-button">Log in (Guest)</button>
                         </div>
                         <div className="form-mid">
                             <div className="form-mid-border"><hr /></div>

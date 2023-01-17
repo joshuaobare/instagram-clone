@@ -32,6 +32,7 @@ export default function FullPost(props) {
         
 
     })
+    const [likeStatus , setLikeStatus] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [comments , setComments] = useState([])
     const [date, setDate] = useState("")
@@ -57,6 +58,17 @@ export default function FullPost(props) {
         })
         if(props.currentPost.likes.arrayValue.values){
             setLikesCount(props.currentPost.likes.arrayValue.values.length)
+            const checker = props.currentPost.likes.arrayValue.values.some(item => item.stringValue === props.userData.username)
+            
+            if(checker){
+                setLikeStatus(true)                
+            } else {
+                setLikeStatus(false)
+            }
+
+        }else {
+            setLikeStatus(false)
+            setLikesCount(0)
         }
         const comms = []
         if(props.currentPost.comments.arrayValue.values){           
@@ -136,7 +148,7 @@ return (
                         <div className="full-post-icons">
                             <div className="full-post-icons-main">
                                 <div onClick={(e) => props.likePost(e,data.id.stringValue  , data.username.stringValue)}
-                                ><LikeIconSvg /></div>
+                                ><LikeIconSvg fill={likeStatus ? "red" : "black"}/></div>
                                 <div><CommentIconSvg /></div>
                                 <div><ShareIconSvg /></div>
                                 
