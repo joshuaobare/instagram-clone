@@ -86,7 +86,7 @@ export default function FullPost(props) {
         setComments(comms)
         const time = new Date(props.currentPost.timestamp.timestampValue)
         const options = {month: "long"}
-        setDate(`${time.getDay()} ${new Intl.DateTimeFormat("en-US",options).format(time)} ${time.getFullYear()}`)
+        setDate(`${time.getDate()} ${new Intl.DateTimeFormat("en-US",options).format(time)} ${time.getFullYear()}`)
 
 
     }, [props.profiles , props.currentPost])

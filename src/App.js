@@ -331,14 +331,14 @@ function App() {
     const followers = []
     const following = []
 
-    if (profile.followers.length > 0) {
-      profile.followers.forEach(item => {
+    if (profile.followers.arrayValue.values) {
+      profile.followers.arrayValue.values.forEach(item => {
         followers.push(item.stringValue)
       })
     }
     
-    if (profile.following.length > 0) {
-      profile.following.forEach(item => {
+    if (profile.following.arrayValue.values) {
+      profile.following.arrayValue.values.forEach(item => {
         following.push(item.stringValue)
       })
     }
@@ -356,6 +356,7 @@ function App() {
       })
                 
     })
+    
 
     const postComments = []
     const postLikes = []
@@ -374,17 +375,17 @@ function App() {
       post.mapValue.fields.likes.arrayValue.values.forEach(item => {
         postLikes.push(item.stringValue)
       })
-    }
-
-    if(post.mapValue.fields.likes.arrayValue.values){
-      const checker = post.mapValue.fields.likes.arrayValue.values.find(item => item.stringValue === userData.username)
+      const checker = postLikes.some(item => item === userData.username)
       if(checker){
         const index = postLikes.indexOf(userData.username)
         postLikes.splice(index, 1)
+      }else {
+        postLikes.push(userData.username)
       }
     }else {
       postLikes.push(userData.username)
     }
+ 
 
 
 
@@ -409,6 +410,34 @@ function App() {
       })
                 
     })
+
+    console.log(profile)
+    console.log({
+      description: profile.description.stringValue,
+      name: profile.name.stringValue,
+      posts: postsBefore,
+      profilePicture: profile.profilePicture.stringValue,
+      username: profile.username.stringValue,
+      following: following,
+      followers: followers 
+})
+console.log({
+  description: profile.description.stringValue,
+  name: profile.name.stringValue,
+  posts: [...postsAfter , {
+    caption:post.mapValue.fields.caption.stringValue,
+    url:post.mapValue.fields.url.stringValue,
+    username:username,
+    id:post.mapValue.fields.id.stringValue,
+    timestamp: Timestamp.fromMillis(Date.parse(post.mapValue.fields.timestamp.timestampValue)),
+    likes: postLikes,
+    comments: postComments
+  }] ,
+  profilePicture: profile.profilePicture.stringValue,
+  username: profile.username.stringValue,
+  following: following,
+  followers: followers 
+})
     await fetcher()
 
   }
@@ -522,14 +551,14 @@ function App() {
     const followers = []
     const following = []
 
-    if (profile.followers.length > 0) {
-      profile.followers.forEach(item => {
+    if (profile.followers.arrayValue.values) {
+      profile.followers.arrayValue.values.forEach(item => {
         followers.push(item.stringValue)
       })
     }
     
-    if (profile.following.length > 0) {
-      profile.following.forEach(item => {
+    if (profile.following.arrayValue.values) {
+      profile.following.arrayValue.values.forEach(item => {
         following.push(item.stringValue)
       })
     }
@@ -548,6 +577,7 @@ function App() {
       })
                 
     })
+    
 
     // a check for whether there was any comments in the retrieved post
 
@@ -591,6 +621,35 @@ function App() {
       })
                 
     })
+
+    console.log(profile)
+    console.log({
+      description: profile.description.stringValue,
+      name: profile.name.stringValue,
+      posts: postsBefore,
+      profilePicture: profile.profilePicture.stringValue,
+      username: profile.username.stringValue,
+      following: following,
+      followers: followers 
+})
+console.log({
+  description: profile.description.stringValue,
+  name: profile.name.stringValue,
+  posts: [...postsAfter , {
+    caption:post.mapValue.fields.caption.stringValue,
+    url:post.mapValue.fields.url.stringValue,
+    username:username,
+    id:post.mapValue.fields.id.stringValue,
+    timestamp: Timestamp.fromMillis(Date.parse(post.mapValue.fields.timestamp.timestampValue)),
+    likes: postLikes,
+    comments: [...postComments, {username: userData.username , comment: comment[id]}]
+  }] ,
+  profilePicture: profile.profilePicture.stringValue,
+  username: profile.username.stringValue,
+  following: following,
+  followers: followers 
+})
+
     setComment({})
     fetcher()
 
