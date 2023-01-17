@@ -22,8 +22,9 @@ export default function Post(props){
             setLikesCount(props.likes.arrayValue.values.length)
 
             if(checker){
-                setLikeStatus(true)
-                
+                setLikeStatus(true)                
+            } else {
+                setLikeStatus(false)
             }
         } else {
             setLikeStatus(false)

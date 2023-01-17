@@ -75,6 +75,13 @@
 }
 .full-post-comment-post {
     color: #0095F6;
+   outline: none;
+   border: none;
+   background-color: #fff;
+ }
+
+ .full-post-comment-form {
+     display: flex;
  }
  .full-post-time {
     padding-top: 5px;

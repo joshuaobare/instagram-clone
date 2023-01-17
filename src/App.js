@@ -86,7 +86,10 @@ function App() {
       setPosts(fullposts)
       
     })
-    console.log("fetcher ran")
+    
+    
+
+
   }  
   
   useEffect(() => {    
@@ -411,33 +414,7 @@ function App() {
                 
     })
 
-    console.log(profile)
-    console.log({
-      description: profile.description.stringValue,
-      name: profile.name.stringValue,
-      posts: postsBefore,
-      profilePicture: profile.profilePicture.stringValue,
-      username: profile.username.stringValue,
-      following: following,
-      followers: followers 
-})
-console.log({
-  description: profile.description.stringValue,
-  name: profile.name.stringValue,
-  posts: [...postsAfter , {
-    caption:post.mapValue.fields.caption.stringValue,
-    url:post.mapValue.fields.url.stringValue,
-    username:username,
-    id:post.mapValue.fields.id.stringValue,
-    timestamp: Timestamp.fromMillis(Date.parse(post.mapValue.fields.timestamp.timestampValue)),
-    likes: postLikes,
-    comments: postComments
-  }] ,
-  profilePicture: profile.profilePicture.stringValue,
-  username: profile.username.stringValue,
-  following: following,
-  followers: followers 
-})
+  
     await fetcher()
 
   }
@@ -622,36 +599,9 @@ console.log({
                 
     })
 
-    console.log(profile)
-    console.log({
-      description: profile.description.stringValue,
-      name: profile.name.stringValue,
-      posts: postsBefore,
-      profilePicture: profile.profilePicture.stringValue,
-      username: profile.username.stringValue,
-      following: following,
-      followers: followers 
-})
-console.log({
-  description: profile.description.stringValue,
-  name: profile.name.stringValue,
-  posts: [...postsAfter , {
-    caption:post.mapValue.fields.caption.stringValue,
-    url:post.mapValue.fields.url.stringValue,
-    username:username,
-    id:post.mapValue.fields.id.stringValue,
-    timestamp: Timestamp.fromMillis(Date.parse(post.mapValue.fields.timestamp.timestampValue)),
-    likes: postLikes,
-    comments: [...postComments, {username: userData.username , comment: comment[id]}]
-  }] ,
-  profilePicture: profile.profilePicture.stringValue,
-  username: profile.username.stringValue,
-  following: following,
-  followers: followers 
-})
-
+  
     setComment({})
-    fetcher()
+    await fetcher()
 
   }
 
@@ -1034,6 +984,12 @@ console.log({
 
 
   }
+  async function refreshCurrentPost(id){
+      
+    const post = await posts.find(item => item.id.stringValue === id)
+    console.log(post)
+    setCurrentPost(post)
+}
 
 
   useEffect(() => {
@@ -1053,7 +1009,11 @@ console.log({
         }
       )
     }
-    rerender()
+    rerender()    
+
+    if(postDialogOpen) {
+      refreshCurrentPost(currentPost.id.stringValue)
+    }
 
 
   } , [profiles,data])
@@ -1073,6 +1033,13 @@ console.log({
   function togglePostDialog(){
     setPostDialogOpen(prevState => !prevState)
   }
+
+  /*async function refreshCurrentPost(e,id){
+    e.preventDefault()
+    const post = await posts.find(item => item.id.stringValue === id)
+    console.log(post)
+    setCurrentPost(post)
+}*/
 
 
   return (
@@ -1120,6 +1087,11 @@ console.log({
                 dialogOpen = {postDialogOpen}
                 currentPost = {currentPost}
                 togglePostDialog = {togglePostDialog}
+                comment = {comment}
+                createComment = {createComment}
+                likePost = {likePost}
+                handleCommentChange = {handleCommentChange}
+                
               /> : null}
       </HashRouter>
 

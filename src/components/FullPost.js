@@ -10,6 +10,7 @@ import Waldo from "../images/icons/waldo.png"
 import "../FullPost.css"
 
 import { useEffect, useState } from "react"
+import uniqid from "uniqid"
 
 export default function FullPost(props) {
     
@@ -58,8 +59,7 @@ export default function FullPost(props) {
             setLikesCount(props.currentPost.likes.arrayValue.values.length)
         }
         const comms = []
-        if(props.currentPost.comments.arrayValue.values){
-            
+        if(props.currentPost.comments.arrayValue.values){           
             
             props.currentPost.comments.arrayValue.values.forEach(obj => {
                 const profile = props.profiles.find(items => {
@@ -91,12 +91,12 @@ export default function FullPost(props) {
 
     }, [props.profiles , props.currentPost])
 
+    
 
 return (
-    <Dialog open={props.dialogOpen ? true : false} fullWidth maxWidth="lg">
-        
+    <Dialog open={props.dialogOpen ? true : false} fullWidth maxWidth="lg">        
         <DialogContent>
-                <div className="Full-Post">
+            <div className="Full-Post">
                 <img src={data.url.stringValue} alt="main post" className="full-post-main-img" />
                 <div className="full-post-right-section">
                     <div className="full-post-header">
@@ -125,6 +125,7 @@ return (
                                     profilePicture = {item.profilePicture}
                                     comment = {item.comment}
                                     username = {item.username}
+                                    key = {uniqid()}
                                 />
                                 
                             )}
@@ -134,9 +135,13 @@ return (
                     <div>
                         <div className="full-post-icons">
                             <div className="full-post-icons-main">
-                                <LikeIconSvg />
-                                <CommentIconSvg />
-                                <ShareIconSvg />
+                                <div onClick={(e) => props.likePost(e,data.id.stringValue  , data.username.stringValue)}
+                                ><LikeIconSvg /></div>
+                                <div><CommentIconSvg /></div>
+                                <div><ShareIconSvg /></div>
+                                
+                                
+                                
                             </div>
                             <div>
                                 <SaveIconSvg />
@@ -148,8 +153,26 @@ return (
                     </div>
                     <div className="full-post-addcomment">
                             <AddEmojiSvg />
-                            <input type="text" placeholder="Add a comment..." className="add-comment"/>
-                            <div className="full-post-comment-post">Post</div>
+                            <form action="" className="full-post-comment-form">
+                                <input 
+                                    type="text" 
+                                    placeholder="Add a comment..." 
+                                    className="add-comment"
+                                    name = "comment"
+                                    id = {data.id.stringValue}
+                                    value = {props.comment[data.id.stringValue] || ""}
+                                    onChange= {(e) => props.handleCommentChange(e , data.id.stringValue)}
+                                    
+                                />
+                                <button 
+                                    className="full-post-comment-post"
+                                    onClick={(e) => {
+                                        props.createComment(e , data.id.stringValue  , data.username.stringValue)
+                                        //props.refreshCurrentPost(e , data.id.stringValue)
+                                    }}
+                                >Post</button>
+                            </form>
+                            
                         </div>
                 </div>
             </div>
