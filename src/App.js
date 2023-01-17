@@ -185,6 +185,25 @@ function App() {
 
   }
 
+  async function guestLogin(){
+    const data = await profiles
+    const profile = data.find(item => item.username.stringValue === "guest")
+    setUserData(
+      {
+              description: profile.description.stringValue,
+              name: profile.name.stringValue,
+              posts: profile.posts.arrayValue.values ? profile.posts.arrayValue.values : [],
+              profilePicture: profile.profilePicture.stringValue,
+              username: profile.username.stringValue,
+              followers: profile.followers.arrayValue.values ? profile.followers.arrayValue.values : [],
+              following: profile.following.arrayValue.values ? profile.following.arrayValue.values : []
+      }
+    )
+
+    setLoggedIn(true)
+
+  }
+
 
   function addSizeToGoogleProfilePic(url) {
     if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
@@ -1050,7 +1069,7 @@ function App() {
           <Route 
             path="/" 
             element = {!loggedIn ? 
-              <Login googleLogin = {googleLogin}  /> :      
+              <Login googleLogin = {googleLogin} guestLogin= {guestLogin} /> :      
               <Homepage 
                 posts = {posts} 
                 profiles= {profiles} 
