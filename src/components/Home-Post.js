@@ -62,7 +62,10 @@ export default function Post(props){
                 </div>                
                 <OptionsSvg />
             </div>
-            <img src={props.url} alt="" className="home-post-img" />
+            <div className="home-post-img-cont">
+                <img src={props.url} alt="" className="home-post-img" />
+            </div>
+            
             <div className="home-post-main">
                 <div className="home-post-icons">
                     <div className="home-post-icons-main">
@@ -88,7 +91,7 @@ export default function Post(props){
                         
                         <div className="home-post-caption">{props.caption}</div>
                     </div>                    
-                    <div className="home-post-comments-section">View all comments</div>                   
+                    <div className="home-post-comments-section">View comments</div>                   
                     
                 </div>
                 <div className="home-post-time">{time}</div>

@@ -25,7 +25,7 @@ export default function Profile(props) {
     })
     const {username} = useParams()
     
-    
+    console.log(data)
     //console.log(props.userData)
     //console.log(props.profiles[0])
     useEffect(() => {
@@ -50,7 +50,7 @@ export default function Profile(props) {
                 })
             } else {
                 const profile = await profiles.find(item => item.username.stringValue === username.toString())
-                let followers, following,postCount
+                let followers, following, postCount, posts
 
                 if(profile.following.arrayValue.values) {
                     following = profile.following.arrayValue.values.length
@@ -66,7 +66,9 @@ export default function Profile(props) {
 
                 if(profile.posts.arrayValue.values) {
                     postCount = profile.posts.arrayValue.values.length
+                    posts = profile.posts.arrayValue.values
                 } else {
+                    posts = []
                     postCount = 0
                 }
 
@@ -76,7 +78,7 @@ export default function Profile(props) {
                     return {...prevState ,
                     description: profile.description.stringValue,
                     name: profile.name.stringValue,
-                    posts: profile.posts.arrayValue.values,
+                    posts: posts,
                     profilePicture: profile.profilePicture.stringValue,
                     username: profile.username.stringValue,
                     following: following ,
