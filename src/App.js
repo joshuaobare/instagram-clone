@@ -22,6 +22,7 @@ import MiniProfile from "./components/MiniProfile";
 import Create from "./components/Create";
 import uniqid from "uniqid"
 import EditProfile from "./components/EditProfile"
+import Explore from "./components/Explore";
 
 
 
@@ -1089,6 +1090,16 @@ function App() {
                 
               />
             }
+          />
+          <Route 
+            path = "/explore"
+            element = {
+              <Explore 
+                posts = {posts}
+                displayPost = {displayPost}
+              
+              />
+          }
           />
          
         </Routes>

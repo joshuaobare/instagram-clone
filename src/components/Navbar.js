@@ -33,8 +33,12 @@ export default function Navbar(props){
                     <div className="nav-title">Search</div>
                 </div>
                 <div className="navbar-item">
+                    
                     <ExploreSvg />
-                    <div className="nav-title">Explore</div>
+                    <Link to = "/explore">
+                        <div className="nav-title">Explore</div>
+                    </Link>
+                    
                 </div>
                 <div className="navbar-item">
                     <ReelsSvg />
