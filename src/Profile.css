@@ -81,9 +81,15 @@ hr {
     gap: 30px;
     padding-top: 20px;
 }
+.profile-post-cont {
+    width: 290px;
+    height: 290px;
+    overflow: hidden;
+}
 
 .profile-post {
-    width: 290px;
+    width: 100%;
+    object-fit: cover;
     height: 290px;
     cursor: pointer;
 }

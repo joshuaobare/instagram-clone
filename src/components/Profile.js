@@ -144,13 +144,16 @@ export default function Profile(props) {
             </div>
             <div className="profile-posts-grid">
                 {
-                    data.posts.map(item => <img 
-                        key = {uniqid()}
-                        src={item.mapValue.fields.url.stringValue} 
-                        alt="posts"
-                        className="profile-post"
-                        onClick={() => props.displayPost(item.mapValue.fields.id.stringValue)} 
-                    />)
+                    data.posts.map(item => 
+                    <div className="profile-post-cont" key = {uniqid()} >
+                        <img                         
+                            src={item.mapValue.fields.url.stringValue} 
+                            alt="posts"
+                            className="profile-post"
+                            onClick={() => props.displayPost(item.mapValue.fields.id.stringValue)} 
+                    />
+                    </div>
+                    )
                 }
             </div>
             <Footer />

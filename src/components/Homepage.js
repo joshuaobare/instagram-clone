@@ -16,13 +16,16 @@ export default function Homepage(props) {
         return profile[0].profilePicture.stringValue
     }
 
+    const posts = [...props.posts]
+    posts.sort((b,a) => new Date(a.timestamp.timestampValue).getTime() - new Date(b.timestamp.timestampValue).getTime() )
+
 
 
     return (
         <div className="Homepage">
             <div className="homepage-left-section">
                 <div className="homepage-stories-section">
-                    {props.profiles.map(item => {
+                    {props.profiles.slice(Math.max(props.profiles.length -7 , 0)).map(item => {
                         if (item.username.stringValue.toString() === props.userData.username.toString()){
                             return null
                         } else {
@@ -39,7 +42,7 @@ export default function Homepage(props) {
                 </div>
                 <div className="homepage-posts-section">
                     {
-                        props.posts.map(item => {
+                        posts.map(item => {
                             if (item.username.stringValue.toString() === props.userData.username.toString()){
                                 return null
                             } else {
