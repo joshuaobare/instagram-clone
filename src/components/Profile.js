@@ -70,7 +70,8 @@ export default function Profile(props) {
                 if(profile.posts.arrayValue.values) {
                     postCount = profile.posts.arrayValue.values.length
                     posts = [...profile.posts.arrayValue.values]
-                    posts.sort((b,a) => new Date(a.timestamp.timestampValue).getTime() - new Date(b.timestamp.timestampValue).getTime() )
+                    console.log(posts)
+                    posts.sort((b,a) => new Date(a.mapValue.fields.timestamp.timestampValue).getTime() - new Date(b.mapValue.fields.timestamp.timestampValue).getTime() )
                 } else {
                     posts = []
                     postCount = 0
