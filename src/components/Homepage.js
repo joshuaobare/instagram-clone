@@ -87,7 +87,7 @@ export default function Homepage(props) {
                 </div>
                 <div>
                     {
-                        props.profiles.map(item => {
+                        props.profiles.slice(Math.max(props.profiles.length -6 , 0)).map(item => {
                             if (item.username.stringValue.toString() === props.userData.username.toString()){
                                 return null
                             } else {
