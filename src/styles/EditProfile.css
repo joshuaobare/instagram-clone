@@ -5,8 +5,7 @@
   align-items: center;
   justify-content: space-evenly;
   width: 360px;
-  margin-top: 0px;
-  padding-top: 0px;
+  
 }
 
 .form-edit-profile-item {
@@ -42,4 +41,8 @@
   font-weight: 600;
   border-radius: 8px;
   border: none;
+}
+
+.edit-profile-close-icon {
+  cursor: pointer;
 }

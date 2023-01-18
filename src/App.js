@@ -1124,6 +1124,7 @@ function App() {
           profileEdits={profileEdits}
           handleProfileEdit={handleProfileEdit}
           editProfile={editProfile}
+          toggleEditDialog = {toggleEditDialog}
         />
         {postDialogOpen ? (
           <FullPost

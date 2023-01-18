@@ -1,11 +1,21 @@
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogTitle } from "@mui/material";
 import "../styles/EditProfile.css";
+import { Close } from "@mui/icons-material";
 
 export default function EditProfile(props) {
+  
+  const style = {
+    display:"flex" ,
+    alignItems : "center",
+    justifyContent: "space-between"
+  }
+  
   return (
     <Dialog open={props.dialogOpen ? true : false}>
-      <DialogTitle>Edit Profile</DialogTitle>
-      <DialogContent>
+      <DialogTitle style={style}>
+        <div>Edit Profile</div>
+        <div onClick={props.toggleEditDialog} className="edit-profile-close-icon"><Close /></div>
+      </DialogTitle>      
         <form action="" className="form-edit-profile">
           <div className="form-edit-profile-item">
             <div className="form-edit-profile-item-title form-edit-img-container">
@@ -71,7 +81,7 @@ export default function EditProfile(props) {
             Submit
           </button>
         </form>
-      </DialogContent>
+      
     </Dialog>
   );
 }
