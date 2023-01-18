@@ -8,7 +8,7 @@ import { Dialog , DialogContent , DialogTitle } from "@mui/material"
 import Comment from "./Comment"
 import Waldo from "../images/icons/waldo.png"
 import "../FullPost.css"
-
+import { Close } from "@mui/icons-material"
 import { useEffect, useState } from "react"
 import uniqid from "uniqid"
 
@@ -122,10 +122,10 @@ return (
                             <img src={profile.profilePicture} alt="random-icon" className="full-post-profile-icon"/>
                             <div>{data.username.stringValue}</div>
                         </div>                
-                        <OptionsSvg />
-                        <div onClick={props.togglePostDialog}>
-                            X
-                        </div>
+                        
+                        <button onClick={props.togglePostDialog} className="full-post-close-icon">
+                            <Close />
+                        </button>
                         
                     </div>
                     <hr />

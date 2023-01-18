@@ -7,7 +7,7 @@ export default function Comment(props) {
         <div className="Comment">
             <img src={props.profilePicture} alt="commenter icon" className="full-post-profile-icon"/>
             <div className="comment-main">
-                <div>{props.username}</div>
+                <div className="comment-main-username">{props.username}</div>
                 <div>{props.comment}</div>
             </div>
             

@@ -113,7 +113,9 @@ export default function Profile(props) {
     return (
         <div className="Profile">
             <div className="profile-main">
-                <img src={data.profilePicture} alt="main profile pic" className="profile-main-img" />
+                <div className="profile-main-img-cont">
+                    <img src={data.profilePicture} alt="main profile pic" className="profile-main-img" />
+                </div>                
                 <div className="profile-details">
                     <div className="profile-details-header">
                         <div className="profile-details-username">{data.username}</div>

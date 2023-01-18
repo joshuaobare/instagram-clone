@@ -5,11 +5,18 @@
     align-items: center;
 }
 
-.story-main-img{
+.story-main-img-cont{
     height: 56px;
     width: 56px;
     border-radius: 100%;
-    
+    overflow: hidden;
+}
+
+.story-main-img{
+    height: 56px;
+    width: 100%;
+    border-radius: 100%;
+    object-fit: cover;
 }
 
 .story-username {

@@ -38,8 +38,15 @@
 .full-post-profile-icon{
     width: 32px;
     height: 32px;
-    border: 1px solid black;
+    
     border-radius: 100%;
+}
+
+.full-post-close-icon {
+    border: none;
+    outline: none;
+    background-color: #fff;
+    cursor: pointer;
 }
 
 .full-post-caption-section {

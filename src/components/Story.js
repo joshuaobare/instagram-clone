@@ -5,7 +5,10 @@ import { Link } from "react-router-dom"
 export default function Story(props) {
    return (
     <div className="Story">
-        <img src={props.ppic} alt="" className="story-main-img"/>
+        <div className="story-main-img-cont">
+            <img src={props.ppic} alt="" className="story-main-img"/>
+        </div>
+        
         <Link to={`/profile/${props.username}`}>
             <div className="story-username">{props.username}</div>
         </Link>        

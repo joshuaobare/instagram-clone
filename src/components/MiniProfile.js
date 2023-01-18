@@ -31,7 +31,9 @@ export default function MiniProfile(props) {
 
     return (
         <div className="MiniProfile">
-            <img src={props.ppic} alt="mini profile icon" className="miniprofile-icon"/>
+            <div className="miniprofile-icon-cont">
+                <img src={props.ppic} alt="mini profile icon" className="miniprofile-icon"/>
+            </div>            
             <div className="miniprofile-main">
                 <Link to={`/profile/${props.username}`}>
                     <div className="miniprofile-main-username">{props.username}</div>
