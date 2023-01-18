@@ -26,7 +26,7 @@ export default function Profile(props) {
     const {username} = useParams()
     
     console.log(data)
-    //console.log(props.userData)
+    console.log(props.userData)
     //console.log(props.profiles[0])
     useEffect(() => {
         const finder = async () => {
@@ -36,11 +36,14 @@ export default function Profile(props) {
             if (username === "user"){
                 setIsUser(true)
                 const profile = props.userData
+                const posts = [...profile.posts]
+                console.log(posts)
+                posts.sort((b,a) => new Date(a.mapValue.fields.timestamp.timestampValue).getTime() - new Date(b.mapValue.fields.timestamp.timestampValue).getTime())
                 setData(prevState => {
                     return {...prevState ,
                     description: profile.description,
                     name: profile.name,
-                    posts: profile.posts,
+                    posts: posts,
                     profilePicture: profile.profilePicture,
                     username: profile.username,
                     following: profile.following.length,
@@ -66,7 +69,8 @@ export default function Profile(props) {
 
                 if(profile.posts.arrayValue.values) {
                     postCount = profile.posts.arrayValue.values.length
-                    posts = profile.posts.arrayValue.values
+                    posts = [...profile.posts.arrayValue.values]
+                    posts.sort((b,a) => new Date(a.timestamp.timestampValue).getTime() - new Date(b.timestamp.timestampValue).getTime() )
                 } else {
                     posts = []
                     postCount = 0

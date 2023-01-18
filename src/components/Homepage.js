@@ -17,7 +17,7 @@ export default function Homepage(props) {
     }
 
     const posts = [...props.posts]
-    posts.sort((b,a) => new Date(a.timestamp.timestampValue).getTime() - new Date(b.timestamp.timestampValue).getTime() )
+    posts.sort((b,a) => new Date(a.timestamp.timestampValue).getTime() - new Date(b.timestamp.timestampValue).getTime())
 
 
 
