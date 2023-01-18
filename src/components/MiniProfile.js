@@ -1,6 +1,5 @@
-import Waldo from "../images/icons/waldo.png"
-import "../MiniProfile.css"
-import { Link, useRouteLoaderData } from "react-router-dom"
+import "../styles/MiniProfile.css"
+import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 export default function MiniProfile(props) {

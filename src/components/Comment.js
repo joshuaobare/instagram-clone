@@ -1,6 +1,5 @@
 import {ReactComponent as SmallLikeIconSvg} from "../images/icons/SmallLikeIcon.svg"
-import Waldo from "../images/icons/waldo.png"
-import "../Comment.css"
+import "../styles/Comment.css"
 
 export default function Comment(props) {
     return (

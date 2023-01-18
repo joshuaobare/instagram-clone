@@ -4,7 +4,7 @@ import GoogleIcon from "../images/icons/GoogleIcon.png"
 import Playstore from "../images/icons/Playstore.png"
 import Appstore from "../images/icons/Appstore.png"
 import IGlogo from "../images/icons/IGlogo.png"
-import { ReactComponent as LogoSvg } from "../images/icons/Logo.svg"
+
 
 export default function Login(props) {
     return (

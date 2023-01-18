@@ -1,10 +1,9 @@
 import { useState , useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login"
-import { getFirestore , collection, addDoc, getDocs, doc, updateDoc, arrayUnion, arrayRemove, Timestamp } from "firebase/firestore"
+import { getFirestore , collection, getDocs, doc, updateDoc, arrayUnion, arrayRemove, Timestamp } from "firebase/firestore"
 import {
   getAuth,
-  onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
@@ -13,12 +12,9 @@ import {
 import { getDownloadURL, getStorage, ref , uploadBytesResumable } from "firebase/storage"
 import { app } from "./firebase-config"
 import { HashRouter , Routes , Route } from "react-router-dom";
-import Post from "./components/Home-Post";
 import Profile from "./components/Profile";
-import Story from "./components/Story";
 import FullPost from "./components/FullPost";
 import Homepage from "./components/Homepage";
-import MiniProfile from "./components/MiniProfile";
 import Create from "./components/Create";
 import uniqid from "uniqid"
 import EditProfile from "./components/EditProfile"
@@ -31,8 +27,7 @@ function App() {
   const [data, setData] = useState([])
   const [posts , setPosts] = useState([])
   const [profiles , setProfiles] = useState([])
-  const [loggedIn , setLoggedIn] = useState(false)
-  const [authData , setAuthData] = useState("")
+  const [loggedIn , setLoggedIn] = useState(false)  
   const [userData , setUserData] = useState({
     username: "" , profilePicture: "" , name: "" , description: "" , posts: [] , followers: [], following: []
   })
@@ -109,7 +104,7 @@ function App() {
     // Sign in Firebase using popup auth and Google as the identity provider.
     const provider = new GoogleAuthProvider();
     await signInWithPopup(getAuth(), provider);
-    setAuthData(getAuth())
+    
   }
 
   async function signOutUser() {

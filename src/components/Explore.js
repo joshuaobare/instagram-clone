@@ -1,4 +1,4 @@
-import "../Explore.css"
+import "../styles/Explore.css"
 
 export default function Explore(props){
     return (

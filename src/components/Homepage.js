@@ -1,8 +1,7 @@
-import "../Homepage.css"
+import "../styles/Homepage.css"
 import Story from "./Story"
 import Post from "./Home-Post"
 import MiniProfile from "./MiniProfile"
-import Waldo from "../images/icons/waldo.png"
 import uniqid from 'uniqid';
 import { Link } from "react-router-dom"
 

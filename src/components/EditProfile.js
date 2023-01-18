@@ -1,5 +1,5 @@
 import { Dialog , DialogContent , DialogTitle } from "@mui/material"
-import "../EditProfile.css"
+import "../styles/EditProfile.css"
 
 export default function EditProfile(props){
     return (

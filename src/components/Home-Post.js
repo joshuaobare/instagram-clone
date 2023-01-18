@@ -5,9 +5,7 @@ import {ReactComponent as CommentIconSvg} from "../images/icons/CommentIcon.svg"
 import {ReactComponent as ShareIconSvg} from "../images/icons/ShareIcon.svg"
 import {ReactComponent as SaveIconSvg} from "../images/icons/SaveIcon.svg"
 import { Link } from "react-router-dom"
-import Waldo from "../images/icons/waldo.png"
-import Wrap from "../images/wrap.jpg"
-import "../Home-Post.css"
+import "../styles/Home-Post.css"
 import { useEffect, useState } from "react"
 
 export default function Post(props){

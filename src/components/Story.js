@@ -1,5 +1,4 @@
-import Waldo from "../images/icons/waldo.png"
-import "../Story.css"
+import "../styles/Story.css"
 import { Link } from "react-router-dom"
 
 export default function Story(props) {

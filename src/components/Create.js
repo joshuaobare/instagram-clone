@@ -1,7 +1,7 @@
-import { Dialog , DialogContent , DialogTitle, DialogActions , Button, makeStyles } from "@mui/material"
+import { Dialog , DialogContent , DialogTitle } from "@mui/material"
 import { Close } from "@mui/icons-material"
 import {ReactComponent as UploadSvg} from "../images/icons/UploadImage.svg"
-import "../Create.css"
+import "../styles/Create.css"
 
 export default function Create(props) {
 
