@@ -77,7 +77,7 @@ export default function Post(props){
                         
                         
                     </div>
-                    <div>
+                    <div className="home-post-icons-save">
                         <SaveIconSvg />
                     </div>                   
                     

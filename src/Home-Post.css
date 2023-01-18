@@ -119,3 +119,8 @@
     display: flex;
     justify-content: center;
 }
+
+.home-post-icons-save {
+    padding-right: 10px;
+    cursor: pointer;
+}

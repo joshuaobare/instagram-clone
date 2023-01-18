@@ -103,13 +103,19 @@ export default function FullPost(props) {
 
     }, [props.profiles , props.currentPost])
 
-    
+    const style = {
+        
+        backgroundColor: "rgb(0,0,0.0.3)"
+    }
 
 return (
-    <Dialog open={props.dialogOpen ? true : false} fullWidth maxWidth="lg">        
-        <DialogContent>
+    <Dialog open={props.dialogOpen ? true : false}  maxWidth="1300px" style={style}>        
+        
             <div className="Full-Post">
-                <img src={data.url.stringValue} alt="main post" className="full-post-main-img" />
+                <div className="full-post-main-img-cont">
+                    <img src={data.url.stringValue} alt="main post" className="full-post-main-img" />
+                </div>
+                
                 <div className="full-post-right-section">
                     <div className="full-post-header">
                         <div className="full-post-header-main">
@@ -188,7 +194,7 @@ return (
                         </div>
                 </div>
             </div>
-        </DialogContent>
+        
         
     </Dialog>
 

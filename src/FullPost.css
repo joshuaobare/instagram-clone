@@ -1,5 +1,8 @@
 .Full-Post{
     display: flex;
+    overflow:"hidden";
+    border: 1px solid black;
+    padding-right: 2px;
 }
 
 .full-post-header{
@@ -9,9 +12,16 @@
     padding: 10px;
 }
 
-.full-post-main-img {
+.full-post-main-img-cont {
     height: 847px;
     width: 847px;
+    overflow: hidden;
+}
+
+.full-post-main-img {
+    height: 847px;
+    width: 100%;
+    object-fit: cover;
 }
 
 .full-post-right-section{
