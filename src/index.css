@@ -1,14 +1,14 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 .App {
@@ -16,7 +16,6 @@ code {
   display: flex;
   height: 100%;
   width: 100vw;
-
 }
 nav {
   padding-top: 25px;
@@ -45,17 +44,24 @@ nav {
   padding-left: 10px;
   width: 85%;
   height: 56px;
-  cursor: pointer; 
-  
+  cursor: pointer;
+}
+.navbar-link {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  width: 85%;
+  height: 56px;
+  cursor: pointer;
 }
 .navbar-item:hover {
-  background-color: rgba(0,0,0, 0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 25px;
 }
 .navbar-item-profile-img {
   border-radius: 100%;
 }
-
 
 .nav-title {
   justify-self: flex-end;
@@ -71,20 +77,19 @@ footer {
   position: absolute;
   bottom: 50px;
   font-size: 12px;
-  color: rgb(142,142,142);
+  color: rgb(142, 142, 142);
   gap: 20px;
 }
 
-.footer-top, .footer-bottom {
+.footer-top,
+.footer-bottom {
   display: flex;
   justify-content: center;
   gap: 10px;
-
 }
 
 .footer-top {
   gap: 10px;
-  
 }
 
 .Googleicon {
@@ -100,10 +105,12 @@ footer {
   color: #385185;
   font-size: 14px;
   font-weight: 600px;
-  
 }
 
-.Google-login , .forgot-password, .signup-prompt-span, .app-stores {
+.Google-login,
+.forgot-password,
+.signup-prompt-span,
+.app-stores {
   cursor: pointer;
 }
 
@@ -113,7 +120,7 @@ footer {
 
 .forgot-password {
   font-size: 12px;
-  color: #00367B;
+  color: #00367b;
   padding: 20px;
 }
 
@@ -122,10 +129,10 @@ footer {
   gap: 30px;
   justify-content: center;
   align-items: center;
- 
 }
 
-.login-main-img , .form-section {
+.login-main-img,
+.form-section {
   height: 582px;
   width: 380px;
 }
@@ -133,7 +140,6 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  
 }
 
 .form-inputs > input {
@@ -146,7 +152,6 @@ footer {
 
 .form-inputs > input::placeholder {
   font-size: 12px;
-  
 }
 
 .form-button {
@@ -154,7 +159,7 @@ footer {
   height: 30px;
   cursor: pointer;
   color: white;
-  background-color: #1877F2;
+  background-color: #1877f2;
   border: 1px solid transparent;
   border-radius: 4px;
   font-weight: 600;
@@ -169,10 +174,9 @@ footer {
 }
 .form-mid-mid {
   font-size: 14px;
-  color: #8E8E8E;
+  color: #8e8e8e;
 }
 .form-mid-border {
-  
   width: 100%;
 }
 
@@ -180,11 +184,11 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 20px;  
-  
+  gap: 20px;
 }
 
-.form-section-bottom , .signup-prompt {
+.form-section-bottom,
+.signup-prompt {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -200,7 +204,8 @@ footer {
   height: 400px;
 }
 
-.form , .signup-prompt {
+.form,
+.signup-prompt {
   border: 1px solid #e4e4e4;
   background-color: #fff;
 }
@@ -228,11 +233,7 @@ footer {
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  
-  
 }
-
-
 
 .login-logo {
   padding: 50px;
@@ -247,7 +248,7 @@ footer {
 }
 
 .signup-prompt-span {
-  color: #0095F6;
+  color: #0095f6;
 }
 
 .form-section-bottom {

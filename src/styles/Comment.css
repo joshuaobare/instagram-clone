@@ -1,19 +1,19 @@
 .Comment {
-    display: flex;
-    padding-left: 10px;
-    align-items: center;
-    gap: 10px;
-    height: 50px;
-    padding-right: 10px;
-    cursor: pointer;
+  display: flex;
+  padding-left: 10px;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  padding-right: 10px;
+  cursor: pointer;
 }
 
 .comment-main {
-    display: flex;
-    gap: 5px;
-    flex: 2;
+  display: flex;
+  gap: 5px;
+  flex: 2;
 }
 
 .comment-main-username {
-    font-weight: 600;
+  font-weight: 600;
 }

@@ -1,94 +1,90 @@
 .Homepage {
-    display: flex;
-    gap: 20px;
-    margin-left: 650px;
-    margin-top: 50px;
-    
+  display: flex;
+  gap: 20px;
+  margin-left: 650px;
+  margin-top: 50px;
 }
 
 aside {
-    width: 347px;
+  width: 347px;
 }
 
 .homepage-stories-section {
-    width: 470px;
-    height: 120px;
-    border-radius: 8px;
-    background-color: #fff;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 1px solid #dbdbdb;
-    overflow-y: hidden;
-    
+  width: 470px;
+  height: 120px;
+  border-radius: 8px;
+  background-color: #fff;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid #dbdbdb;
+  overflow-y: hidden;
 }
 
 .homepage-left-section {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .homepage-posts-section {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.homepage-aside-img{
-    height: 56px;
-    width: 56px;
-    border-radius: 100%;
-    
+.homepage-aside-img {
+  height: 56px;
+  width: 56px;
+  border-radius: 100%;
 }
 
 .homepage-aside-header {
-    display: flex;
-    align-items: center;
-    padding-top: 10px;
-
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
 }
 
-.homepage-aside-header-main{
-    flex: 2;
-    padding: 10px;
+.homepage-aside-header-main {
+  flex: 2;
+  padding: 10px;
 }
 
 .homepage-aside-header-name {
-    color: #8e8e8e;
+  color: #8e8e8e;
 }
 
 .homepage-aside-header-switch {
-    color: #0095F6;
-    font-size: 14px;
-    cursor: pointer;
+  color: #0095f6;
+  font-size: 14px;
+  cursor: pointer;
 }
 .homepage-aside-suggestions {
-    color: #8e8e8e;
-    flex: 2;
+  color: #8e8e8e;
+  flex: 2;
 }
 
 .homepage-aside-mid {
-    display: flex;
-    align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .homepage-aside-footer {
-    color: #c7c7c7;
-    margin-top: 10px;
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  color: #c7c7c7;
+  margin-top: 10px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .homepage-aside-footer-top {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }

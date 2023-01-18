@@ -10,10 +10,10 @@ const firebaseConfig = {
   projectId: "instagram-clone-d033f",
   storageBucket: "instagram-clone-d033f.appspot.com",
   messagingSenderId: "143840470845",
-  appId: "1:143840470845:web:e1016ef020f30c1a880754"
+  appId: "1:143840470845:web:e1016ef020f30c1a880754",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export { app }
+export { app };
