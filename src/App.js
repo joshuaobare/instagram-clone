@@ -230,7 +230,10 @@ function App() {
       const fileUrl = await getDownloadURL(storageRef)
 
       alterProfile(pictureData.caption , fileUrl)
-      
+      setPictureData({
+        pictureFile: "",
+        caption: ""
+      })
   }
 
   function handlePictureChange(event){

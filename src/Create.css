@@ -1,8 +1,47 @@
 .image-input {
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-create {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.image-input-header {
+    font-weight: 600;
+    cursor: default;
+}
+
+.form-create-caption {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+.caption {
+    padding-bottom: 10px;
+}
+
+.form-create-button {
+    background-color: #0095f6;
+    color: #fff;
+    padding: 7px 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    align-self: center;
+}
+.Create-close-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: #fff;
 }
