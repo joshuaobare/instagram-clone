@@ -34,7 +34,7 @@
       "prettier"
     ]
   },
-  "homepage": "https://joshuaobare.github.io/thegramclone",
+  "homepage": "https://joshuaobare.github.io/instagram-clone",
   "browserslist": {
     "production": [
       ">0.2%",
