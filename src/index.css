@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
@@ -15,7 +16,8 @@ code {
   background-color: #fafafa;
   display: flex;
   height: 100%;
-  width: 100vw;
+  width: 99.2vw;
+  
 }
 nav {
   padding-top: 25px;
