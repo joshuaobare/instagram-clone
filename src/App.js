@@ -1063,7 +1063,7 @@ function App() {
 
   return (
     <div className="App">
-      <HashRouter>
+      <HashRouter basename="/">
         {loggedIn ? (
           <Navbar
             dialogOpen={dialogOpen}
