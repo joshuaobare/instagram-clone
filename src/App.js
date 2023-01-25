@@ -345,6 +345,30 @@ function App() {
 
   }
 
+  function followsUnpacker(follower, followings){
+
+    const followers = []
+    const following = []
+
+    /* if the following and follower arrays are empty, profile.followers.arrayValue.values will be null.
+       this unpacking is necessary, otherwise the data won't match what's in Firebase  */
+
+    if (follower) {
+      follower.forEach((item) => {
+        followers.push(item.stringValue);
+      });
+    }
+
+    if (followings) {
+      followings.forEach((item) => {
+        following.push(item.stringValue);
+      });
+    }
+
+    return {followers,following}
+
+  }
+
   async function likePost(event, id, username) {
     // The profile that owns the liked post is retrieved
     const profile = profiles.find((items) => {
@@ -362,18 +386,17 @@ function App() {
     );
 
     const postsBefore = postsUnpacker(profile.posts.arrayValue.values)   
-    const postsAfter = postsUnpacker(profile.posts.arrayValue.values , id)
+    const postsAfter = postsUnpacker(profile.posts.arrayValue.values, id)
     
 
     const profileData = doc(getFirestore(app), "profiles", "Profile");
+    const followArrays = followsUnpacker(profile.followers.arrayValue.values , profile.following.arrayValue.values)
+    const followers = followArrays.followers;
+    const following = followArrays.following;
 
-    const followers = [];
-    const following = [];
+    
 
-    /* if the following and follower arrays are empty, profile.followers.arrayValue.values will be null.
-       this unpacking is necessary, otherwise the data won't match what's in Firebase  */
-
-    if (profile.followers.arrayValue.values) {
+    /* if (profile.followers.arrayValue.values) {
       profile.followers.arrayValue.values.forEach((item) => {
         followers.push(item.stringValue);
       });
@@ -383,7 +406,7 @@ function App() {
       profile.following.arrayValue.values.forEach((item) => {
         following.push(item.stringValue);
       });
-    }
+    } */
 
     await updateDoc(profileData, {
       data: arrayRemove({
@@ -489,10 +512,11 @@ function App() {
 
     // the followers and following arrays will need to be unpacked to match the data in Firebase
 
-    const followers = [];
-    const following = [];
+    const followArrays = followsUnpacker(profile.followers.arrayValue.values , profile.following.arrayValue.values)
+    const followers = followArrays.followers;
+    const following = followArrays.following;
 
-    if (profile.followers.arrayValue.values) {
+    /* if (profile.followers.arrayValue.values) {
       profile.followers.arrayValue.values.forEach((item) => {
         followers.push(item.stringValue);
       });
@@ -502,7 +526,7 @@ function App() {
       profile.following.arrayValue.values.forEach((item) => {
         following.push(item.stringValue);
       });
-    }
+    } */
 
     await updateDoc(profileData, {
       data: arrayRemove({
@@ -590,7 +614,7 @@ function App() {
       caption: "",
     });
   }
-
+console.log(userData)
   /* alterProfile unpacks the profile to convert it to a format similar to what's on Firebase 
       before it's used in createPost */
 
