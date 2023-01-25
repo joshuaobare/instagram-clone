@@ -259,6 +259,92 @@ function App() {
     setDialogOpen((prevState) => !prevState);
   }
 
+  console.log(posts)
+  console.log(profiles)
+
+  function postsUnpacker(array , id) {
+
+    const posts = []
+
+    if(id === undefined){
+      array.forEach((item) => {
+        const comments = [];
+        const likes = [];
+        let data;
+        if (item.mapValue.fields.comments.arrayValue.values) {
+          item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
+            comments.push({
+              comment: item.mapValue.fields.comment.stringValue,
+              username: item.mapValue.fields.username.stringValue,
+            });
+          });
+          data = comments;
+        } else {
+          data = [];
+        }
+  
+        if (item.mapValue.fields.likes.arrayValue.values) {
+          item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
+            likes.push(item.stringValue);
+          });
+        }
+  
+        posts.push({
+          caption: item.mapValue.fields.caption.stringValue,
+          id: item.mapValue.fields.id.stringValue,
+          url: item.mapValue.fields.url.stringValue,
+          username: item.mapValue.fields.username.stringValue,
+          comments: data,
+          likes: likes,
+          timestamp: Timestamp.fromMillis(
+            Date.parse(item.mapValue.fields.timestamp.timestampValue)
+          ),
+        });
+      });
+    } else {
+      array.forEach((item) => {
+        if (item.mapValue.fields.id.stringValue !== id) {
+          const comments = [];
+          const likes = [];
+          let data;
+          if (item.mapValue.fields.comments.arrayValue.values) {
+            item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
+              comments.push({
+                comment: item.mapValue.fields.comment.stringValue,
+                username: item.mapValue.fields.username.stringValue,
+              });
+            });
+            data = comments;
+          } else {
+            data = [];
+          }
+  
+          if (item.mapValue.fields.likes.arrayValue.values) {
+            item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
+              likes.push(item.stringValue);
+            });
+          }
+  
+          posts.push({
+            caption: item.mapValue.fields.caption.stringValue,
+            id: item.mapValue.fields.id.stringValue,
+            url: item.mapValue.fields.url.stringValue,
+            username: item.mapValue.fields.username.stringValue,
+            comments: data,
+            likes: likes,
+            timestamp: Timestamp.fromMillis(
+              Date.parse(item.mapValue.fields.timestamp.timestampValue)
+            ),
+          });
+        }
+      });
+    }
+    
+
+    return posts
+
+  }
+
   async function likePost(event, id, username) {
     // The profile that owns the liked post is retrieved
     const profile = profiles.find((items) => {
@@ -275,79 +361,9 @@ function App() {
       (item) => item.mapValue.fields.id.stringValue === id
     );
 
-    const postsBefore = [];
-    profile.posts.arrayValue.values.forEach((item) => {
-      const comments = [];
-      const likes = [];
-      let data;
-      if (item.mapValue.fields.comments.arrayValue.values) {
-        item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
-          comments.push({
-            comment: item.mapValue.fields.comment.stringValue,
-            username: item.mapValue.fields.username.stringValue,
-          });
-        });
-        data = comments;
-      } else {
-        data = [];
-      }
-
-      if (item.mapValue.fields.likes.arrayValue.values) {
-        item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
-          likes.push(item.stringValue);
-        });
-      }
-
-      postsBefore.push({
-        caption: item.mapValue.fields.caption.stringValue,
-        id: item.mapValue.fields.id.stringValue,
-        url: item.mapValue.fields.url.stringValue,
-        username: item.mapValue.fields.username.stringValue,
-        comments: data,
-        likes: likes,
-        timestamp: Timestamp.fromMillis(
-          Date.parse(item.mapValue.fields.timestamp.timestampValue)
-        ),
-      });
-    });
-
-    const postsAfter = [];
-    profile.posts.arrayValue.values.forEach((item) => {
-      if (item.mapValue.fields.id.stringValue !== id) {
-        const comments = [];
-        const likes = [];
-        let data;
-        if (item.mapValue.fields.comments.arrayValue.values) {
-          item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
-            comments.push({
-              comment: item.mapValue.fields.comment.stringValue,
-              username: item.mapValue.fields.username.stringValue,
-            });
-          });
-          data = comments;
-        } else {
-          data = [];
-        }
-
-        if (item.mapValue.fields.likes.arrayValue.values) {
-          item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
-            likes.push(item.stringValue);
-          });
-        }
-
-        postsAfter.push({
-          caption: item.mapValue.fields.caption.stringValue,
-          id: item.mapValue.fields.id.stringValue,
-          url: item.mapValue.fields.url.stringValue,
-          username: item.mapValue.fields.username.stringValue,
-          comments: data,
-          likes: likes,
-          timestamp: Timestamp.fromMillis(
-            Date.parse(item.mapValue.fields.timestamp.timestampValue)
-          ),
-        });
-      }
-    });
+    const postsBefore = postsUnpacker(profile.posts.arrayValue.values)   
+    const postsAfter = postsUnpacker(profile.posts.arrayValue.values , id)
+    
 
     const profileData = doc(getFirestore(app), "profiles", "Profile");
 
@@ -461,84 +477,14 @@ function App() {
     /* The posts in the retrieved profile are looped through, so the format can be matched to the data on the database, 
      for each, we also loop the comments array and append it to the postsBefore array */
 
-    const postsBefore = [];
-    profile.posts.arrayValue.values.forEach((item) => {
-      const comments = [];
-      const likes = [];
-      let data;
-      if (item.mapValue.fields.comments.arrayValue.values) {
-        item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
-          comments.push({
-            comment: item.mapValue.fields.comment.stringValue,
-            username: item.mapValue.fields.username.stringValue,
-          });
-        });
-        data = comments;
-      } else {
-        data = [];
-      }
-
-      if (item.mapValue.fields.likes.arrayValue.values) {
-        item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
-          likes.push(item.stringValue);
-        });
-      }
-
-      postsBefore.push({
-        caption: item.mapValue.fields.caption.stringValue,
-        id: item.mapValue.fields.id.stringValue,
-        url: item.mapValue.fields.url.stringValue,
-        username: item.mapValue.fields.username.stringValue,
-        comments: data,
-        likes: likes,
-        timestamp: Timestamp.fromMillis(
-          Date.parse(item.mapValue.fields.timestamp.timestampValue)
-        ),
-      });
-    });
-
+    const postsBefore = postsUnpacker(profile.posts.arrayValue.values)
+    
     /*  postsBefore is used to remove the profile from the array on the DB, so it's exclusive of the changes made to the data by the function.
         postsAfter separates the retrieved post from postsBefore, so that the post can be altered by adding comments , then merged with postsAfter 
         before adding it to the DB                   */
 
-    const postsAfter = [];
-    profile.posts.arrayValue.values.forEach((item) => {
-      if (item.mapValue.fields.id.stringValue !== id) {
-        const comments = [];
-        const likes = [];
-        let data;
-        if (item.mapValue.fields.comments.arrayValue.values) {
-          item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
-            comments.push({
-              comment: item.mapValue.fields.comment.stringValue,
-              username: item.mapValue.fields.username.stringValue,
-            });
-          });
-          data = comments;
-        } else {
-          data = [];
-        }
-
-        if (item.mapValue.fields.likes.arrayValue.values) {
-          item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
-            likes.push(item.stringValue);
-          });
-        }
-
-        postsAfter.push({
-          caption: item.mapValue.fields.caption.stringValue,
-          id: item.mapValue.fields.id.stringValue,
-          url: item.mapValue.fields.url.stringValue,
-          username: item.mapValue.fields.username.stringValue,
-          comments: data,
-          likes: likes,
-          timestamp: Timestamp.fromMillis(
-            Date.parse(item.mapValue.fields.timestamp.timestampValue)
-          ),
-        });
-      }
-    });
-
+    const postsAfter = postsUnpacker(profile.posts.arrayValue.values , id);
+    
     const profileData = doc(getFirestore(app), "profiles", "Profile");
 
     // the followers and following arrays will need to be unpacked to match the data in Firebase
@@ -651,45 +597,11 @@ function App() {
   async function alterProfile(caption, url) {
     const profileData = doc(getFirestore(app), "profiles", "Profile");
 
-    const userPosts = [];
+    const userPosts = postsUnpacker(userData.posts);
     const followers = [];
     const following = [];
 
-    userData.posts.forEach((item) => {
-      const comments = [];
-      const likes = [];
-      let data;
-      if (item.mapValue.fields.comments.arrayValue.values) {
-        item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
-          comments.push({
-            comment: item.mapValue.fields.comment.stringValue,
-            username: item.mapValue.fields.username.stringValue,
-          });
-        });
-        data = comments;
-      } else {
-        data = [];
-      }
-
-      if (item.mapValue.fields.likes.arrayValue.values) {
-        item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
-          likes.push(item.stringValue);
-        });
-      }
-
-      userPosts.push({
-        caption: item.mapValue.fields.caption.stringValue,
-        id: item.mapValue.fields.id.stringValue,
-        url: item.mapValue.fields.url.stringValue,
-        username: item.mapValue.fields.username.stringValue,
-        comments: data,
-        likes: likes,
-        timestamp: Timestamp.fromMillis(
-          Date.parse(item.mapValue.fields.timestamp.timestampValue)
-        ),
-      });
-    });
-
+    
     if (userData.followers.length > 0) {
       userData.followers.forEach((item) => {
         followers.push(item.stringValue);
@@ -748,45 +660,11 @@ function App() {
 
     const profileData = doc(getFirestore(app), "profiles", "Profile");
 
-    const userPosts = [];
+    const userPosts = postsUnpacker(userData.posts);
     const followers = [];
     const following = [];
 
-    userData.posts.forEach((item) => {
-      const comments = [];
-      const likes = [];
-      let data;
-      if (item.mapValue.fields.comments.arrayValue.values) {
-        item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
-          comments.push({
-            comment: item.mapValue.fields.comment.stringValue,
-            username: item.mapValue.fields.username.stringValue,
-          });
-        });
-        data = comments;
-      } else {
-        data = [];
-      }
-
-      if (item.mapValue.fields.likes.arrayValue.values) {
-        item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
-          likes.push(item.stringValue);
-        });
-      }
-
-      userPosts.push({
-        caption: item.mapValue.fields.caption.stringValue,
-        id: item.mapValue.fields.id.stringValue,
-        url: item.mapValue.fields.url.stringValue,
-        username: item.mapValue.fields.username.stringValue,
-        comments: data,
-        likes: likes,
-        timestamp: Timestamp.fromMillis(
-          Date.parse(item.mapValue.fields.timestamp.timestampValue)
-        ),
-      });
-    });
-
+    
     if (userData.followers.length > 0) {
       userData.followers.forEach((item) => {
         followers.push(item.stringValue);
@@ -836,48 +714,12 @@ function App() {
     const checker = userData.following.some(
       (item) => item.stringValue === user
     );
-    const userPosts = [];
+    const userPosts = postsUnpacker(userData.posts);
     const followers = [];
     const following = [];
     let followingAfter = [];
 
-    // user's posts are unpacked
-
-    userData.posts.forEach((item) => {
-      const comments = [];
-      const likes = [];
-      let data;
-      if (item.mapValue.fields.comments.arrayValue.values) {
-        item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
-          comments.push({
-            comment: item.mapValue.fields.comment.stringValue,
-            username: item.mapValue.fields.username.stringValue,
-          });
-        });
-        data = comments;
-      } else {
-        data = [];
-      }
-
-      if (item.mapValue.fields.likes.arrayValue.values) {
-        item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
-          likes.push(item.stringValue);
-        });
-      }
-
-      userPosts.push({
-        caption: item.mapValue.fields.caption.stringValue,
-        id: item.mapValue.fields.id.stringValue,
-        url: item.mapValue.fields.url.stringValue,
-        username: item.mapValue.fields.username.stringValue,
-        comments: data,
-        likes: likes,
-        timestamp: Timestamp.fromMillis(
-          Date.parse(item.mapValue.fields.timestamp.timestampValue)
-        ),
-      });
-    });
-
+    
     if (userData.followers.length > 0) {
       userData.followers.forEach((item) => {
         followers.push(item.stringValue);
@@ -930,44 +772,13 @@ function App() {
     const profile = profiles.find((item) => item.username.stringValue === user);
     const profileFollowers = [];
     const profileFollowing = [];
-    const profilePosts = [];
+    let profilePosts = [];
     let profileFollowersAfter = [];
 
     if (profile.posts.arrayValue.values) {
-      profile.posts.arrayValue.values.forEach((item) => {
-        const comments = [];
-        const likes = [];
-        let data;
-        if (item.mapValue.fields.comments.arrayValue.values) {
-          item.mapValue.fields.comments.arrayValue.values.forEach((item) => {
-            comments.push({
-              comment: item.mapValue.fields.comment.stringValue,
-              username: item.mapValue.fields.username.stringValue,
-            });
-          });
-          data = comments;
-        } else {
-          data = [];
-        }
 
-        if (item.mapValue.fields.likes.arrayValue.values) {
-          item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
-            likes.push(item.stringValue);
-          });
-        }
+      profilePosts = postsUnpacker(profile.posts.arrayValue.values)
 
-        profilePosts.push({
-          caption: item.mapValue.fields.caption.stringValue,
-          id: item.mapValue.fields.id.stringValue,
-          url: item.mapValue.fields.url.stringValue,
-          username: item.mapValue.fields.username.stringValue,
-          comments: data,
-          likes: likes,
-          timestamp: Timestamp.fromMillis(
-            Date.parse(item.mapValue.fields.timestamp.timestampValue)
-          ),
-        });
-      });
     }
 
     if (profile.followers.arrayValue.values) {
@@ -1144,5 +955,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
