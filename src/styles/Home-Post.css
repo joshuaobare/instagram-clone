@@ -122,3 +122,29 @@
   padding-right: 10px;
   cursor: pointer;
 }
+
+@media (max-width:600px) {
+  .post {
+    max-width: 350px;
+    height: auto;
+    align-self: center;
+  }
+  .home-post-comment {
+    max-width: 350px;
+  }
+  .home-post-comment-form {
+    max-width: 295px;
+  }
+
+  .home-post-img-cont {
+    height: 450px;
+    max-width: 350px;
+    overflow: hidden;
+  }
+  
+  .home-post-img {
+    width: 100%;
+    object-fit: cover;
+    height: 450px;
+  }
+}
