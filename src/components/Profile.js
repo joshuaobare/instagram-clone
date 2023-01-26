@@ -128,15 +128,21 @@ export default function Profile(props) {
         <div className="profile-details">
           <div className="profile-details-header">
             <div className="profile-details-username">{data.username}</div>
-            <button
-              className="profile-details-follow"
-              onClick={
-                isUser ? props.toggleEditDialog : () => props.follow(username)
-              }
-              style={style}
-            >
-              {isUser ? "Edit Profile" : followStatus}
-            </button>
+            <div className="profile-details-button-cont">
+              <button
+                className="profile-details-follow"
+                onClick={
+                  isUser ? props.toggleEditDialog : () => props.follow(username)
+                }
+                style={style}
+              >
+                {isUser ? "Edit Profile" : followStatus}
+              </button>
+              {isUser ? <button className="profile-details-signout">
+                Sign Out
+              </button> : ""}
+            </div>
+            
             <OptionsSvg />
           </div>
           <div className="profile-details-mid">
