@@ -109,6 +109,10 @@ hr {
   display: none;
 }
 
+.secondary-profile-details, .secondary-profile-details-top {
+  display: none;
+}
+
 @media (max-width:600px) {
   .Profile {
     margin-left: 0px;
@@ -145,13 +149,7 @@ hr {
     
     
   }
-
-  .profile-footer {
-    display: none;
-  }
-  .options-icon {
-    display: none;
-  }
+  
 
   .profile-details {
     max-width: 200px;
@@ -170,4 +168,51 @@ hr {
     align-self: flex-start;
     width: 100%;
   }
+
+  .profile-details-mid,
+  .profile-details-bottom,
+  .options-icon,
+  .profile-footer {
+    display: none;
+  }
+
+  .secondary-profile-details {
+    width: 100vw;
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px solid rgb(219, 219, 219);
+    margin-top: 20px;
+  }
+
+  .secondary-profile-details-posts,
+  .secondary-profile-details-following,
+  .secondary-profile-details-followers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .secondary-title {
+    color: rgb(142, 142, 142);
+  }
+
+  
+  .secondary-profile-details-top {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    padding-left: 30px;
+    margin-top: 10px;
+    gap:5px;
+  }
+
+  .secondary-profile-details-top-desc {
+    font-size: 14px;
+  }
+
 }

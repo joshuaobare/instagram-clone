@@ -164,6 +164,31 @@ export default function Profile(props) {
           </div>
         </div>
       </div>
+
+      {/* secondary details are displayed via media query else display is set to none */}
+      <div className="secondary-profile-details-top">
+            <div>
+              <b>{data.name}</b>
+            </div>
+            <div className="secondary-title secondary-profile-details-top-desc">{data.description}</div>
+      </div>
+      
+
+      
+      <div className="secondary-profile-details">
+        <div className="secondary-profile-details-posts">
+          <div><b>{data.postCount}</b></div>
+          <div className="secondary-title">post{data.postCount === 1 ? "" : "s"}</div>
+        </div>
+        <div className="secondary-profile-details-followers">
+          <div><b>{data.followers}</b></div>
+          <div className="secondary-title">follower{data.followers === 1 ? "" : "s"}</div>
+        </div>
+        <div className="secondary-profile-details-following">
+          <div><b>{data.following}</b></div>
+          <div className="secondary-title">following</div>
+        </div>
+      </div>
       <hr />
       <div className="profile-menu">
         <div className="profile-menu-item">
