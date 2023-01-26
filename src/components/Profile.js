@@ -127,7 +127,12 @@ export default function Profile(props) {
         </div>
         <div className="profile-details">
           <div className="profile-details-header">
-            <div className="profile-details-username">{data.username}</div>
+            <div className="profile-details-username-cont">
+              <div className="profile-details-username">{data.username}</div>
+              {isUser ? <button className="profile-details-signout">
+                Sign Out
+              </button> : ""}
+            </div>
             <div className="profile-details-button-cont">
               <button
                 className="profile-details-follow"
@@ -138,9 +143,7 @@ export default function Profile(props) {
               >
                 {isUser ? "Edit Profile" : followStatus}
               </button>
-              {isUser ? <button className="profile-details-signout">
-                Sign Out
-              </button> : ""}
+              
             </div>
             
             <OptionsSvg />

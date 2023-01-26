@@ -16,6 +16,7 @@ hr {
   width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
+  border-color: rgb(219, 219, 219);
 }
 
 .profile-main-img-cont {
@@ -117,10 +118,12 @@ hr {
   .Profile {
     margin-left: 0px;
     width: 100vw;
+    height: auto;
   }
 
   .profile-main {
     gap: 25px;
+    margin-top: 25px;
   }
 
   .profile-main , .profile-posts-grid {
@@ -149,6 +152,10 @@ hr {
     
     
   }
+
+  .profile-details-username {
+    font-size: 20px;
+  }
   
 
   .profile-details {
@@ -172,7 +179,8 @@ hr {
   .profile-details-mid,
   .profile-details-bottom,
   .options-icon,
-  .profile-footer {
+  .profile-footer,
+  .profile-menu {
     display: none;
   }
 
@@ -181,6 +189,7 @@ hr {
     display: flex;
     justify-content: space-evenly;
     border-top: 1px solid rgb(219, 219, 219);
+    border-bottom: 1px solid rgb(219, 219, 219);
     margin-top: 20px;
   }
 
@@ -213,6 +222,43 @@ hr {
 
   .secondary-profile-details-top-desc {
     font-size: 14px;
+  }
+
+  .profile-details-username-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 200px;
+  }
+
+  hr {
+    display: none;
+  }
+
+  .profile-menu {
+    margin-top: 5px;
+    color: rgb(142, 142, 142);
+
+  }
+
+  .profile-posts-grid {
+    gap: 0;
+    row-gap: 0;
+    height: auto;
+  }
+
+  .profile-post-cont {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+  }
+
+  .profile-post {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+
   }
 
 }
