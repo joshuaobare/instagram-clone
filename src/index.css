@@ -136,12 +136,14 @@ footer {
 .login-main-img,
 .form-section {
   height: 582px;
-  width: 380px;
+  max-width: 380px;
 }
 .form-inputs {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 .form-inputs > input {
@@ -268,4 +270,77 @@ a {
 
 button {
   cursor: pointer;
+}
+
+@media (max-width:600px) {
+  
+  .App {
+    width: 100vw;
+  }
+  .login-main-img {
+    display: none;
+  }
+
+  footer {
+    position: static;
+    margin-top: 50px;
+    padding-bottom: 20px;
+  }
+
+  .form-section {
+    max-width: 400px;
+  }
+
+  .footer-top {
+    flex-wrap: wrap;
+  }
+
+  .Login {
+    height: auto;
+    margin-top: 50px;
+  }
+
+  .nav-title, 
+  .navbar-bottom,
+  .reels-link,
+  aside,
+  .search-link,
+  .messages-link,
+  .notifications-link{
+    display: none;
+  }
+
+  .logo-link {
+    width: 100vw;
+  }
+
+  nav {
+    visibility: hidden;
+  }
+
+  .navbar-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: auto;
+    visibility: visible;
+  }
+
+  .navbar-mid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    height: auto;
+    visibility: visible;
+  }
+
+  
+
 }

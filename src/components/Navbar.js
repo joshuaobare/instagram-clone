@@ -13,46 +13,46 @@ export default function Navbar(props) {
   return (
     <nav>
       <div className="navbar-heading">
-        <div className="navbar-item">
+        <div className="navbar-item logo-link">
           <LogoSvg />
         </div>
       </div>
 
       <div className="navbar-mid">
-        <div className="navbar-item">
-          <Link to="/" className="navbar-link">
+        <div className="navbar-item home-link">
+          <Link to="/" className="navbar-link ">
             <HomeSvg />
 
-            <div className="nav-title">Home</div>
+            <div className="nav-title ">Home</div>
           </Link>
         </div>
-        <div className="navbar-item">
+        <div className="navbar-item search-link">
           <SearchSvg />
           <div className="nav-title">Search</div>
         </div>
-        <div className="navbar-item">
+        <div className="navbar-item explore-link">
           <Link to="/explore" className="navbar-link">
             <ExploreSvg />
             <div className="nav-title">Explore</div>
           </Link>
         </div>
-        <div className="navbar-item">
+        <div className="navbar-item reels-link">
           <ReelsSvg />
           <div className="nav-title">Reels</div>
         </div>
-        <div className="navbar-item">
+        <div className="navbar-item messages-link">
           <MessagesSvg />
           <div className="nav-title">Messages</div>
         </div>
-        <div className="navbar-item">
+        <div className="navbar-item notifications-link">
           <NotificationsSvg />
           <div className="nav-title">Notifications</div>
         </div>
-        <div className="navbar-item" onClick={props.toggleDialog}>
+        <div className="navbar-item create-link" onClick={props.toggleDialog}>
           <CreateSvg />
           <div className="nav-title">Create</div>
         </div>
-        <div className="navbar-item">
+        <div className="navbar-item profile-link">
           <Link to="/profile/user" className="navbar-link">
             <img
               src={props.userData.profilePicture}

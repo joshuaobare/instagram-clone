@@ -24,6 +24,8 @@ aside {
   overflow-y: hidden;
 }
 
+
+
 .homepage-left-section {
   display: flex;
   flex-direction: column;
@@ -87,4 +89,20 @@ aside {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+@media (max-width:600px) {
+  .Homepage {
+    margin-left: 0;
+    padding-left: 20px;
+  }
+  .homepage-stories-section div:nth-child(5){
+    display: none;
+  }
+  .homepage-stories-section div:nth-child(6){
+    display: none;
+  }
+  .homepage-stories-section {
+    width: 100vw;
+  }
 }
