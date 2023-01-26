@@ -259,14 +259,14 @@ function App() {
     setDialogOpen((prevState) => !prevState);
   }
 
-  console.log(posts)
-  console.log(profiles)
 
-  function postsUnpacker(array , id) {
+  // postsUnpacker convert posts arrays to a format that matches Firebase, otherwise the arrayRemoves won't successfully
+  // delete the profiles before the arrayUnions recreate them and add them back to Firebase
 
-    const posts = []
+  function postsUnpacker(array, id) {
+    const posts = [];
 
-    if(id === undefined){
+    if (id === undefined) {
       array.forEach((item) => {
         const comments = [];
         const likes = [];
@@ -282,13 +282,13 @@ function App() {
         } else {
           data = [];
         }
-  
+
         if (item.mapValue.fields.likes.arrayValue.values) {
           item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
             likes.push(item.stringValue);
           });
         }
-  
+
         posts.push({
           caption: item.mapValue.fields.caption.stringValue,
           id: item.mapValue.fields.id.stringValue,
@@ -303,6 +303,10 @@ function App() {
       });
     } else {
       array.forEach((item) => {
+        // this block is used for postsAfter arrays whereby a post has been removed from the main posts array (postsBefore). It'll be edited
+        // and then merged with postsBefore.
+        // the following if block is used to ignore that particular post (via its id)
+
         if (item.mapValue.fields.id.stringValue !== id) {
           const comments = [];
           const likes = [];
@@ -318,13 +322,13 @@ function App() {
           } else {
             data = [];
           }
-  
+
           if (item.mapValue.fields.likes.arrayValue.values) {
             item.mapValue.fields.likes.arrayValue.values.forEach((item) => {
               likes.push(item.stringValue);
             });
           }
-  
+
           posts.push({
             caption: item.mapValue.fields.caption.stringValue,
             id: item.mapValue.fields.id.stringValue,
@@ -339,34 +343,45 @@ function App() {
         }
       });
     }
-    
 
-    return posts
-
+    return posts;
   }
 
-  function followsUnpacker(follower, followings){
+  // followsUnpacker converts the follow arrays into a format that matches the data in Firebase
 
-    const followers = []
-    const following = []
+  function followsUnpacker(follower, followings, arrayType) {
+    const followers = [];
+    const following = [];
 
-    /* if the following and follower arrays are empty, profile.followers.arrayValue.values will be null.
-       this unpacking is necessary, otherwise the data won't match what's in Firebase  */
+    // The main if-else block is used to differentiate between the two types of arrays that may be used with the function
 
-    if (follower) {
-      follower.forEach((item) => {
-        followers.push(item.stringValue);
-      });
+    if (arrayType === undefined) {
+      if (follower) {
+        follower.forEach((item) => {
+          followers.push(item.stringValue);
+        });
+      }
+
+      if (followings) {
+        followings.forEach((item) => {
+          following.push(item.stringValue);
+        });
+      }
+    } else {
+      if (follower.length > 0) {
+        follower.forEach((item) => {
+          followers.push(item.stringValue);
+        });
+      }
+
+      if (followings.length > 0) {
+        followings.forEach((item) => {
+          following.push(item.stringValue);
+        });
+      }
     }
 
-    if (followings) {
-      followings.forEach((item) => {
-        following.push(item.stringValue);
-      });
-    }
-
-    return {followers,following}
-
+    return { followers, following };
   }
 
   async function likePost(event, id, username) {
@@ -385,28 +400,19 @@ function App() {
       (item) => item.mapValue.fields.id.stringValue === id
     );
 
-    const postsBefore = postsUnpacker(profile.posts.arrayValue.values)   
-    const postsAfter = postsUnpacker(profile.posts.arrayValue.values, id)
-    
+    // The retrieved profile's posts array is separated into two, one with the liked posts and one without (postsAfter)
+    // After the post is edited it'll be merged with postsAfter just before the arrayUnion
+
+    const postsBefore = postsUnpacker(profile.posts.arrayValue.values);
+    const postsAfter = postsUnpacker(profile.posts.arrayValue.values, id);
 
     const profileData = doc(getFirestore(app), "profiles", "Profile");
-    const followArrays = followsUnpacker(profile.followers.arrayValue.values , profile.following.arrayValue.values)
+    const followArrays = followsUnpacker(
+      profile.followers.arrayValue.values,
+      profile.following.arrayValue.values
+    );
     const followers = followArrays.followers;
     const following = followArrays.following;
-
-    
-
-    /* if (profile.followers.arrayValue.values) {
-      profile.followers.arrayValue.values.forEach((item) => {
-        followers.push(item.stringValue);
-      });
-    }
-
-    if (profile.following.arrayValue.values) {
-      profile.following.arrayValue.values.forEach((item) => {
-        following.push(item.stringValue);
-      });
-    } */
 
     await updateDoc(profileData, {
       data: arrayRemove({
@@ -482,7 +488,6 @@ function App() {
 
     const profile = profiles.find((items) => {
       if (items.posts.arrayValue.values) {
-        //console.log(items.posts)
         return items.posts.arrayValue.values.find(
           (item) => item.mapValue.fields.id.stringValue === id
         );
@@ -500,33 +505,24 @@ function App() {
     /* The posts in the retrieved profile are looped through, so the format can be matched to the data on the database, 
      for each, we also loop the comments array and append it to the postsBefore array */
 
-    const postsBefore = postsUnpacker(profile.posts.arrayValue.values)
-    
+    const postsBefore = postsUnpacker(profile.posts.arrayValue.values);
+
     /*  postsBefore is used to remove the profile from the array on the DB, so it's exclusive of the changes made to the data by the function.
         postsAfter separates the retrieved post from postsBefore, so that the post can be altered by adding comments , then merged with postsAfter 
         before adding it to the DB                   */
 
-    const postsAfter = postsUnpacker(profile.posts.arrayValue.values , id);
-    
+    const postsAfter = postsUnpacker(profile.posts.arrayValue.values, id);
+
     const profileData = doc(getFirestore(app), "profiles", "Profile");
 
     // the followers and following arrays will need to be unpacked to match the data in Firebase
 
-    const followArrays = followsUnpacker(profile.followers.arrayValue.values , profile.following.arrayValue.values)
+    const followArrays = followsUnpacker(
+      profile.followers.arrayValue.values,
+      profile.following.arrayValue.values
+    );
     const followers = followArrays.followers;
     const following = followArrays.following;
-
-    /* if (profile.followers.arrayValue.values) {
-      profile.followers.arrayValue.values.forEach((item) => {
-        followers.push(item.stringValue);
-      });
-    }
-
-    if (profile.following.arrayValue.values) {
-      profile.following.arrayValue.values.forEach((item) => {
-        following.push(item.stringValue);
-      });
-    } */
 
     await updateDoc(profileData, {
       data: arrayRemove({
@@ -614,7 +610,7 @@ function App() {
       caption: "",
     });
   }
-console.log(userData)
+  
   /* alterProfile unpacks the profile to convert it to a format similar to what's on Firebase 
       before it's used in createPost */
 
@@ -622,21 +618,13 @@ console.log(userData)
     const profileData = doc(getFirestore(app), "profiles", "Profile");
 
     const userPosts = postsUnpacker(userData.posts);
-    const followers = [];
-    const following = [];
-
-    
-    if (userData.followers.length > 0) {
-      userData.followers.forEach((item) => {
-        followers.push(item.stringValue);
-      });
-    }
-
-    if (userData.following.length > 0) {
-      userData.following.forEach((item) => {
-        following.push(item.stringValue);
-      });
-    }
+    const followArrays = followsUnpacker(
+      userData.followers,
+      userData.following,
+      "userData"
+    );
+    const followers = followArrays.followers;
+    const following = followArrays.following;
 
     await updateDoc(profileData, {
       data: arrayRemove({
@@ -685,21 +673,13 @@ console.log(userData)
     const profileData = doc(getFirestore(app), "profiles", "Profile");
 
     const userPosts = postsUnpacker(userData.posts);
-    const followers = [];
-    const following = [];
-
-    
-    if (userData.followers.length > 0) {
-      userData.followers.forEach((item) => {
-        followers.push(item.stringValue);
-      });
-    }
-
-    if (userData.following.length > 0) {
-      userData.following.forEach((item) => {
-        following.push(item.stringValue);
-      });
-    }
+    const followArrays = followsUnpacker(
+      userData.followers,
+      userData.following,
+      "userData"
+    );
+    const followers = followArrays.followers;
+    const following = followArrays.following;
 
     await updateDoc(profileData, {
       data: arrayRemove({
@@ -739,23 +719,14 @@ console.log(userData)
       (item) => item.stringValue === user
     );
     const userPosts = postsUnpacker(userData.posts);
-    const followers = [];
-    const following = [];
-    let followingAfter = [];
-
-    
-    if (userData.followers.length > 0) {
-      userData.followers.forEach((item) => {
-        followers.push(item.stringValue);
-      });
-    }
-
-    if (userData.following.length > 0) {
-      userData.following.forEach((item) => {
-        following.push(item.stringValue);
-      });
-      followingAfter = [...following];
-    }
+    const followArrays = followsUnpacker(
+      userData.followers,
+      userData.following,
+      "userData"
+    );
+    const followers = followArrays.followers;
+    const following = followArrays.following;
+    const followingAfter = [...following];
 
     // determines whether to follow or unfollow by checking whether the profile is in the user's following array
     if (checker) {
@@ -794,29 +765,19 @@ console.log(userData)
     // the next part either adds or removes the user from the corresponding profile's follower array
 
     const profile = profiles.find((item) => item.username.stringValue === user);
-    const profileFollowers = [];
-    const profileFollowing = [];
+    const profileFollowArrays = followsUnpacker(
+      profile.followers.arrayValue.values,
+      profile.following.arrayValue.values
+    );
+    const profileFollowers = profileFollowArrays.followers;
+    const profileFollowing = profileFollowArrays.following;
     let profilePosts = [];
-    let profileFollowersAfter = [];
+    const profileFollowersAfter = [...profileFollowers];
 
     if (profile.posts.arrayValue.values) {
-
-      profilePosts = postsUnpacker(profile.posts.arrayValue.values)
-
+      profilePosts = postsUnpacker(profile.posts.arrayValue.values);
     }
 
-    if (profile.followers.arrayValue.values) {
-      profile.followers.arrayValue.values.forEach((item) => {
-        profileFollowers.push(item.stringValue);
-      });
-      profileFollowersAfter = [...profileFollowers];
-    }
-
-    if (profile.following.arrayValue.values) {
-      profile.following.arrayValue.values.forEach((item) => {
-        profileFollowing.push(item.stringValue);
-      });
-    }
     const userFollower = profileFollowersAfter.some(
       (item) => item === userData.username
     );
@@ -959,7 +920,7 @@ console.log(userData)
           profileEdits={profileEdits}
           handleProfileEdit={handleProfileEdit}
           editProfile={editProfile}
-          toggleEditDialog = {toggleEditDialog}
+          toggleEditDialog={toggleEditDialog}
         />
         {postDialogOpen ? (
           <FullPost
@@ -979,6 +940,5 @@ console.log(userData)
     </div>
   );
 }
-
 
 export default App;
