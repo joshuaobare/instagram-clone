@@ -3,6 +3,7 @@ import Story from "./Story";
 import Post from "./Home-Post";
 import MiniProfile from "./MiniProfile";
 import uniqid from "uniqid";
+import { ReactComponent as LogoSvg } from "../images/icons/Logo.svg";
 import { Link } from "react-router-dom";
 
 export default function Homepage(props) {
@@ -23,6 +24,9 @@ export default function Homepage(props) {
   return (
     <div className="Homepage">
       <div className="homepage-left-section">
+        <div className="homepage-left-section-header">
+          <h1 className="homepage-header-cont"><LogoSvg /></h1>
+        </div>
         <div className="homepage-stories-section">
           {props.profiles
             .slice(Math.max(props.profiles.length - 7, 0))

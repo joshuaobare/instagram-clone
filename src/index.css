@@ -306,6 +306,7 @@ button {
   aside,
   .search-link,
   .messages-link,
+  .navbar-heading,
   .notifications-link{
     display: none;
   }
@@ -319,14 +320,15 @@ button {
   }
 
   .navbar-heading {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     top: 0;
     width: 100vw;
     height: auto;
-    visibility: visible;
+    visibility: visible; */
+    display: none;
   }
 
   .navbar-mid {
@@ -334,12 +336,26 @@ button {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    /* width: 100vw; */
-    max-width: 100vw;
+    width: 100vw;
+    /* max-width: 100vw; */
     height: auto;
     visibility: visible;
+    background-color: #fff;
+    border-top: 1px solid #e4e4e4;
+  }
+
+  .navbar-item {
+    justify-content: center;
+    margin-left: 0;
+    padding-left: 0;
+    height: 50px;
+  }
+
+  .navbar-link {
+    justify-content: center;
+    align-items: center;
   }
 
   

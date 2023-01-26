@@ -99,3 +99,37 @@ hr {
   height: 290px;
   cursor: pointer;
 }
+
+@media (max-width:600px) {
+  .Profile {
+    margin-left: 0px;
+    width: 100vw;
+  }
+
+  .profile-main {
+    gap: 25px;
+  }
+
+  .profile-main , .profile-posts-grid {
+    max-width: 350px;
+  }
+
+  .profile-main-img-cont {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+  }
+  .profile-main-img {
+    width: 100%;
+    object-fit: cover;
+    height: 80px;
+  }
+
+  .profile-details-header {
+    flex-direction: column;
+  }
+
+  .profile-footer {
+    display: none;
+  }
+}
