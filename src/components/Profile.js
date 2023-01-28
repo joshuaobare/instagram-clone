@@ -5,7 +5,7 @@ import { ReactComponent as TaggedIconSvg } from "../images/icons/TaggedIcon.svg"
 import { ReactComponent as OptionsSvg } from "../images/icons/Options.svg";
 import "../styles/Profile.css";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams , useNavigate } from "react-router-dom";
 import uniqid from "uniqid";
 
 export default function Profile(props) {
@@ -21,6 +21,7 @@ export default function Profile(props) {
     postCount: 0,
   });
   const { username } = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const finder = async () => {
@@ -129,7 +130,12 @@ export default function Profile(props) {
           <div className="profile-details-header">
             <div className="profile-details-username-cont">
               <div className="profile-details-username">{data.username}</div>
-              {isUser ? <button className="profile-details-signout">
+              {isUser ? <button 
+                className="profile-details-signout"
+                onClick={() => {
+                  props.signOut()
+                  navigate("/")
+                }}>
                 Sign Out
               </button> : ""}
             </div>

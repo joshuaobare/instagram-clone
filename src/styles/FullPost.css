@@ -127,5 +127,31 @@ hr {
 }
 
 @media (max-width:600px) {
+  .Full-Post {
+    flex-direction: column;
+
+  }
+
+  .full-post-main-img-cont {
+    height: 50vh;
+    width: auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
+  .full-post-main-img {
+    height: 50vh;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .full-post-header {
+    border-bottom: 1px solid rgb(219, 219, 219);
+  }
+
+  .full-post-right-section {
+    height: auto;
+  }
 }

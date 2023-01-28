@@ -900,6 +900,7 @@ function App() {
                 toggleEditDialog={toggleEditDialog}
                 follow={follow}
                 displayPost={displayPost}
+                signOut={signOutUser}
               />
             }
           />
