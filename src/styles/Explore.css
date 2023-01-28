@@ -1,6 +1,11 @@
 .Explore {
   margin-left: 650px;
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.Explore-main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -17,4 +22,30 @@
   object-fit: cover;
   height: 295px;
   cursor: pointer;
+}
+
+@media (max-width:600px) {
+  .Explore {
+    margin-left: 0px;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .Explore-main {
+    gap: 0px;
+  }
+
+  .explore-img-cont {
+    max-width: 33.33333vw;
+    height: 33.33333vw;
+    overflow: hidden;
+  }
+
+  .explore-img {
+    width: 100%;
+    height: 33.33333vw;
+    object-fit: cover;
+
+  }
+
 }

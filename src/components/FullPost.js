@@ -105,6 +105,7 @@ export default function FullPost(props) {
 
   const style = {
     backgroundColor: "rgb(0,0,0.0.3)",
+    
   };
 
   return (

@@ -101,13 +101,13 @@ hr {
   cursor: pointer;
 }
 .profile-details-signout {
-  background-color: #FF3040;
-  color: #fff;
-  padding: 7px 16px;
-  font-weight: 600;
+  color: #0095f6;
+  font-size: 14px;
+  cursor: pointer;
   border-radius: 8px;
   border: none;
   display: none;
+  background-color: #fff;
 }
 
 .secondary-profile-details, .secondary-profile-details-top {
