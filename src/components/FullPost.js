@@ -206,7 +206,7 @@ export default function FullPost(props) {
               <input
                 type="text"
                 placeholder="Add a comment..."
-                className="add-comment"
+                className="full-post-comment-bar"
                 name="comment"
                 id={data.id.stringValue}
                 value={props.comment[data.id.stringValue] || ""}

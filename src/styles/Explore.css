@@ -12,15 +12,15 @@
 }
 
 .explore-img-cont {
-  height: 295px;
-  width: 295px;
+  height: 15.36vw;
+  width: 15.36vw;
   overflow: hidden;
 }
 
 .explore-img {
   width: 100%;
   object-fit: cover;
-  height: 295px;
+  height: 15.36vw;
   cursor: pointer;
 }
 
@@ -38,7 +38,7 @@
   }
 
   .explore-img-cont {
-    max-width: 33.33333vw;
+    width: 33.33333vw;
     height: 33.33333vw;
     overflow: hidden;
   }
