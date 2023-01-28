@@ -28,7 +28,9 @@
   .Explore {
     margin-left: 0px;
     gap: 10px;
-    align-items: center;
+    align-items: flex-start;
+    margin-top: 0;
+    height: 100vh;
   }
 
   .Explore-main {

@@ -214,7 +214,7 @@ hr {
   .secondary-profile-details-top {
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    align-self: flex-start;
     padding-left: 30px;
     margin-top: 10px;
     gap:5px;

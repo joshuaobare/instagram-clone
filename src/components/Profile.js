@@ -227,7 +227,7 @@ export default function Profile(props) {
           </div>
         ))}
       </div>
-      <footer className="profile-footer">
+      {data.postCount > 3 ? "" :  <footer className="profile-footer">
         <div className="footer-top">
           <div>Meta</div>
           <div>About</div>
@@ -247,7 +247,7 @@ export default function Profile(props) {
           <div>English</div>
           <div>&copy; 2023 Instagram from Meta</div>
         </div>
-    </footer>
+    </footer>}
     </div>
   );
 }
