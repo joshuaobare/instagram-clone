@@ -31,7 +31,7 @@ nav {
   flex-direction: column;
   gap: 5px;
   width: 350px;
-  height: 95vh;
+  height: calc(100vh - 25px);
   background-color: #fff;
   position: fixed;
 }
@@ -302,7 +302,7 @@ button {
 
   .Login {
     height: 100vh;
-    margin-top: 50px;
+    margin-top: 5.5vh;
     justify-content: flex-start;
   }
 

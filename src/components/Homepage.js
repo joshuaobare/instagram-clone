@@ -81,11 +81,14 @@ export default function Homepage(props) {
       </div>
       <aside>
         <div className="homepage-aside-header">
-          <img
-            src={props.userData.profilePicture}
-            alt="homepage aside header"
-            className="homepage-aside-img"
-          />
+          <div className="homepage-aside-img-cont">
+            <img
+              src={props.userData.profilePicture}
+              alt="homepage aside header"
+              className="homepage-aside-img"
+            />  
+          </div>
+          
           <div className="homepage-aside-header-main">
             <Link to="/profile/user">
               <div className="homepage-aside-header-username">
