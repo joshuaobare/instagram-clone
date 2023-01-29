@@ -301,8 +301,9 @@ button {
   }
 
   .Login {
-    height: auto;
+    height: 100vh;
     margin-top: 50px;
+    justify-content: flex-start;
   }
 
   .nav-title, 

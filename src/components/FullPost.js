@@ -141,7 +141,7 @@ export default function FullPost(props) {
               <Close />
             </button>
           </div>
-          <hr />
+          {/* <hr /> */}
           <div className="full-post-comment-section">
             <div className="full-post-caption-section">
               <div className="full-post-caption-section-main">
@@ -169,7 +169,7 @@ export default function FullPost(props) {
               ))}
             </div>
           </div>
-          <hr />
+          {/* <hr /> */}
           <div>
             <div className="full-post-icons">
               <div className="full-post-icons-main">
