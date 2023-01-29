@@ -1,6 +1,6 @@
 .Profile {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   flex-direction: column;
   align-items: center;
   height: 100vh;
@@ -82,7 +82,7 @@ hr {
 }
 
 .profile-posts-grid {
-  flex: 2;
+  /* flex: 2; */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
@@ -246,6 +246,7 @@ hr {
     gap: 0;
     row-gap: 0;
     height: auto;
+    justify-content: center;
   }
 
   .profile-post-cont {
