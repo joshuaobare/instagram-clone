@@ -81,7 +81,7 @@ footer {
   display: flex;
   flex-direction: column;
   position: absolute;
-  bottom: 50px;
+  bottom: 5.26vh;
   font-size: 12px;
   color: rgb(142, 142, 142);
   gap: 20px;
@@ -302,7 +302,7 @@ button {
 
   .Login {
     height: 100vh;
-    margin-top: 5.5vh;
+    margin-top: 50px;
     justify-content: flex-start;
   }
 

@@ -17,7 +17,7 @@ export default function Login(props) {
         <div className="form-section">
           <form action="" className="form">
             <div className="login-logo">
-              <img src={IGlogo} alt="" />
+              <img src={IGlogo} alt="" className="form-section-login-main-img"/>
             </div>
 
             <div className="form-inputs">
