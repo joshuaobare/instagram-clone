@@ -86,6 +86,14 @@ function App() {
 
       setProfiles(profs);
       setPosts(fullposts);
+
+      const storageUserData = JSON.parse(localStorage.getItem("userData"))
+      if (storageUserData) {
+        setUserData(storageUserData)
+        setLoggedIn(true)
+      }
+
+
     });
   }
 
@@ -125,6 +133,21 @@ function App() {
           ? checker.followers.arrayValue.values
           : [],
       });
+      localStorage.setItem("userData" , JSON.stringify({
+        description: checker.description.stringValue,
+        name: checker.name.stringValue,
+        posts: checker.posts.arrayValue.values
+          ? checker.posts.arrayValue.values
+          : [],
+        profilePicture: checker.profilePicture.stringValue,
+        username: checker.username.stringValue,
+        following: checker.following.arrayValue.values
+          ? checker.following.arrayValue.values
+          : [],
+        followers: checker.followers.arrayValue.values
+          ? checker.followers.arrayValue.values
+          : [],
+      }))
     }
     rerender();
 
@@ -149,6 +172,7 @@ function App() {
         console.error("Unsuccessful Sign Out");
       });
     setLoggedIn(false);
+    localStorage.removeItem("userData")
   }
 
   // googleLogin is the only way new Profiles can be created
@@ -199,6 +223,21 @@ function App() {
           ? checker.following.arrayValue.values
           : [],
       });
+      localStorage.setItem("userData", JSON.stringify({
+        description: checker.description.stringValue,
+        name: checker.name.stringValue,
+        posts: checker.posts.arrayValue.values
+          ? checker.posts.arrayValue.values
+          : [],
+        profilePicture: checker.profilePicture.stringValue,
+        username: checker.username.stringValue,
+        followers: checker.followers.arrayValue.values
+          ? checker.followers.arrayValue.values
+          : [],
+        following: checker.following.arrayValue.values
+          ? checker.following.arrayValue.values
+          : [],
+      }))
     } else {
       createProfile(username, ppic, name);
       setUserData({
@@ -216,6 +255,21 @@ function App() {
         followers: [],
         following: [],
       });
+      JSON.setItem("userData" , JSON.stringify({
+        name: data.currentUser.displayName,
+        username: username,
+        profilePicture:
+          `${addSizeToGoogleProfilePic(
+            data.currentUser.photoURL
+          ).toString()}` ||
+          `${addSizeToGoogleProfilePic(
+            "/images/profile_placeholder.png"
+          ).toString()}`,
+        description: "",
+        posts: [],
+        followers: [],
+        following: [],
+      }))
     }
 
     setLoggedIn(true);
@@ -239,6 +293,21 @@ function App() {
         ? profile.following.arrayValue.values
         : [],
     });
+    localStorage.setItem("userData" , JSON.stringify({
+      description: profile.description.stringValue,
+      name: profile.name.stringValue,
+      posts: profile.posts.arrayValue.values
+        ? profile.posts.arrayValue.values
+        : [],
+      profilePicture: profile.profilePicture.stringValue,
+      username: profile.username.stringValue,
+      followers: profile.followers.arrayValue.values
+        ? profile.followers.arrayValue.values
+        : [],
+      following: profile.following.arrayValue.values
+        ? profile.following.arrayValue.values
+        : [],
+    }))
 
     setLoggedIn(true);
   }
