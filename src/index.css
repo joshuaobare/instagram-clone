@@ -80,8 +80,9 @@ nav {
 footer {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  bottom: 5.26vh;
+  /* position: absolute; */
+  /* bottom: ; */
+  margin-top: 5.26vh;
   font-size: 12px;
   color: rgb(142, 142, 142);
   gap: 20px;
